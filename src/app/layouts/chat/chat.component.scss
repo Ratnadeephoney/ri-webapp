@@ -283,7 +283,7 @@ app-chat {
             //  margin-top:3rem;
             .user-active{
                 // background: #ddd !important;
-                border-right: 1.5px solid#99226e !important;
+                border-right: 1.5px solid #99226e !important;
                 // color: #fff;
                 background: #c5ddde;
 
@@ -302,7 +302,7 @@ app-chat {
                 // margin: 1px 0px;
 
                 .avatar{
-                    border: 1px solid#99226e ;
+                    border: 1px solid #99226e ;
                     border-radius: 50%;
                     padding: 5px;
                     text-align: center;
@@ -352,7 +352,7 @@ app-chat {
                 padding: 8px 10px;
 
                 .avatar{
-                    border: 1px solid#99226e;
+                    border: 1px solid #99226e;
                     border-radius: 50%;
                     padding: 5px;
                     text-align: center;
@@ -1291,6 +1291,10 @@ app-chat {
         }
     }
 
+    #recovergap{
+        
+    }
+
 }
 //iSteer1@3
 // @media (min-width: 1270px) and (max-width: 1290px) {
@@ -1322,7 +1326,7 @@ app-chat {
         -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
         animation-name: example;
         animation-duration: 2s;
-        border: 1px solid#99226e;
+        border: 1px solid #99226e;
         border-radius: 5px;
         background: #fff;
     }
@@ -1331,7 +1335,7 @@ app-chat {
 .plan_expired_js_lg:before {
     content: " ";
     position: absolute;
-    border: 8px solid#99226e;
+    border: 8px solid #99226e;
     border-right-color: transparent;
     border-left-color: transparent;
     border-top-color: transparent;
@@ -1356,7 +1360,7 @@ app-chat {
         -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
         animation-name: example;
         animation-duration: 2s;
-        border: 1px solid#99226e;
+        border: 1px solid #99226e;
         border-radius: 5px;
         background: #fff;
     }
@@ -1364,7 +1368,7 @@ app-chat {
     .plan_expired_js_md:before {
         content: " ";
         position: absolute;
-        border: 8px solid#99226e;
+        border: 8px solid #99226e;
         border-right-color: transparent;
         border-left-color: transparent;
         border-top-color: transparent;
@@ -1385,7 +1389,7 @@ app-chat {
     .plan_expired_js_lg:before {
         content: " ";
         position: absolute;
-        border: 8px solid#99226e;
+        border: 8px solid #99226e;
         border-right-color: transparent;
         border-left-color: transparent;
         border-top-color: transparent;
@@ -1396,7 +1400,7 @@ app-chat {
     .plan_expired_emp_lg:before {
         content: " ";
         position: absolute;
-        border: 8px solid#99226e;
+        border: 8px solid #99226e;
         border-right-color: transparent;
         border-left-color: transparent;
         border-top-color: transparent;
@@ -1440,7 +1444,7 @@ app-chat {
         -webkit-animation-duration: 2s;
         animation-name: example;
         animation-duration: 2s;
-        border: 1px solid#99226e;
+        border: 1px solid #99226e;
         border-radius: 5px;
         background: #fff;
     }

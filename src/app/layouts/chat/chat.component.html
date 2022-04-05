@@ -572,7 +572,7 @@
                                                                             <img style="margin-left:14px; margin-top:4.5px;" src="assets/images/chat/ri_web_chat_pdf.png" class="pdfImage">
                                                                         </div>
 
-                                                                        <div style=" margin-left:15px; margin" class="line-breaker" 
+                                                                        <div style=" margin-left:15px;" class="line-breaker" 
                                                                         [ngClass]="{'notadmin': chat.userType != 'RE'}"  id="pMemberMessage" >
                                                                         {{allChatPdfSplitSlice(chat.message)}}
                                                                             <div id="recovergap" style="margin-top:0px; text-decoration: underline; color:black; " >
@@ -595,7 +595,7 @@
                                                                     <div style=" margin-left:15px; margin" class="line-breaker" 
                                                                     [ngClass]="{'notadmin': chat.userType != 'RE'}"  id="pMemberMessage" >
                                                                     {{allChatDocSplitSlice(chat.message)}}
-                                                                        <div id="recovergap" style="margin-top:0px; text-decoration: underline; color:black; " >
+                                                                        <div id="recovergap" style="" >
                                                                             {{msgleftchatdoc}}
                                                                         </div>
                                                                     </div>  
