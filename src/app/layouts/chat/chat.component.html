@@ -1,0 +1,1436 @@
+<app-authorize-layout>
+    <meta charset="utf-8">
+  <!--meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script-->
+    <section>
+        <div style="margin-left:10px;" class="container">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="banner-title">
+                        <h4>Chat</h4>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div style="margin-top: 5px;">
+                <div>
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12" id="section-left">
+                            <div class="section-left">
+                                <!-- <div class="search" [ngClass]="{'searchdisable': selectedTab != 'Groups'}">
+                                    <img src="assets/images/search.png" style="margin-left: 20px;" />
+                                    <input type="text" placeholder="Search" [disabled]="selectedTab != 'Groups'"
+                                        [(ngModel)]="filterUserListText" id="txtChatSearch" />
+                                </div> -->
+
+                                <div class="ri-col" style="min-height: 100%;">
+                                    <ngb-tabset #tabSet style="width: 100%;" (tabChange)="onTabChange($event)"
+                                        style="margin: 10px 10px 0px 10px;">
+                                        <!-- <ngb-tab title="Groups" id="tFirst">
+                                            <ng-template ngbTabContent>
+                                            </ng-template>
+                                        </ngb-tab> -->
+                                        <ngb-tab id="tFirst">
+                                            <ng-template ngbTabTitle>Groups<span class="msg-bulb"
+                                                    *ngIf="dataStorage.globalGroupChatUnreadCount > 0"></span>
+                                            </ng-template>
+                                            <ng-template ngbTabContent>
+                                            </ng-template>
+                                        </ngb-tab>
+                                        <ngb-tab id="tSecond">
+                                            <ng-template ngbTabTitle>Members<span class="msg-bulb"
+                                                    *ngIf="dataStorage.globalMemberChatUnreadCount > 0"></span>
+                                            </ng-template>
+                                            <ng-template ngbTabContent>
+                                            </ng-template>
+                                        </ngb-tab>
+                                        <ngb-tab id="tthird">
+                                            <ng-template ngbTabTitle>Employers<span class="msg-bulb"
+                                                    *ngIf="dataStorage.globalEmployerTabChatUnreadCount > 0"></span>
+                                            </ng-template>
+                                            <ng-template ngbTabContent>
+                                            </ng-template>
+                                        </ngb-tab>
+                                    </ngb-tabset>
+                                    <div *ngIf="selectedTab=='Groups'">
+                                        <div style="margin: 10px;">
+                                            <ng-select placeholder="Search" style="height: 40px; border-radius: 20px;"
+                                                [selectOnTab]="true" [formControl]="technologies"
+                                                [items]="dataStorage.globalSkillsList" bindLabel="technologyDescription"
+                                                bindValue="technologyId" [multiple]="true" id="txtSkills"
+                                                class="left mb-3">
+                                                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                                    <div class="ng-value" *ngFor="let item of items | slice:0:3">
+                                                        <span class="ng-value-label"
+                                                            title="{{item.technologyDescription}}">
+                                                            {{item.technologyDescription | slice:0:10}}
+                                                            <span style="margin-left:-3px"
+                                                                title="{{item.technologyDescription}}"
+                                                                *ngIf="item.technologyDescription.length > 10">...</span>
+                                                        </span>
+
+                                                        <span class="ng-value-icon right" (click)="clear(item)"
+                                                            aria-hidden="true">×</span>
+                                                    </div>
+                                                    <div class="ng-value" *ngIf="items.length > 3">
+                                                        <span class="ng-value-label">{{items.length - 3}}
+                                                            more...</span>
+                                                    </div>
+                                                </ng-template>
+                                            </ng-select>
+                                        </div>
+                                        <div style="overflow: auto; max-height: 350px;"
+                                            [ngClass]="{'my-height-group': dataStorage.clickedGroupId}">
+                                            <div *ngIf="dataStorage.globalRIGroupsChatList.length != 0">
+                                                <mat-card class="ri-col mycard1" (click)="GroupSelected(data)"
+                                                    [ngClass]="{'bdr1': data.clicked}"
+                                                    *ngFor="let data of dataStorage.globalRIGroupsChatList">
+                                                    <div class="ri-col"
+                                                        style="padding: 5px 10px; border-bottom: 1px solid #bfbfbf;">
+                                                        <div class="ri-row">
+                                                            <div class="flex1">
+                                                                <span *ngIf="data.groupName.length > 22"
+                                                                    title="{{data.groupName}}"><b>
+                                                                        {{data.groupName | slice:0:22}}
+                                                                        {{data.groupName.length > 22 ? '...': ''}}</b>
+                                                                </span>
+                                                                <span *ngIf="data.groupName.length <= 22"><b>
+                                                                        {{data.groupName | slice:0:22}}
+                                                                        {{data.groupName.length > 22 ? '...': ''}}</b>
+                                                                </span>
+                                                            </div>
+                                                            <div style="flex: 0.2;">
+                                                                <span class="unread-count"
+                                                                    *ngIf="data.unreadCount > 0">{{data.unreadCount}}</span>
+                                                            </div>
+                                                            <div>
+                                                                <!-- <img src="../../../assets/images/Share_Icon.png"
+                                                                style="height: 20px; width: 20px;"> -->
+                                                                <span *ngIf="data.userId"
+                                                                    style="font-size: 9px;">{{data.messageTime}}</span>
+                                                                <span *ngIf="!data.userId"
+                                                                    style="font-size: 9px;">{{data.groupElapsedTime}}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div>
+                                                                <span
+                                                                    *ngIf="data.ownerName != '' && data.ownerName != null && data.ownerName.length > 22"
+                                                                    title="{{data.ownerName}}"
+                                                                    style="font-size: 12px;">by
+                                                                    {{data.ownerName | slice:0:22}}
+                                                                    {{data.ownerName.length > 22 ? '...': ''}}
+                                                                </span>
+                                                                <span
+                                                                    *ngIf="data.ownerName != '' && data.ownerName != null && data.ownerName.length <= 22"
+                                                                    style="font-size: 12px;">by
+                                                                    {{data.ownerName | slice:0:22}}
+                                                                    {{data.ownerName.length > 22 ? '...': ''}}
+                                                                </span>
+                                                                <span
+                                                                    *ngIf="data.ownerName == '' || data.ownerName == null"
+                                                                    style="font-size: 12px;">by
+                                                                    Mentor
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="ri-col" style="padding: 5px 10px;">
+                                                        <div><span><b>Group Details</b></span></div>
+                                                        <div>
+                                                            <span *ngIf="data.groupDescription.length <= 55">
+                                                                {{data.groupDescription | slice:0:55}}
+                                                                {{data.groupDescription.length > 55 ? '...': ''}}
+                                                            </span>
+                                                            <span *ngIf="data.groupDescription.length > 55"
+                                                                title="{{data.groupDescription}}">
+                                                                {{data.groupDescription | slice:0:55}}
+                                                                {{data.groupDescription.length > 55 ? '...': ''}}
+                                                            </span>
+                                                        </div>
+                                                        <div class="ri-row" style="padding-top: 10px;">
+                                                            <div class="ri-row flex1">
+                                                                <div><img src="../../../assets/images/Chat_Skills.png"
+                                                                        style="width: 20px; height: 15px;"></div>
+                                                                <div style="padding-left: 10px;">
+                                                                    <!-- <span>{{!!data.skillsList ? data.skillsList : 'No Skills'}}</span> -->
+                                                                    <!-- <span *ngIf="data.skillsList && data.skillsList.length <= 10">
+                                                                        {{data.skillsList | slice:0:1}}
+                                                                        {{data.skillsList.length > 10 ? '...': ''}}
+                                                                    </span> -->
+                                                                    <span *ngIf="data.skillsList"
+                                                                        title="{{data.skills}}">
+                                                                        {{data.skills | slice:0:40}}
+                                                                        {{data.skills.length > 40 ? '...': ''}}
+                                                                    </span>
+                                                                    <span *ngIf="!data.skillsList">
+                                                                        No Skills
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <!-- <div class="ri-row" style="flex: 0.6;">
+                                                                <div><img src="../../../assets/images/viewers.png"
+                                                                        style="width: 20px; height: 15px;"></div>
+                                                                <div style="padding-left: 10px;">
+                                                                    <span><span
+                                                                            style="color: #99226e;">{{!!data.totalUsers
+                                                                            ? data.totalUsers-1 :
+                                                                            '0'}}</span>
+                                                                        Jobseekers</span>
+                                                                </div>
+                                                            </div> -->
+                                                        </div>
+                                                        <div class="ri-row" style="padding-top: 10px;">
+                                                            <div class="ri-row" style="flex: 1;">
+                                                                <div><img src="../../../assets/images/viewers.png"
+                                                                        style="width: 20px; height: 15px;"></div>
+                                                                <div style="padding-left: 10px;">
+                                                                    <span *ngIf="data.totalUsers > 1 && !data.userId">Connect with<span
+                                                                            style="color: #99226e;"> {{!!data.totalUsers
+                                                                            ? data.totalUsers-1 :
+                                                                            '0'}}</span>
+                                                                            similar Users like you. Explore more!</span>
+                                                                            <span *ngIf="data.totalUsers > 1 && data.userId">Connected with<span
+                                                                                style="color: #99226e;"> {{!!data.totalUsers
+                                                                                ? data.totalUsers-1 :
+                                                                                '0'}}</span>
+                                                                                similar Users like you. Explore more!</span>
+                                                                        <span *ngIf="data.totalUsers <= 1">
+                                                                            No other Users available in this group.</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="ri-row" style="justify-content: center;">
+                                                            <div>
+                                                                <!-- <button *ngIf="data.userId" style="border: 2px solid #99226e">Chat</button> -->
+                                                                <button *ngIf="!data.userId"
+                                                                    (click)="JoinGroupChatFromLeft($event, data)"
+                                                                    style="border: 2px solid #99226e; border-radius: 5px; color: white; width: 90px; height: 30px; background: linear-gradient(to right, rgba(215, 32, 232, 1), #9a0365);">Join</button>
+                                                                <button *ngIf="data.userId"
+                                                                    style="border: 2px solid #99226e; border-radius: 5px; color: white; width: 90px; height: 30px; background: linear-gradient(to right, rgba(215, 32, 232, 1), #9a0365);">View Chat</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </mat-card>
+                                            </div>
+                                            <div style="padding-top: 100px;"
+                                                *ngIf="dataStorage.globalRIGroupsChatList.length == 0 && isGroupChatListLoaded"
+                                                class="ri-col emptyList">
+                                                <img style="width: 150px; margin-bottom: 10px;"
+                                                    src="../../../assets/images/chat/empty_group_list.png" />
+                                                <p style="font-size: 16px;">No messages yet.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="selectedTab=='Members'"
+                                        style="flex:1; display: flex; overflow: auto; max-height: 400px;"
+                                        [ngClass]="{'my-height-member': dataStorage.openedchatId}">
+                                        <div class="flex1" *ngIf="dataStorage.globalMentorJSChatList.length != 0">
+                                            <mat-card class="ri-row mycard2" [ngClass]="{'bdr': data.clicked}"
+                                                *ngFor="let data of dataStorage.globalMentorJSChatList">
+                                                <div style="flex: 0.15">
+                                                    <div class="avatar1" style="cursor: pointer;"
+                                                        (click)="getMemberData(data)">
+                                                        <span>{{!!data.destinationName ? !!data.destinationName.trim() ?
+                                                            (data.destinationName | avatarfilter): 'RI' : 'RI'}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="ri-col flex1" (click)="openMentorchat(data)">
+                                                    <div class="ri-row">
+                                                        <span class="flex1" style="font-size: 15px; font-weight: bold;"
+                                                            *ngIf="data.destinationName != null && data.destinationName !=''">
+                                                            {{data.destinationName |
+                                                            slice:0:20}}{{data.destinationName.length > 20 ? '...': ''}}
+                                                        </span>
+                                                        <span class="flex1" style="font-size: 15px; font-weight: bold;"
+                                                            *ngIf="data.destinationName == null || data.destinationName ==''">Name:
+                                                            Not Available</span>
+                                                        <span style="margin: 0px 5px;" class="unread-count"
+                                                            *ngIf="data.sourceUnreadCount !=0">{{data.sourceUnreadCount}}</span>
+                                                        <span
+                                                            style="font-size: 10px; flex: 0.15;">{{data.RecentMessageTime}}</span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="desc"
+                                                            *ngIf="data.recentMessage != '' && data.inviteStatus != 2 && data.inviteStatus != 0"
+                                                            [innerHTML]="data.recentMessage"></span>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="ri-col">
+                                                    <span style="font-size: 10px; padding-top: 8px; text-align: center;">{{data.RecentMessageTime}}</span>
+                                                </div> -->
+                                            </mat-card>
+                                        </div>
+                                        <div *ngIf="dataStorage.globalMentorJSChatList.length == 0 && isMembersChatListLoaded"
+                                            class="ri-col emptyList">
+                                            <img style="width: 150px; margin-bottom: 10px;"
+                                                src="../../../assets/images/chat/empty_group_list.png" />
+                                            <p style="font-size: 16px;">No messages yet.</p>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="selectedTab=='Employers'"
+                                        style="flex:1; display: flex; overflow: auto; max-height: 400px; flex-direction: column;"
+                                        [ngClass]="{'my-height-employer': dataStorage.openedchatId}">
+                                        <!-- Admin chat starts here -->
+                                        <mat-card class="ri-row mycard2" [ngClass]="{'bdr': AdminClicked}"
+                                            *ngIf="dataStorage.globalAdminChatInformation != {}">
+                                            <div style="flex: 0.15">
+                                                <div>
+                                                    <img src="../../../assets/images/chat/RI-Logo-Thick.png"
+                                                        style="height: 40px; width: 40px;">
+                                                </div>
+                                            </div>
+                                            <div (click)="openAdminchat(dataStorage.globalAdminChatInformation)"
+                                                class="ri-col flex1">
+                                                <div class="ri-row">
+                                                    <span class="flex1" style="font-size: 15px; font-weight: bold;">
+                                                        Rock Interview Support
+                                                    </span>
+                                                    <span style="margin: 0px 5px;" class="unread-count"
+                                                        *ngIf="dataStorage.globalAdminChatInformation && dataStorage.globalAdminChatInformation.sourceUnreadCount !=0">{{dataStorage.globalAdminChatInformation.sourceUnreadCount}}</span>
+                                                    <span *ngIf="dataStorage.globalAdminChatInformation"
+                                                        style="font-size: 10px; flex: 0.15;">{{dataStorage.globalAdminChatInformation.RecentMessageTime}}</span>
+                                                </div>
+                                                <div>
+                                                    <span class="desc"
+                                                        *ngIf="dataStorage.globalAdminChatInformation && dataStorage.globalAdminChatInformation.recentMessage != ''"
+                                                        [innerHTML]="dataStorage.globalAdminChatInformation.recentMessage"></span>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="ri-col">
+                                                    <span style="font-size: 10px; padding-top: 8px; text-align: center;">{{data.RecentMessageTime}}</span>
+                                                </div> -->
+                                        </mat-card>
+                                        <!-- Admin chat ends here -->
+
+                                        <!-- Employers chat starts here -->
+                                        <div class="flex1" *ngIf="dataStorage.globalRIREChatList.length != 0">
+                                            <mat-card class="ri-row mycard2" [ngClass]="{'bdr': data.clicked}"
+                                                *ngFor="let data of dataStorage.globalRIREChatList">
+                                                <div style="flex: 0.15">
+                                                    <div class="avatar1" style="cursor: pointer;"
+                                                        (click)="GetEmployerData(data, 'left')">
+                                                        <span>{{!!data.destinationName ? !!data.destinationName.trim() ?
+                                                            (data.destinationName | avatarfilter): 'RI' : 'RI'}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="ri-col flex1" (click)="openEmployerchat(data)">
+                                                    <div class="ri-row">
+                                                        <span class="flex1" style="font-size: 15px; font-weight: bold;"
+                                                            *ngIf="data.destinationName != null && data.destinationName !=''">
+                                                            {{data.destinationName |
+                                                            slice:0:20}}{{data.destinationName.length > 20 ? '...': ''}}
+                                                        </span>
+                                                        <span class="flex1" style="font-size: 15px; font-weight: bold;"
+                                                            *ngIf="data.destinationName == null || data.destinationName ==''">Name:
+                                                            Not Available</span>
+                                                        <span style="margin: 0px 5px;" class="unread-count"
+                                                            *ngIf="data.sourceUnreadCount !=0">{{data.sourceUnreadCount}}</span>
+                                                        <span
+                                                            style="font-size: 10px; flex: 0.15;">{{data.RecentMessageTime}}</span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="desc"
+                                                            *ngIf="data.recentMessage != '' && data.inviteStatus != 2"
+                                                            [innerHTML]="data.recentMessage"></span>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="ri-col">
+                                                    <span style="font-size: 10px; padding-top: 8px; text-align: center;">{{data.RecentMessageTime}}</span>
+                                                </div> -->
+                                            </mat-card>
+                                        </div>
+                                        <!-- Employers chat ends here -->
+
+
+                                        <!-- <div *ngIf="dataStorage.globalMentorJSChatList.length == 0 && isMembersChatListLoaded"
+                                            class="ri-col emptyList">
+                                            <img style="width: 150px; margin-bottom: 10px;"
+                                                src="../../../assets/images/chat/empty_group_list.png" />
+                                            <p style="font-size: 16px;">No messages yet.</p>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Groups Tab Right hand Section starts here -->
+                        <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-xs-12" id="section-right"
+                            *ngIf="selectedTab=='Groups'">
+
+                            <!-- Group Chat Details start-->
+                            <div class="section-right"
+                                *ngIf="selectedTab == 'Groups' && dataStorage.ongrpchatdetails == true && GroupUsersData == false && showjoiningroup==false;">
+                                <div class="header" fxFlex="100%">
+                                    <div class="user ri-row" fxFlex="100%" fxLayout="row" style="align-items: center;">
+                                        <div class="right-avatar-section" style="flex: 0.1">
+                                            <img src="../../../assets/images/chat/group_icon_color.png"
+                                                style="height: 40px; width: 40px;">
+                                        </div>
+                                        <div fxFlex="80%" class="ri-col flex1" fxLayout="column"
+                                            style="cursor:pointer;">
+
+                                            <span (click)="OpenGroupUserDetails(SelectedGroupData)"
+                                                title="{{SelectedGroupData.groupName}}"
+                                                style="font-size: 17px; font-weight: bold;"
+                                                *ngIf="SelectedGroupData != null && SelectedGroupData.groupName.length > 20">
+                                                <!-- {{SelectedGroupData.groupName ? SelectedGroupData.groupName : 'NA'}} -->
+                                                {{SelectedGroupData.groupName | slice:0:20}}
+                                                {{SelectedGroupData.groupName.length > 20 ? '...': ''}}
+                                            </span>
+                                            <span (click)="OpenGroupUserDetails(SelectedGroupData)"
+                                                style="font-size: 17px; font-weight: bold;"
+                                                *ngIf="SelectedGroupData != null && SelectedGroupData.groupName.length <= 20">
+                                                <!-- {{SelectedGroupData.groupName ? SelectedGroupData.groupName : 'NA'}} -->
+                                                {{SelectedGroupData.groupName | slice:0:20}}
+                                                {{SelectedGroupData.groupName.length > 20 ? '...': ''}}
+                                            </span>
+                                            <span (click)="OpenGroupUserDetails(SelectedGroupData)"
+                                                title="{{SelectedGroupData.ownerName}}"
+                                                *ngIf="SelectedGroupData != null && SelectedGroupData.ownerName !='' && SelectedGroupData.ownerName != null && SelectedGroupData.ownerName.length > 20">
+                                                By {{SelectedGroupData.ownerName | slice:0:20}}
+                                                {{SelectedGroupData.ownerName.length > 20 ? '...': ''}}
+                                            </span>
+                                            <span (click)="OpenGroupUserDetails(SelectedGroupData)"
+                                                *ngIf="SelectedGroupData != null && SelectedGroupData.ownerName !='' && SelectedGroupData.ownerName != null && SelectedGroupData.ownerName.length <= 20">
+                                                By {{SelectedGroupData.ownerName | slice:0:20}}
+                                                {{SelectedGroupData.ownerName.length > 20 ? '...': ''}}
+                                            </span>
+                                            <span (click)="OpenGroupUserDetails(SelectedGroupData)"
+                                                *ngIf="SelectedGroupData != null && (SelectedGroupData.ownerName == '' || SelectedGroupData.ownerName == null)">
+                                                By Mentor
+                                            </span>
+                                            <!-- <span class="desc" >{{!!selectedUserInfo.userRole ? selectedUserInfo.userRole : 'NA'}}</span> -->
+
+                                        </div>
+                                        <div fxFlex="20%" style="flex: 0.2">
+                                            <div ngbDropdown placement="top-left" container="body">
+                                                <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
+                                                    <img src="../../../assets/images/Jobs-More-Options.png"
+                                                        style="width: 6px; height: 20px;">
+                                                </button>
+                                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                                    <button ngbDropdownItem
+                                                        (click)="ShowRemoveUserAlert(SelectedGroupData)">Leave
+                                                        Group</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="body" fxFlex.lg="100%" fxFlex.md="100%" fxFlex.sm="100%" fxFlex.xs="100%"
+                                    id="chatnewbody">
+                                    <div *ngFor="let chat of dataStorage.globalgroupchatdetailsconversation">
+
+                                        <div style="display: block">
+                                            <!--div class="msg-time" *ngIf="chat.messageType != 2"> {{chat.postedDate |
+                                                date: 'dd-MMM-yyyy h:mm a'}}
+                                            </div-->
+                                            <div *ngIf="chat.messageType == 1 || chat.messageType == 3">
+                                                <div style="display: flex; flex-direction: row; padding:3.5px;" 
+                                                    *ngIf='chat.senderUserId == "ADMIN" || chat.senderUserId != dataStorage.globalLoggedInUserData.userId'>
+
+                                                    <div style="margin-top:20px;" class="avatar" style="cursor: pointer;"
+                                                        (click)="ShowGroupDetailsUserData(chat)">
+                                                        <span
+                                                            *ngIf="chat.senderUserName != null && chat.senderUserName !='' && chat.senderUserName != 'ADMIN'">{{chat.senderUserName
+                                                            | avatarfilter}}</span>
+                                                        <span
+                                                            *ngIf="(chat.senderUserName == null || chat.senderUserName =='') && chat.userType == 2 && chat.senderUserName != 'ADMIN'">ME</span>
+                                                        <span
+                                                            *ngIf="(chat.senderUserName == null || chat.senderUserName =='') && chat.userType == 1 && chat.senderUserName != 'ADMIN'">JS</span>
+                                                        <span
+                                                            *ngIf="chat.senderUserName != null && chat.senderUserName !='' && chat.senderUserName == 'ADMIN'">
+                                                            RI
+                                                        </span>
+                                                    </div>
+                                                           
+                                                    <div *ngIf='chat.senderUserId == "ADMIN" || chat.senderUserId != dataStorage.globalLoggedInUserData.userId'
+                                                    class="msg-content-left" style="margin-top:-20px;">
+                                                        
+                                                        <span style="font-size: 10px; "
+                                                            *ngIf="chat.senderUserName != null && chat.senderUserName !='' && chat.senderUserName == 'ADMIN'">
+                                                            RI Admin
+                                                            
+                                                        </span>
+                                                         <span class="ng-value" *ngIf="chat.senderUserName.length > 10">
+                                                                <span style="font-size: 10px; margin-top:0px; "
+                                                                *ngIf="chat.senderUserName != null && chat.senderUserName !='' && chat.senderUserName != 'ADMIN'">{{chat.senderUserName | slice:0:10}}...</span>
+                                                            
+                                                                </span>
+                                                            <span class="ng-value" *ngIf="chat.senderUserName.length < 10">
+                                                                <span style="font-size: 10px; margin-top: -5px; "
+                                                                *ngIf="chat.senderUserName != null && chat.senderUserName !='' && chat.senderUserName != 'ADMIN'">{{chat.senderUserName}}</span>                                                            
+
+                                                            </span>
+                                                            <span class="msg-time-left" style=""> {{chat.postedDate | date: 'dd-MMM-yyyy h:mm a'}}
+                                                            </span>
+                                                        <div class="ri-col" style="position: relative;">
+                                                            <span class="msg-left" (click)="onmessageclick(chat.message)" 
+                                                            style=" justify-content:flex-start!important; border-radius: 1px 10px 10px 10px;" 
+                                                            [innerHTML]="chat.message" id="pMemberMessage" *ngIf="!chat.msgType || chat.msgType == 'text'"></span>
+                                                            <img [src]="chat.thumbnail" class="msg-left chat-img" (click)="onmessageclick(chat.message)" style="justify-content:flex-start!important;" id="imgMemberMessage" *ngIf="chat.msgType == 'image' || chat.msgType == 'video'" />
+                                                            <img src='assets/imgs/ri/white_play_button.png' class='play-img left-play-img' id='btnPlayVideo' (click)="onmessageclick(chat.message)" *ngIf="chat.msgType == 'video'" >
+
+                                                            <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-left" *ngIf="!!chat.msgType && chat.msgType == 'pdf'" (click)="onmessageclick(chat.message)">
+                                                                <div class="row">
+                                                                    <div class="col-9">
+                                                                        <p style="margin-top:20px;" class="line-breaker" [ngClass]="{'notadmin': chat.userType != 'RE'}" 
+                                                                        
+                                                                          id="pMemberMessage">{{allChatPdfSplitSlice(chat.message)}}<span style="text-decoration: underline; color:black;">{{msgleftchatpdf}}</span></p>
+                                                                    </div>    
+                                                                    <div style="margin-left:219px; margin-top:-50px;"  class="col-3">
+                                                                        <div style="background-color:white; margin-top:10px;
+                                                                        border:1px solid white;
+                                                                        border-radius:100px;
+                                                                        width:60px; text-align:center; height:60px;">
+                                                                        <img style="margin-top:4px; margin-left:4.5px;" 
+                                                                        src="assets/images/chat/ri_web_chat_pdf.png" class="pdfImage">
+                                                                        </div>
+                                                        
+                                                                    </div>
+                                                                </div>     
+                                                            </div>
+                
+                                                            
+                                                            <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-left" *ngIf="!!chat.msgType && chat.msgType == 'doc'" (click)="onmessageclick(chat.message)">
+                                                                <div class="row">
+                                                                
+                                                                    <div class="col-9">
+                                                                       
+                                                                        <p style="margin-top:20px;" class="line-breaker" [ngClass]="{'notadmin': chat.userType != 'RE'}" 
+                                                                            
+                                                                          id="pMemberMessage" >{{allChatDocSplitSlice(chat.message)}}<span style="text-decoration: underline; color:black;">{{msgleftchatdoc}}</span></p>
+                                                            
+                                                                    </div>
+                                                                    <div style="margin-left:219px; margin-top:-50px" class="col-3">
+                                                                        <div style="background-color:white; margin-top:10px;
+                                                                        border:1px solid white;
+                                                                        border-radius:100px;
+                                                                        width:60px; text-align:center; height:60px;">
+                                                                        <img style="margin-top:4px; margin-left:4.5px;"  src="assets/images/chat/ri_web_chat_doc.png" class="docImage">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>  
+                                                            </div>  
+                                                        </div>
+                                                        <!--span style="font-size: 10px; margin-top: -5px;"
+                                                            *ngIf="chat.senderUserName != null && chat.senderUserName !='' && chat.senderUserName != 'ADMIN'">{{chat.senderUserName}}</span-->
+                                                        <span style="font-size: 10px; margin-top: -5px;"
+                                                            *ngIf="(chat.senderUserName == null || chat.senderUserName =='') && chat.userType == 2 && chat.senderUserName != 'ADMIN'">Mentor</span>
+                                                        <span style="font-size: 10px; margin-top: -5px;"
+                                                            *ngIf="(chat.senderUserName == null || chat.senderUserName =='') && chat.userType == 1 && chat.senderUserName != 'ADMIN'">Jobseeker</span>
+                                                        <!--span style="font-size: 10px; margin-top: -5px;"
+                                                            *ngIf="chat.senderUserName != null && chat.senderUserName !='' && chat.senderUserName == 'ADMIN'">
+                                                            Rock Interview Admin
+                                                        </span-->
+
+                                                    </div>
+                                                </div><br>
+
+                                                <div *ngIf='chat.senderUserId != "ADMIN" && chat.senderUserId == dataStorage.globalLoggedInUserData.userId'
+                                                    class="msg-content-right" style="margin-top:10px;">
+
+                                                    <div class="ri-col" style="position: relative;">
+                                                    
+                                                                <span style="float:left; font-size:10px;  margin-top:-15px; "> {{chat.postedDate | date: 'dd-MMM-yyyy h:mm a'}}
+                                                                </span>
+                                                                
+                                                            <!--span  style="float:left; margin-left:100px;" class="ng-value" *ngIf="chat.senderUserName.length > 10">
+                                                                <span style="font-size: 10px; "
+                                                                *ngIf="chat.senderUserName != null && chat.senderUserName !='' && chat.senderUserName != 'ADMIN'">{{chat.senderUserName | slice:0:10}}...</span>
+                                                            
+                                                                </span>
+                                                            <span class="ng-value" *ngIf="chat.senderUserName.length < 10">
+                                                                <span style="font-size: 10px; margin-top: -5px; "
+                                                                *ngIf="chat.senderUserName != null && chat.senderUserName !='' && chat.senderUserName != 'ADMIN'">
+                                                                {{chat.senderUserName}}</span>                                                            
+
+                                                            </span-->
+                                                                <p class="msg-right" (click)="onmessageclick(chat.message)" style="border-radius: 10px 1px 10px 10px;"  [innerHTML]="chat.message" id="pMemberMessage"  *ngIf="!chat.msgType || chat.msgType == 'text'"></p>
+                                                                <img [src]="chat.thumbnail" class="msg-right chat-img" (click)="onmessageclick(chat.message)" style="justify-content:flex-start!important;" id="imgMemberMessage" *ngIf="chat.msgType == 'image' || chat.msgType == 'video'" />
+                                                                <!-- <div [ngStyle]="{'background-image': 'url(' + chat.thumbnail + ')'}"
+                                                                class="msg-right chat-img" (click)="onmessageclick(chat.message)" 
+                                                                style="justify-content:flex-start !important; 
+                                                                background-repeat: no-repeat; background-size: cover;" 
+                                                                id="imgMemberMessage" 
+                                                                *ngIf="chat.msgType == 'image' || chat.msgType == 'video'" ></div> -->
+                                                                <img src='assets/imgs/ri/white_play_button.png' class='play-img right-play-img' id='btnPlayVideo' (click)="onmessageclick(chat.message)" *ngIf="chat.msgType == 'video'" >
+                                                                <!--style="border:1px solid red; width:200px; height:40px;"-->                                            
+                                                                <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-right" 
+                                                                *ngIf="chat.msgType == 'pdf'" (click)="onmessageclick(chat.message)">
+
+                                                                
+                                                                    <div style="width:60px; height:60px; background-color:white;
+                                                                        border:1px solid white; border-radius:100px;
+                                                                        ">
+                                                                            <img style="margin-left:14px; margin-top:4.5px;" src="assets/images/chat/ri_web_chat_pdf.png" class="pdfImage">
+                                                                        </div>
+
+                                                                        <div style=" margin-left:15px; margin" class="line-breaker" 
+                                                                        [ngClass]="{'notadmin': chat.userType != 'RE'}"  id="pMemberMessage" >
+                                                                        {{allChatPdfSplitSlice(chat.message)}}
+                                                                            <div id="recovergap" style="margin-top:0px; text-decoration: underline; color:black; " >
+                                                                            {{msgleftchatpdf}}
+                                                                            </div>
+                                                                        </div>    
+                                                                
+
+
+                                                                </div>
+                    
+                                                                <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-right" *ngIf="chat.msgType == 'doc'" (click)="onmessageclick(chat.message)">
+                                                                    
+                                                                    <div style="width:60px; height:60px; background-color:white;
+                                                                    border:1px solid white; border-radius:100px;
+                                                                    ">
+                                                                        <img style="margin-left:14px; margin-top:4.5px;" src="assets/images/chat/ri_web_chat_doc.png" class="pdfImage">
+                                                                    </div>
+
+                                                                    <div style=" margin-left:15px; margin" class="line-breaker" 
+                                                                    [ngClass]="{'notadmin': chat.userType != 'RE'}"  id="pMemberMessage" >
+                                                                    {{allChatDocSplitSlice(chat.message)}}
+                                                                        <div id="recovergap" style="margin-top:0px; text-decoration: underline; color:black; " >
+                                                                            {{msgleftchatdoc}}
+                                                                        </div>
+                                                                    </div>  
+                                                                </div>
+                                                            <!-- </div> -->
+                                                            
+                                                        <!--span
+                                                            *ngIf="chat.senderUserName != null && chat.senderUserName !=''"
+                                                            style="font-size: 10px; text-align: right;">
+                                                            
+                                                            {{chat.senderUserName}}</span-->
+                                                        <span
+                                                            *ngIf="(chat.senderUserName == null || chat.senderUserName =='') && chat.userType == 2"
+                                                            style="font-size: 10px; text-align: right;">Mentor</span>
+                                                        <span
+                                                            *ngIf="(chat.senderUserName == null || chat.senderUserName =='') && chat.userType == 1"
+                                                            style="font-size: 10px; text-align: right;">Jobseeker</span>
+                                                    </div>
+                                                    <div class="avatar" style="cursor: pointer;"
+                                                        (click)="ShowGroupDetailsUserData(chat)">
+                                                        <span
+                                                            *ngIf="chat.senderUserName != null && chat.senderUserName !=''">{{chat.senderUserName
+                                                            | avatarfilter}}</span>
+                                                        <span
+                                                            *ngIf="(chat.senderUserName == null || chat.senderUserName =='') && chat.userType == 2">ME</span>
+                                                        <span
+                                                            *ngIf="(chat.senderUserName == null || chat.senderUserName =='') && chat.userType == 1">JS</span>
+                                                    </div>
+                                                    <br>
+                                                </div>
+
+                                            </div>
+                                            <div *ngIf="chat.messageType == 2"
+                                                style="text-align: center; padding: 5px;">
+                                                <p class="msg-center" [innerHTML]="chat.message"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-portion ri-row" fxFlex="100%" fxLayout="row">
+                                    <div fxFlex="5%" style="flex: 0.08">
+                                        <!-- <img src="assets/img/attachment.png" style="width: 46%; margin-top: 20px;" /> -->
+                                        <label for="upload">
+                                            <!-- <textarea></textarea> -->
+                                            <span class="glyphicon glyphicon-folder-open" aria-hidden="true">
+                                                <!-- (click)="NoAttachment()" --> <img 
+                                                    src="../../../assets/images/chat/attachment.png"
+                                                    style="width: 54%; margin-top: 20px; margin-left: 5px; cursor: pointer;" (click)="checkOnline()" />
+                                            </span>
+                                            <input type="file" id="upload" style="display:none" (change)="getFile($event, 'groupChat')">
+                                        </label>
+                                    </div>
+                                    <div fxFlex="90%" class="flex1">
+                                        <textarea id="groupinput" (keyup)="onSendMessageKeyup($event, messageToSend)"
+                                            placeholder="Type a Message" [(ngModel)]="messageToSend"
+                                            style="background-color: white; margin-top: 7px;"></textarea>
+                                    </div>
+                                    <div fxFlex="5%" style="margin-left: 10px;">
+                                        <img src="../../../assets/images/chat/right_arrow.png"
+                                            style="width: 86%; margin-top: 15px; cursor: pointer;"
+                                            (click)="onInsertMessageClickInGroup(messageToSend); messageToSend = ''" />
+                                            <!-- (click)="onInsertMessageClick(messageToSend); messageToSend = ''" /> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Group chat details end -->
+
+                            <!-- Group chat user details start -->
+                            <div class="section-right" style="margin-right: 20px;"
+                                *ngIf="selectedTab == 'Groups' && dataStorage.ongrpchatdetails == true && GroupUsersData == true && showjoiningroup==false">
+
+                                <div class="header" fxFlex="100%">
+                                    <div class="user ri-row" fxFlex="100%" fxLayout="row" style="align-items: center;">
+                                        <div style="min-width: 40px;">
+                                            <img src="../../../assets/images/Back-Arrow.png"
+                                                (click)="GroupUsersData=false"
+                                                style="height: 20px; width: 20px; cursor: pointer;">
+                                        </div>
+                                        <div class="right-avatar-section" style="flex: 0.1">
+                                            <img src="../../../assets/images/chat/group_icon_color.png"
+                                                style="height: 40px; width: 40px;">
+                                        </div>
+                                        <div fxFlex="75%" class="ri-col flex1" fxLayout="column">
+
+                                            <span style="font-size: 17px; font-weight: bold;"
+                                                *ngIf="SelectedGroupData != null">
+                                                {{SelectedGroupData.groupName | slice:0:20}}
+                                                {{SelectedGroupData.groupName.length > 20 ? '...': ''}}
+                                            </span>
+                                            <span
+                                                *ngIf="SelectedGroupData != null && SelectedGroupData.ownerName !='' && SelectedGroupData.ownerName != null">
+                                                By {{SelectedGroupData.ownerName | slice:0:20}}
+                                                {{SelectedGroupData.ownerName.length > 20 ? '...': ''}}
+                                            </span>
+                                            <span
+                                                *ngIf="SelectedGroupData != null && (SelectedGroupData.ownerName == '' || SelectedGroupData.ownerName == null)">
+                                                By Mentor
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="body" fxFlex.lg="100%" fxFlex.md="100%" fxFlex.sm="100%" fxFlex.xs="100%">
+                                    <div class="ri-row" style="margin-top: 10px; ">
+                                        <div class="flex1">
+                                            <input type="text" [formControl]="search" class="bb-1 my-input"
+                                                placeholder="Search Members">
+                                        </div>
+                                        <div style="padding: 0px 10px;">
+                                            <button class="btn form-control btn-default btn-gradient pt-0 pb-0"
+                                                (click)="getFilteredData()">Search</button>
+                                        </div>
+                                    </div>
+                                    <div class="ri-col">
+                                        <div class="ri-row" style="margin-top: 10px;">
+                                            <div><span>People</span>({{filteredGroupUserDetails.length}})</div>
+                                        </div>
+                                        <br>
+                                        <div class="ri-row" *ngFor="let user of filteredGroupUserDetails"
+                                            style="align-items: center; min-height: 50px; border-bottom: 1px solid #bfbfbf;">
+                                            <div class="avatar" (click)="ShowUserData(user)"
+                                                style="cursor: pointer; margin: 10px 10px 10px 0px; min-width: 35px;">
+                                                <span *ngIf="user.userName !=''">{{user.userName | avatarfilter}}</span>
+                                                <span *ngIf="user.userName =='' && user.userType == 1">JS</span>
+                                                <span *ngIf="user.userName =='' && user.userType == 2">IN</span>
+                                            </div>
+                                            <div class="ri-col"
+                                                *ngIf="user.userId != dataStorage.globalLoggedInUserData.userId">
+                                                <div>
+                                                    <span
+                                                        *ngIf="user.userName != ''"><strong>{{user.userName}}</strong></span>
+                                                    <span *ngIf="user.userName == ''"><strong>NA</strong></span>
+                                                </div>
+                                                <!-- <div style="font-size: 11px;">
+                                                    <span *ngIf="user.userType==1">Jobseeker</span>
+                                                    <span *ngIf="user.userType==2">Mentor</span>
+                                                </div> -->
+                                            </div>
+                                            <div class="ri-col"
+                                                *ngIf="user.userId == dataStorage.globalLoggedInUserData.userId">
+                                                <div>
+                                                    <span *ngIf="user.userName != ''"><strong>{{user.userName}}
+                                                            (You)</strong></span>
+                                                    <span *ngIf="user.userName == ''"><strong>NA (You)</strong></span>
+                                                </div>
+                                                <!-- <div style="font-size: 11px;">
+                                                    <span *ngIf="user.userType==1">Jobseeker</span>
+                                                    <span *ngIf="user.userType==2">Mentor</span>
+                                                </div> -->
+                                            </div>
+                                            <div *ngIf="user.userId != dataStorage.globalLoggedInUserData.userId"
+                                                style="text-align: center; width: 50px;">
+                                                <div><img style="width: 20px; height: 20px; cursor: pointer;"
+                                                        src="../../../assets/images/chat_new_icon.png"
+                                                        (click)="goToChat(user)"></div>
+                                            </div>
+                                        </div>
+                                        <div class="ri-row" style="align-items: center;">
+                                            <div>
+                                                <img src="../../../assets/images/chat/RI-Logo-Thick.png"
+                                                    style="height: 35px; width: 35px">
+                                            </div>
+                                            <div class="ri-col" style="padding-left: 10px;">
+                                                <div>
+                                                    <span><strong>Rock Interview</strong></span>
+                                                </div>
+                                                <div>
+                                                    <span style="font-size: 11px;">Admin Chat Support</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-portion ri-row" fxFlex="100%" fxLayout="row">
+                                    <button (click)="ShowRemoveUserAlert(SelectedGroupData)"
+                                        class="btn form-control btn-default btn-gradient pt-0 pb-0">Leave Group</button>
+                                </div>
+                            </div>
+                            <!-- Group chat user details end -->
+
+                            <!-- Newly Joining Group Starts here -->
+                            <div class="section-right" *ngIf="showjoiningroup==true">
+                                <div class="header" fxFlex="100%">
+                                    <div class="user ri-row" fxFlex="100%" fxLayout="row" style="align-items: center;">
+                                        <div class="right-avatar-section" style="flex: 0.1">
+                                            <img src="../../../assets/images/chat/group_icon_color.png"
+                                                style="height: 40px; width: 40px;">
+                                        </div>
+                                        <div fxFlex="75%" class="ri-col flex1" fxLayout="column"
+                                            style="cursor:pointer;">
+
+                                            <span style="font-size: 17px; font-weight: bold;"
+                                                *ngIf="SelectedGroupData != null">
+                                                {{SelectedGroupData.groupName | slice:0:20}}
+                                                {{SelectedGroupData.groupName.length > 20 ? '...': ''}}
+                                            </span>
+                                            <span
+                                                *ngIf="SelectedGroupData != null && SelectedGroupData.ownerName !='' && SelectedGroupData.ownerName != null">
+                                                By {{SelectedGroupData.ownerName | slice:0:20}}
+                                                {{SelectedGroupData.ownerName.length > 20 ? '...': ''}}
+                                            </span>
+                                            <span
+                                                *ngIf="SelectedGroupData != null && (SelectedGroupData.ownerName == '' || SelectedGroupData.ownerName == null)">
+                                                By Mentor
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="body" fxFlex.lg="100%" fxFlex.md="100%" fxFlex.sm="100%" fxFlex.xs="100%">
+                                    <div class="ri-col" style="min-height: 100%; justify-content: center;">
+                                        <div style="text-align: center; padding-bottom: 10px; font-size: 19px;">
+                                            <span>Join the group to interact with Mentors and other Jobseekers</span>
+                                        </div>
+                                        <div style="text-align: center;"><button
+                                                style="width: 100px; border: 2px solid #99226e; height: 40px; border-radius: 5px; font-weight: 500; font-size: 18px;"
+                                                (click)="joinGroupChat(SelectedGroupData)">Join</button></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Newly joining group ends here -->
+                        </div>
+                        <!-- Groups Tab Right hand section ends here -->
+
+                        <!-- Jobseekers Tab Right hand Section starts here -->
+                        <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-xs-12" id="section-right"
+                            *ngIf="selectedTab=='Members'">
+
+                            <div class="section-right" *ngIf="selectedTab=='Members' && Mentorchat==true">
+                                <div class="header" fxFlex="100%">
+                                    <div class="user ri-row" fxFlex="100%" fxLayout="row" style="align-items: center;">
+                                        <div class="avatar1" style="cursor: pointer; flex: 0.1">
+                                            <span
+                                                *ngIf="MentorData.destinationName != null && MentorData.destinationName !=''">{{MentorData.destinationName
+                                                | avatarfilter}}</span>
+                                            <span
+                                                *ngIf="MentorData.destinationName == null || MentorData.destinationName ==''">RI</span>
+                                            <!-- {{!!MentorData.destinationName.trim() ? (MentorData.destinationName | avatarfilter) : 'RI'}} -->
+                                        </div>
+                                        <div fxFlex="75%" class="ri-col flex1" fxLayout="column"
+                                            style="padding-left: 10px;">
+
+                                            <span style="font-size: 17px; font-weight: 500;"
+                                                *ngIf="!!MentorData.destinationName">
+                                                <!-- {{SelectedGroupData.groupName ? SelectedGroupData.groupName : 'NA'}} -->
+                                                {{MentorData.destinationName | slice:0:20}}
+                                                {{MentorData.destinationName.length > 20 ? '...': ''}}
+                                            </span>
+                                            <span style="font-size: 17px; font-weight: 500;"
+                                                *ngIf="!MentorData.destinationName">
+                                                Name: Not Available
+                                            </span>
+                                            <!-- <span *ngIf="MentorData.companyName != null && MentorData.companyName !=''">
+                                                By {{MentorData.companyName | slice:0:20}}
+                                                {{MentorData.companyName.length > 20 ? '...': ''}}
+                                            </span>
+                                            <span *ngIf="MentorData.companyName == null || MentorData.companyName ==''" style="font-size: 1rem;">
+                                                NA
+                                            </span> -->
+                                            <!-- <span class="desc" >{{!!selectedUserInfo.userRole ? selectedUserInfo.userRole : 'NA'}}</span> -->
+
+                                        </div>
+                                        <div fxFlex="20%" style="flex: 0.25">
+                                            <!-- <button *ngIf="!userblocked && Adminchat==false && Hidebutton==false"
+                                                [disabled]="senddisable" (click)="blockuser()"
+                                                id="btnBlockMember">block</button>
+                                            <button *ngIf="userblocked && Adminchat==false && Hidebutton==false"
+                                                (click)="unblockuser()" id="btnUnblockMember">unblock</button> -->
+                                            <button class="btn form-control btn-default btn-gradient pt-0 pb-0"
+                                                (click)="blockuser()" [disabled]="senddisable || membersblockdisable"
+                                                *ngIf="!userblocked && !Adminchat && !Hidebutton">block</button>
+                                            <button class="btn form-control btn-default btn-gradient pt-0 pb-0"
+                                                (click)="unblockuser()"
+                                                *ngIf="userblocked && !Adminchat && !Hidebutton">unblock</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="body" fxFlex.lg="100%" fxFlex.md="100%" fxFlex.sm="100%" fxFlex.xs="100%"
+                                    id="chatnewbody">
+
+                                    <!-- Invite status div starts here -->
+                                    <div class="ri-col" *ngIf="Acceprejreq==false && dataStorage.Adminchat==false "
+                                        style="min-height: 100%; background: #bfbfbf;justify-content:center; align-items: center;">
+                                        <div class="mycard2 ri-col"
+                                            style="width: 350px; height: 150px; line-height: 30px;">
+                                            <span>You have received a Chat request</span>
+                                            <span *ngIf="MentorData.destinationName">from
+                                                <b>{{MentorData.destinationName}}</b></span>
+                                            <span>Would you like to continue?</span>
+                                            <div class="ri-row" style="padding-top: 10px;">
+                                                <button style="margin-right: 10px;" (click)="NotAccepted()"
+                                                    class="btn form-control btn-default btn-gradient pt-0 pb-0">Reject</button>
+                                                <button (click)="Accepted()"
+                                                    class="btn form-control btn-default btn-gradient pt-0 pb-0">Accept</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Invite status div ends here -->
+
+                                    <!-- Mentors chat details starts here -->
+                                    <div
+                                        *ngIf="dataStorage.globalMentorJSChatConversations.length != 0 && Acceprejreq && !Adminchat">
+                                        <div *ngFor="let msg of dataStorage.globalMentorJSChatConversations">
+                                            <!-- Msg : {{msg.userId}} user id : {{userId}} -->
+                                           
+                                            <div style="display: block">
+                                                
+                                                <div *ngIf="msg.eventType == -1">
+                                                    <div style="display: flex; flex-direction: row;"
+                                                        *ngIf='msg.userId && msg.userId !=  dataStorage.globalLoggedInUserData.userId'>
+
+                                                        <div class="avatar" style="cursor: pointer;"
+                                                            (click)="ShowUserData(msg)">
+                                                            <span
+                                                                *ngIf="MentorData.destinationName != null && MentorData.destinationName !=''">{{MentorData.destinationName
+                                                                | avatarfilter}}</span>
+                                                            <span
+                                                                *ngIf="MentorData.destinationName == null || MentorData.destinationName ==''">RI</span>
+                                                        </div>
+
+                                                        <div class="msg-content-left" style="margin-top:-20px;">
+                                                            
+                                                            <div style="margin-left:0px; font-size:10px; margin-top:15px;" *ngIf="msg.eventType == -1"> {{msg.eventTime |
+                                                                date: 'dd-MMM-yyyy h:mm a'}}
+                                                            </div>
+                                                            <div class="ri-col" style="position: relative;">
+                                                                <p class="msg-left" (click)="onmessageclick(msg.message)" style="justify-content:flex-start!important; border-radius: 1px 10px 10px 10px;" [innerHTML]="msg.message" id="pMemberMessage" *ngIf="!msg.msgType || msg.msgType == 'text'"></p>
+                                                                <img [src]="msg.thumbnail" class="msg-left chat-img" (click)="onmessageclick(msg.message)" style="justify-content:flex-start!important;" id="imgMemberMessage" *ngIf="msg.msgType == 'image' || msg.msgType == 'video'" />
+                                                                <img src='assets/imgs/ri/white_play_button.png' class='play-img left-play-img' id='btnPlayVideo' (click)="onmessageclick(msg.message)" *ngIf="msg.msgType == 'video'" >
+
+                                                                <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-left" *ngIf="!!msg.msgType && msg.msgType == 'pdf'" (click)="onmessageclick(msg.message)">
+                                                                    <div class="row">
+                                                                        <div class="col-9">
+                                                                            <p style="margin-top:20px;" class="line-breaker" 
+                                                                            [ngClass]="{'notadmin': msg.userType != 'RE'}" 
+                                                                             id="pMemberMessage" >{{allChatPdfSplitSlice(msg.message)}}<span style="text-decoration: underline; color:black;">{{msgleftchatpdf}}</span></p>
+                                                                            
+                                                                        </div>
+                                                                        <div style="margin-left:219px; margin-top:-50px;" class="col-3">
+                                                                            <div style="background-color:white; margin-top:10px;
+                                                                            border:1px solid white;
+                                                                            border-radius:100px;
+                                                                            width:60px; text-align:center; height:60px;">
+                                                                            <img style="text-align:center; margin-top:5px;" src="assets/images/chat/ri_web_chat_pdf.png" class="pdfImage">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                    
+                                                                <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-left" *ngIf="!!msg.msgType && msg.msgType == 'doc'" (click)="onmessageclick(msg.message)">
+                                                                    <div class='row'>
+                                                                        <div class="col-9">
+                                                                            <p style="margin-top:20px; " class="line-breaker" 
+                                                                            [ngClass]="{'notadmin': msg.userType != 'RE'}" 
+                                                                             id="pMemberMessage" >{{allChatDocSplitSlice(msg.message)}}<span style="text-decoration: underline; color:black;">{{msgleftchatdoc}}</span></p>
+                                                                        </div>
+                                                                        <div style="margin-left:219px; margin-top:-50px;" class="col-3">
+                                                                            <div style="background-color:white; margin-top:10px;
+                                                                            border:1px solid white;
+                                                                            border-radius:100px;
+                                                                            width:60px; text-align:center; height:60px;">
+                                                                            <img style="margin-top:4px; margin-left:4.5px;"  src="assets/images/chat/ri_web_chat_doc.png" class="docImage">
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div><br>
+
+                                                    <div  *ngIf="msg.userId == '' || msg.userId == dataStorage.globalLoggedInUserData.userId  "
+                                                        class="msg-content-right">
+
+                                                        
+                                                            
+                                                            <div class="ri-col" style="position: relative;">
+                                                                <div style="margin-right:10px; font-size:10px; margin-top:-10px;" *ngIf="msg.eventType == -1"> {{msg.eventTime |
+                                                                    date: 'dd-MMM-yyyy h:mm a'}}
+                                                                </div>
+                                                            <p class="msg-right" (click)="onmessageclick(msg.message)" style="border-radius: 10px 1px 10px 10px;"  [innerHTML]="msg.message" id="pMemberMessage"  *ngIf="!msg.msgType || msg.msgType == 'text'"></p>
+                                                            <img [src]="msg.thumbnail" class="msg-right chat-img" (click)="onmessageclick(msg.message)" style="justify-content:flex-start!important;" id="imgMemberMessage" *ngIf="msg.msgType == 'image' || msg.msgType == 'video'" />
+                                                            <img src='assets/imgs/ri/white_play_button.png' class='play-img right-play-img' id='btnPlayVideo' (click)="onmessageclick(msg.message)" *ngIf="msg.msgType == 'video'" >
+
+                                                            <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-right" *ngIf="!!msg.msgType && msg.msgType == 'pdf'" (click)="onmessageclick(msg.message)">
+                                                                
+                                                                        <div style="width:60px; height:60px; border:1px solid white; 
+                                                                        border-radius:100px; background-color:white;">
+                                                                        <img style="margin-left:13px; margin-top:8px;" src="assets/images/chat/ri_web_chat_pdf.png" class="pdfImage">
+                                                                        </div>
+                                                                    
+                                                                        <p style="margin-top:0px; margin-left:15px;" class="line-breaker" [ngClass]="{'notadmin': msg.userType != 'RE'}"  id="pMemberMessage" >
+                                                                            {{allChatPdfSplitSlice(msg.message)}}<span style="text-decoration: underline; color:black;">{{msgleftchatpdf}}</span>
+                                                                        </p>
+                                                                   
+                                                            </div>
+                
+                                                            <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-right" *ngIf="!!msg.msgType && msg.msgType == 'doc'" (click)="onmessageclick(msg.message)">
+                                                                
+                                                                        <div style="width:60px; height:60px; border:1px solid white; 
+                                                                        border-radius:100px; background-color:white;">
+                                                                        <img style="margin-left:13px; margin-top:8px;" src="assets/images/chat/ri_web_chat_doc.png" class="docImage">
+                                                                        </div>
+                                                                    
+                                                                        <p style="margin-top:0px; margin-left:15px;" class="line-breaker" [ngClass]="{'notadmin': msg.userType != 'RE'}" id="pMemberMessage" >
+                                                                            {{allChatDocSplitSlice(msg.message)}}<span style="text-decoration: underline; color:black;">{{msgleftchatdoc}}</span>
+                                                                        </p>
+                                                                   
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+
+                                                </div>
+                                                <div *ngIf="msg.eventType > -1"
+                                                    style="text-align: center; padding: 5px;">
+                                                    <p class="msg-center" >{{blockunblockmembers(msg.message,msg.userId)}}{{blockunblockmemberscenter}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Mentors chat details ends here -->
+                                </div>
+
+                                <div class="text-portion ri-row" fxFlex="100%" fxLayout="row"
+                                    [ngClass]="{'disablecolor':footershadeout}" id="footer-tag">
+                                    <div fxFlex="5%" style="flex: 0.08">
+                                        <!-- <img src="assets/img/attachment.png" style="width: 46%; margin-top: 20px;" /> -->
+                                        <label for="upload" [ngStyle]="{ 'pointer-events' : senddisable ? 'none' : 'auto'}">
+                                            <!-- <textarea></textarea> -->
+                                            <span class="glyphicon glyphicon-folder-open" aria-hidden="true" [disabled]="senddisable">
+                                                <!-- (click)="NoAttachment()" --> <img 
+                                                    src="../../../assets/images/chat/attachment.png" 
+                                                    style="width: 54%; margin-top: 20px; margin-left: 5px; cursor: pointer;" (click)="checkOnline()" />
+                                            </span>
+                                            <input type="file" id="upload" style="display:none" (change)="getFile($event, 'userChat')">
+                                        </label>
+                                    </div>
+                                    <div fxFlex="90%" class="flex1">
+                                        <textarea id="memberinput"
+                                            (keyup)="onSendMessageKeyupforMentors($event, editorMsg)"
+                                            placeholder="Type a Message" [(ngModel)]="editorMsg"
+                                            [formControl]="msgtyped"
+                                            style="background-color: white; margin-top: 7px;"></textarea>
+                                    </div>
+                                    <div fxFlex="5%" style="margin-left: 10px;">
+                                        <img src="../../../assets/images/chat/right_arrow.png" [disabled]="senddisable"
+                                            style="width: 86%; margin-top: 15px; cursor: pointer;"
+                                            (click)="SendMessageFromUser(editorMsg)" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- Jobseekers Tab Right hand Section ends here -->
+
+
+                        <!-- Admin and Employers right hand section starts here -->
+                        <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-xs-12" id="section-right"
+                            *ngIf="selectedTab=='Employers'">
+                            <div class="section-right" *ngIf="selectedTab=='Employers' && Employerschat==true">
+                                <div class="header" fxFlex="100%">
+                                    <div class="user ri-row" fxFlex="100%" fxLayout="row" style="align-items: center;">
+                                        <div class="avatar1" style="cursor: pointer; flex: 0.1">
+                                            <span>{{!!usernameforemployers ? (usernameforemployers | avatarfilter) :
+                                                'RI'}}</span>
+                                        </div>
+                                        <div fxFlex="75%" class="ri-col flex1" fxLayout="column"
+                                            style="padding-left: 10px; ">
+
+                                            <span style="font-size: 17px; font-weight: bold;">
+                                                <!-- {{SelectedGroupData.groupName ? SelectedGroupData.groupName : 'NA'}} -->
+                                                {{usernameforemployers | slice:0:20}}
+                                                {{usernameforemployers.length > 20 ? '...': ''}}
+                                            </span>
+                                            <span *ngIf="compnameforemployers != null && compnameforemployers !=''">
+                                                {{compnameforemployers | slice:0:20}}
+                                                {{compnameforemployers.length > 20 ? '...': ''}}
+                                            </span>
+                                            <span *ngIf="compnameforemployers == null || compnameforemployers ==''">
+                                                NA
+                                            </span>
+                                            <!-- <span class="desc" >{{!!selectedUserInfo.userRole ? selectedUserInfo.userRole : 'NA'}}</span> -->
+
+                                        </div>
+                                        <div fxFlex="20%" style="flex: 0.25" *ngIf="dataStorage.Adminchat==false">
+                                            <!-- <button *ngIf="!userblocked && Adminchat==false && Hidebutton==false"
+                                                [disabled]="senddisable" (click)="blockuser()"
+                                                id="btnBlockMember">block</button>
+                                            <button *ngIf="userblocked && Adminchat==false && Hidebutton==false"
+                                                (click)="unblockuser()" id="btnUnblockMember">unblock</button> -->
+                                            <button class="btn form-control btn-default btn-gradient pt-0 pb-0"
+                                                (click)="blockuser()" [disabled]="senddisable"
+                                                *ngIf="!userblocked && !Adminchat && !Hidebutton">block</button>
+                                            <button class="btn form-control btn-default btn-gradient pt-0 pb-0"
+                                                (click)="unblockuser()"
+                                                *ngIf="userblocked && !Adminchat && !Hidebutton">unblock</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="body" fxFlex.lg="100%" fxFlex.md="100%" fxFlex.sm="100%" fxFlex.xs="100%"
+                                    id="chatnewbody">
+
+                                    <!-- Employers Invite update -->
+                                    <div class="ri-col" *ngIf="Acceprejreq==false && dataStorage.Adminchat==false "
+                                        style="min-height: 100%; background: #bfbfbf;justify-content:center; align-items: center;">
+                                        <div class="mycard2 ri-col"
+                                            style="width: 350px; height: 190px; line-height: 30px;">
+                                            <span>You have received a Chat request from</span>
+                                            <span *ngIf="usernameforemployers"> Employer/Recruiter
+                                                <b>{{usernameforemployers}}</b></span>
+                                            <span>{{compnameforemployers}}</span>
+                                            <span>Would you like to continue?</span>
+                                            <div class="ri-row" style="padding-top: 10px;">
+                                                <button style="margin-right: 10px;" (click)="NotAccepted()"
+                                                    class="btn form-control btn-default btn-gradient pt-0 pb-0">Reject</button>
+                                                <button (click)="Accepted()"
+                                                    class="btn form-control btn-default btn-gradient pt-0 pb-0">Accept</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Employers Invite update ends here -->
+
+                                    <!-- Employers chat details starts here -->
+                                    <div
+                                        *ngIf="Acceprejreq==true && dataStorage.Adminchat==false && dataStorage.globalchatdetailsconversation.length != 0">
+                                        <div *ngFor="let msg of dataStorage.globalchatdetailsconversation">
+                                            <!-- Msg : {{msg.userId}} user id : {{userId}} -->
+                                            <div style="display: block">
+                                                <!--div class="msg-time" *ngIf="msg.eventType == -1"> {{msg.eventTime |
+                                                    date: 'dd-MMM-yyyy h:mm a'}}
+                                                </div-->
+                                                <div *ngIf="msg.eventType == -1">
+                                                    <div style="display: flex; flex-direction: row;"
+                                                        *ngIf="msg.userType == 'RE'">
+
+                                                        <div class="avatar" style="cursor: pointer;"
+                                                            (click)="GetEmployerData(msg, 'right')">
+                                                            <span
+                                                                *ngIf="usernameforemployers != null && usernameforemployerse !=''">{{usernameforemployers
+                                                                | avatarfilter}}</span>
+                                                            <span
+                                                                *ngIf="usernameforemployers == null || usernameforemployers ==''">NA</span>
+                                                        </div>
+
+                                                        <div style="margin-top:-15px;" class="msg-content-left">
+                                                            <!-- <span class="msg-left" (click)="onmessageclick(msg.message)"
+                                                                [innerHTML]="msg.message"
+                                                                style="justify-content:flex-start!important; max-width: 300px; background: white;">
+                                                            </span> -->
+                                                            <div style="font-size:10px;" *ngIf="msg.eventType == -1"> {{msg.eventTime |
+                                                                date: 'dd-MMM-yyyy h:mm a'}}
+                                                            </div>
+                                                            <div class="ri-col" style="position: relative;">
+                                                            <p class="msg-left" (click)="onmessageclick(msg.message)" style="justify-content:flex-start!important; border-radius: 1px 10px 10px 10px;" [innerHTML]="msg.message" id="pMemberMessage" *ngIf="!msg.msgType || msg.msgType == 'text'"></p>
+                                                            <img [src]="msg.thumbnail" class="msg-left chat-img" (click)="onmessageclick(msg.message)" style="justify-content:flex-start!important;" id="imgMemberMessage" *ngIf="msg.msgType == 'image' || msg.msgType == 'video'" />
+                                                            <img src='assets/imgs/ri/white_play_button.png' class='play-img left-play-img' id='btnPlayVideo' (click)="onmessageclick(msg.message)" *ngIf="msg.msgType == 'video'" >
+
+                                                            <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-left" *ngIf="!!msg.msgType && msg.msgType == 'pdf'" (click)="onmessageclick(msg.message)">
+                                                                <div class="row">
+                                                                    <div class="col-9">
+                                                                        <p style="margin-top:20px;" class="line-breaker" 
+                                                                        [ngClass]="{'notadmin': msg.userType != 'RE'}" 
+                                                                         id="pMemberMessage" >{{allChatPdfSplitSlice(msg.message)}}<span style="text-decoration: underline; color:black;">{{msgleftchatpdf}}</span></p>
+                                                                        
+                                                                    </div>
+                                                                    <div style="margin-left:219px; margin-top:-50px;" class="col-3">
+                                                                        <div style="background-color:white; margin-top:10px;
+                                                                        border:1px solid white;
+                                                                        border-radius:100px;
+                                                                        width:60px; text-align:center; height:60px;">
+                                                                        <img src="assets/images/chat/ri_web_chat_pdf.png" class="pdfImage">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                
+                                                            <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-left" *ngIf="!!msg.msgType && msg.msgType == 'doc'" (click)="onmessageclick(msg.message)">
+                                                                <div class='row'>
+                                                                    <div class="col-9">
+                                                                        <p style="margin-top:20px; " class="line-breaker" 
+                                                                        [ngClass]="{'notadmin': msg.userType != 'RE'}" 
+                                                                         id="pMemberMessage" >{{allChatDocSplitSlice(msg.message)}}<span style="text-decoration: underline; color:black;">{{msgleftchatdoc}}</span></p>
+                                                                    </div>
+                                                                    <div style="margin-left:219px; margin-top:-50px;" class="col-3">
+                                                                        <div style="background-color:white; margin-top:10px;
+                                                                        border:1px solid white;
+                                                                        border-radius:100px;
+                                                                        width:60px; text-align:center; height:60px;">
+                                                                        <img style="margin-top:4px; margin-left:4.5px;"  src="assets/images/chat/ri_web_chat_doc.png" class="docImage">
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        </div>
+                                                    </div><br><br>
+
+                                                    <div *ngIf="msg.userType != 'RE'"
+                                                        class="msg-content-right" style="margin-top:10px;">
+
+                                                        <div style="font-size:10px; margin-right:-20px; margin-top:-10px;" *ngIf="msg.eventType == -1"> {{msg.eventTime |
+                                                            date: 'dd-MMM-yyyy h:mm a'}}
+                                                        </div>
+                                                            <div class="ri-col" style="position: relative;">
+                                                            <p class="msg-right" (click)="onmessageclick(msg.message)" style="border-radius: 10px 1px 10px 10px;"  [innerHTML]="msg.message" id="pMemberMessage"  *ngIf="!msg.msgType || msg.msgType == 'text'"></p>
+                                                            <img [src]="msg.thumbnail" class="msg-right chat-img" (click)="onmessageclick(msg.message)" style="justify-content:flex-start!important;" id="imgMemberMessage" *ngIf="msg.msgType == 'image' || msg.msgType == 'video'" />
+                                                            <img src='assets/imgs/ri/white_play_button.png' class='play-img right-play-img' id='btnPlayVideo' (click)="onmessageclick(msg.message)" *ngIf="msg.msgType == 'video'" >
+
+                                                            <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-right" *ngIf="!!msg.msgType && msg.msgType == 'pdf'" (click)="onmessageclick(msg.message)">
+                                                                <div class="row">
+                                                                    <div class="col-4">
+                                                                        <img src="assets/images/chat/download_report.png" class="pdfImage">
+                                                                    </div>
+                                                                    <div class="col-11">
+                                                                        <p style="margin-top:-40px; margin-left:35px;" class="line-breaker" [ngClass]="{'notadmin': msg.userType != 'RE'}" [innerHTML]="msg.message" id="pMemberMessage" ></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                
+                                                            <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-right" *ngIf="!!msg.msgType && msg.msgType == 'doc'" (click)="onmessageclick(msg.message)">
+                                                                <div class="row">
+                                                                    <div class="col-4">
+                                                                        <img src="assets/images/chat/download_doc.png" class="docImage">
+                                                                    </div>
+                                                                    <div class="col-11">
+                                                                        <p style="margin-top:-35px; margin-left:35px;" class="line-breaker" [ngClass]="{'notadmin': msg.userType != 'RE'}" [innerHTML]="msg.message" id="pMemberMessage" ></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                    </div>
+
+                                                </div>
+                                                <div *ngIf="msg.eventType > -1"
+                                                    style="text-align: center; padding: 5px;">
+                                                    <p class="msg-center" style="margin-bottom:10px;">{{ blockunblockemployee(msg.message,msg.userId)}}{{blockunblockemployeecenter}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Employers chat details ends here -->
+
+                                    <!-- Admin chat details starts here -->
+                                    <div
+                                        *ngIf="dataStorage.globalchatdetailsconversation.length != 0 && Acceprejreq==true && dataStorage.Adminchat==true">
+                                        <div *ngFor="let msg of dataStorage.globalchatdetailsconversation">
+                                            <!-- Msg : {{msg.userId}} user id : {{userId}} -->
+                                            <div style="display: block">
+                                                <div class="msg-time" *ngIf="msg.eventType == -1"> {{msg.eventTime |
+                                                    date: 'dd-MMM-yyyy h:mm a'}}
+                                                </div>
+                                                <div *ngIf="msg.eventType == -1">
+                                                    <div style="display: flex; flex-direction: row;"
+                                                        *ngIf='msg.userType == "RIADMIN"'>
+
+                                                        <div class="avatar" style="cursor: pointer;">
+                                                            <span
+                                                                *ngIf="usernameforemployers != null && usernameforemployerse !=''">{{usernameforemployers
+                                                                | avatarfilter}}</span>
+                                                            <span
+                                                                *ngIf="usernameforemployers == null || usernameforemployers ==''">NA</span>
+                                                        </div>
+
+                                                        <div class="msg-content-left">
+                                                            <!-- <span class="msg-left" (click)="onmessageclick(msg.message)"
+                                                                [innerHTML]="msg.message"
+                                                                style="justify-content:flex-start!important; max-width: 300px; background: white;">
+                                                            </span> -->
+                                                            <!--div style="font-size:10px;" *ngIf="msg.eventType == -1"> {{msg.eventTime |
+                                                                date: 'dd-MMM-yyyy h:mm a'}}
+                                                            </div-->
+                                                            <div class="ri-col" style="position: relative;">
+                                                            <p class="msg-left" (click)="onmessageclick(msg.message)" style="justify-content:flex-start!important; border-radius: 1px 10px 10px 10px;" [innerHTML]="msg.message" id="pMemberMessage" *ngIf="!msg.msgType || msg.msgType == 'text'"></p>
+                                                        <img [src]="msg.thumbnail" class="msg-left chat-img" (click)="onmessageclick(msg.message)" style="justify-content:flex-start!important;" id="imgMemberMessage" *ngIf="msg.msgType == 'image' || msg.msgType == 'video'" />
+                                                        <img src='assets/imgs/ri/white_play_button.png' class='play-img left-play-img' id='btnPlayVideo' (click)="onmessageclick(msg.message)" *ngIf="msg.msgType == 'video'">
+
+                                                        <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-left" *ngIf="!!msg.msgType && msg.msgType == 'pdf'" (click)="onmessageclick(msg.message)">
+                                                            <div class="row">
+                                                                <div class="col-9">
+                                                                    <p style="margin-top:20px;" class="line-breaker" 
+                                                                    [ngClass]="{'notadmin': msg.userType != 'RE'}" 
+                                                                     id="pMemberMessage" >{{allChatPdfSplitSlice(msg.message)}}<span style="text-decoration: underline; color:black;">{{msgleftchatpdf}}</span></p>
+                                                                    
+                                                                </div>
+                                                                <div style="margin-left:219px; margin-top:-50px;" class="col-3">
+                                                                    <div style="background-color:white; margin-top:10px;
+                                                                    border:1px solid white;
+                                                                    border-radius:100px;
+                                                                    width:60px; text-align:center; height:60px;">
+                                                                    <img src="assets/images/chat/ri_web_chat_pdf.png" class="pdfImage">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+            
+                                                        <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-left" 
+                                                        *ngIf="!!msg.msgType && msg.msgType == 'doc'" (click)="onmessageclick(msg.message)">
+                                                        <div class='row'>
+                                                            <div class="col-9">
+                                                                <p style="margin-top:20px; " class="line-breaker" 
+                                                                [ngClass]="{'notadmin': msg.userType != 'RE'}" 
+                                                                 id="pMemberMessage" >{{allChatDocSplitSlice(msg.message)}}<span style="text-decoration: underline; color:black;">{{msgleftchatdoc}}</span></p>
+                                                            </div>
+                                                            <div style="margin-left:219px; margin-top:-50px;" class="col-3">
+                                                                <div style="background-color:white; margin-top:10px;
+                                                                border:1px solid white;
+                                                                border-radius:100px;
+                                                                width:60px; text-align:center; height:60px;">
+                                                                <img style="margin-top:4px; margin-left:4.5px;"  src="assets/images/chat/ri_web_chat_doc.png" class="docImage">
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div *ngIf="msg.userType != 'RIADMIN'"
+                                                        class="msg-content-right" style="margin-top:15px;">
+                                                        <!--div style="font-size:10px; margin-right:-10px; margin-top:-10px;" class="msg-time" *ngIf="msg.eventType == -1"> {{msg.eventTime |
+                                                            date: 'dd-MMM-yyyy h:mm a'}}
+                                                        </div-->
+                                                            <div class="ri-col" style="position: relative;">
+                                                                
+                                                            <p class="msg-right" (click)="onmessageclick(msg.message)" style="border-radius: 10px 1px 10px 10px;" [innerHTML]="msg.message" id="pMemberMessage"  *ngIf="!msg.msgType || msg.msgType == 'text'"></p>
+                                                            <img [src]="msg.thumbnail" class="msg-right chat-img" (click)="onmessageclick(msg.message)" style="justify-content:flex-start!important;" id="imgMemberMessage" *ngIf="msg.msgType == 'image' || msg.msgType == 'video'" />
+                                                            <img src='assets/imgs/ri/white_play_button.png' class='play-img right-play-img' id='btnPlayVideo' (click)="onmessageclick(msg.message)" *ngIf="msg.msgType == 'video'" >
+
+                                                            <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-right" *ngIf="!!msg.msgType && msg.msgType == 'pdf'" (click)="onmessageclick(msg.message)">
+                                                                <div class="row">
+                                                                    <div class="col-3">
+                                                                        <div style=" background-color:white; margin-top:10px;
+                                                                        border:1px solid white;
+                                                                        border-radius:100px;
+                                                                        width:60px; text-align:center; height:60px;">
+                                                                            <img style="margin-top:10px; margin-left:4.5px;" src="assets/images/chat/download_report.png" class="pdfImage">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-9">
+                                                                        <p style="margin-top:20px; margin-left:15px;" class="line-breaker" [ngClass]="{'notadmin': msg.userType != 'RE'}" 
+                                                                         id="pMemberMessage" >
+                                                                        {{allChatPdfSplitSlice(msg.message)}}<span style="text-decoration: underline; color: black;">{{msgleftchatpdf}}</span>
+                                                                    </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                
+                                                            <div style="width:300px; border:1px solid #e6e7e8; border-radius:8px;" class="pdfClass line-breaker msg-right" *ngIf="!!msg.msgType && msg.msgType == 'doc'" (click)="onmessageclick(msg.message)">
+                                                                <div class="row">
+                                                                    <div class="col-3">
+                                                                        <div style=" background-color:white; margin-top:10px;
+                                                                        border:1px solid white;
+                                                                        border-radius:100px;
+                                                                        width:60px; text-align:center; height:60px;">
+                                                                            <img style="margin-top:10px; margin-left:4.5px;" src="assets/images/chat/download_doc.png" class="docImage">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-9">
+                                                                        <p style="margin-top:20px; margin-left:15px;" class="line-breaker" [ngClass]="{'notadmin': msg.userType != 'RE'}"  id="pMemberMessage" >
+                                                                            {{allChatDocSplitSlice(msg.message)}}<span style="text-decoration: underline; color:black;">{{msgleftchatdoc}}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        <br>
+                                                    </div>
+
+                                                </div>
+                                                <div *ngIf="msg.eventType > -1"
+                                                    style="text-align: center; padding: 5px;">
+                                                    <p class="msg-center" [innerHTML]="msg.message"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Admin chat details ends here -->
+                                </div>
+
+                                <div class="text-portion ri-row" fxFlex="100%" fxLayout="row"
+                                    [ngClass]="{'disablecolor':footershadeout}" id="footer-tag">
+                                    <div fxFlex="5%" style="flex: 0.08">
+                                        <!-- <img src="assets/img/attachment.png" style="width: 46%; margin-top: 20px;" /> -->
+                                        <label for="upload" *ngIf="!dataStorage.Adminchat">
+                                            <!-- <textarea></textarea> -->
+                                            <span class="glyphicon glyphicon-folder-open" aria-hidden="true">
+                                                <img (click)="NoAttachment()"
+                                                    src="../../../assets/images/chat/attachment.png"
+                                                    style="width: 54%; margin-top: 20px; margin-left: 5px; cursor: pointer;" /> <!-- (click)="checkOnline()" -->
+                                            </span>
+                                            <!-- <input type="file" id="upload" style="display:none" (change)="getFile($event, 'adminEmployerChat')"> -->
+                                        </label>
+                                        <label for="upload" *ngIf="!!dataStorage.Adminchat">
+                                            <!-- <textarea></textarea> -->
+                                            <span class="glyphicon glyphicon-folder-open" aria-hidden="true">
+                                                <!-- (click)="NoAttachment()" --> <img 
+                                                    src="../../../assets/images/chat/attachment.png"
+                                                    style="width: 54%; margin-top: 20px; margin-left: 5px; cursor: pointer;" (click)="checkOnline()" />
+                                            </span>
+                                            <input type="file" id="upload" style="display:none" (change)="getFile($event, 'userChat')">
+                                        </label>
+                                    </div>
+                                    <div fxFlex="90%" class="flex1">
+                                        <textarea id="employerinput"
+                                            (keyup)="onSendMessageKeyupforMentors($event, editorMsg)"
+                                            placeholder="Type a Message" [(ngModel)]="editorMsg"
+                                            [formControl]="msgtyped"
+                                            style="background-color: white; margin-top: 7px;"></textarea>
+                                    </div>
+                                    <div fxFlex="5%" style="margin-left: 10px;">
+                                        <img src="../../../assets/images/chat/right_arrow.png" [disabled]="senddisable"
+                                            style="width: 86%; margin-top: 15px; cursor: pointer;"
+                                            (click)="SendMessageFromUser(editorMsg)" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- Admin and Employers right hand section ends here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</app-authorize-layout>

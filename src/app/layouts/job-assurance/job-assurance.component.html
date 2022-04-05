@@ -1,0 +1,120 @@
+<app-modern-nav></app-modern-nav>
+<div style="height: 100px;"></div>
+<app-breadcrumb></app-breadcrumb>
+<!-- <div> -->
+    <img src="../../../assets/images/rockinterview/JAP-img.png" style="height: 150px; width: 150px; position: absolute; right: 5vh; top: 12vh;">
+<!-- </div> -->
+<!-- <div class="ri-row">
+    <div class="flex1">
+        <app-breadcrumb></app-breadcrumb>
+    </div>
+    <div>
+        <img src="../../../assets/images/rockinterview/JAP-img.png" style="height: 150px; width: 220px;">
+    </div>
+</div> -->
+<div class="mt-5 mb-5">
+    <h2 class="text-center" style="margin: 0px auto;color: #000;">How it Works?</h2>
+</div>
+<div class="row col-md-12 jap-details">
+
+    <div class="col-md-3 tile">
+        <div class="header">
+            <img src="assets/images/rockinterview/jap-1.png" />
+        </div>
+        <div class="content">
+            <h3>Assessment</h3>
+            <p>Take Free Assessment.
+                Get detailed reports.
+                Understand Yourself</p>
+        </div>
+        <img class="img-right-arrow web-display" src="assets/images/rockinterview/jap-right-arrow.png" />
+        <img class="img-down-arrow mobile-display" src="assets/images/rockinterview/jap-down-arrow.png" />
+    </div>
+    <div class="col-md-3 tile">
+        <div class="header">
+            <img src="assets/images/rockinterview/jap-2.png" />
+        </div>
+        <div class="content">
+            <h3>1 : 1 Training</h3>
+            <p>Get Personalised Training Course
+
+            </p>
+        </div>
+        <img class="img-right-arrow web-display" src="assets/images/rockinterview/jap-right-arrow.png" />
+        <img class="img-down-arrow mobile-display" src="assets/images/rockinterview/jap-down-arrow.png" />
+    </div>
+    <div class="col-md-3 tile">
+        <div class="header">
+            <img src="assets/images/rockinterview/jap-3.png" />
+        </div>
+        <div class="content">
+            <h3>Interviews</h3>
+            <p>Take Interviews(Video) from <br />
+                RockInterview Panels
+            </p>
+        </div>
+        <img class="img-right-arrow web-display" src="assets/images/rockinterview/jap-right-arrow.png" />
+        <img class="img-down-arrow mobile-display" src="assets/images/rockinterview/jap-down-arrow.png" />
+    </div>
+    <div class="col-md-3 tile">
+        <div class="header">
+            <img style="width: 80%" src="assets/images/rockinterview/jap-4.png" />
+        </div>
+        <div class="content">
+            <h3>Get Placed</h3>
+            <p>Get In-Hand offers
+                from companies
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center">
+    <button class="btn btn-default btn-gradient" (click)="onLeaveMessageClick()">Get in Touch</button>
+</div>
+
+<div class="faq-section">
+    <div class="container">
+        <div style="margin: 20px 0px;">
+            <div id="div-faq">
+                <div class="faqType">
+                    <h4>FAQ</h4>
+                </div>
+                <div style="display: block !important; flex-direction: column;">
+                    <div *ngFor="let t of faqs; let i = index;" fxFlex="100%" style="padding:10px 0px; display: block !important; flex-direction: column !important; 
+                        background-color: #eeeeee; margin: 0px;  border: 1px solid #cccccc;">
+                        <div fxFlex="100%"
+                            style="cursor: pointer;font-size:17px; display: flex; flex-direction: row; margin-top: 5px;">
+                            <div style="display: flex; width: 100%;">
+                                <div style="width: 95%;"
+                                    (click)="getfaqDescription(t.faqId); t.isChecked = !t.isChecked">
+                                    <span style="font-weight: 500;margin-left:15px; color: #444444;">{{t.faqTitle}}
+                                    </span>
+                                </div>
+                                <div style="float: right; width: 5%;">
+                                    <span *ngIf="!t.isChecked" (click)="getfaqDescription(t.faqId); t.isChecked = true"
+                                        style="color: #444444; margin-left: 10px;">+</span>
+                                    <span *ngIf="t.isChecked" (click)="t.isChecked = false"
+                                        style="color: #444444; margin-left: 10px;">-</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div fxFlex='100%' *ngIf=" t.isChecked"
+                            style="margin-top: 15px; background-color: #ffffff; display: block !important; flex-direction: column !important; margin-bottom: -10px;">
+                            <div fxFlex="100%" style="color: #444444 !important; font-size: 15px; padding: 10px;"
+                                [innerHTML]="t.answer">
+                                <!-- {{t.answer}} -->
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-detailed-footer></app-detailed-footer>

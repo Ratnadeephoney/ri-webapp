@@ -1,0 +1,41 @@
+<div #modal class="login-modal" data-target="#modal" class="intfbPopup" >
+    <div class="modal-header p-2">
+        <h4 class="text-white" *ngIf="data.userType == 2">Jobseeker Feedback</h4>
+        <h4 class="text-white" *ngIf="data.userType == 1">Your Feedback</h4>
+        <button aria-label="Close" class="close text-white sm-close-right" data-dismiss="modal" (click)="onModalDismiss(false)"
+         type="button" style="right: -150px; outline: none;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        
+    </div>
+    <div class="modal-body">
+        <div *ngIf="feedbackGiven == 2 || data.userType == 1">
+            <div class="col-lg-12">
+                <form [formGroup]="jsFeedbackForm" readonly>
+                    <div class="row col-md-12 p-0">
+                        <div class="row col-md-12 p-0">
+                            <label class="col-md-3">Ratings :</label>
+                            <ngb-rating class="star-rating" formControlName="ratings" max="5" [readonly]="feedbackGiven == 2 || data.userType == 2" [(rate)]="jsFeedback.ratings" ></ngb-rating>
+                        </div>
+                    </div>
+                    <div class="row col-md-12 pl-0 mt-4 mb-4">
+                        <div class="row col-md-12">
+                            <label class="col-md-3 pl-0">Feedback: </label>
+                            <!-- <p class="col-md-8 feedback">{{jobseekerFeedback.feedback}} </p> -->
+                            <textarea class="col-md-9 feedback" formControlName="feedback" [readonly]="feedbackGiven == 2 || data.userType == 2"></textarea>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="col-md-12 center-content row pl-0 mt-4" *ngIf="!(feedbackGiven == 2 || data.userType == 2)">
+                <button class="btn btn-gradient btn-default" [disabled]="feedbackGiven == 2 || data.userType == 2" (click)="postFeedback()" >Submit Feedback</button>
+            </div>
+        </div>
+        <div *ngIf="feedbackGiven != 2 && data.userType != 1" class="text-center">
+            <img src="assets/images/rockinterview/no-feedback.png"/>
+            <h6 class="p-4">Yet to receive feedback from the jobseeker</h6>
+        </div>
+
+    </div>
+</div>

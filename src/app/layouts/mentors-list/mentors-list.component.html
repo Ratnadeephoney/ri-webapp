@@ -1,0 +1,151 @@
+<app-authorize-layout>
+    <section class="register-page section-b-space">
+        <div class="container">
+            <!-- <app-breadcrumb></app-breadcrumb> -->
+            <!-- <div class="row col-md-12" style="padding-right: 0px !important;">
+                <div class="col-md-3 text-center-sm" style="margin-bottom: 5px">
+                    <strong>{{paginationProps.totalItems}}</strong> results found
+                </div>
+                <div class="col-md-6">
+                    <pagination-controls (pageChange)="onPageChanges($event);">
+                    </pagination-controls>
+                </div>
+                <div class="col-md-3 m-b-30">
+                    Mentors per page
+                    <select name="country" [(ngModel)]="selectedPage" (change)="onPerPageChange($event)">
+                        <option [value]="obj" *ngFor="let obj of perPageItems">{{obj}}</option>
+                    </select>
+                </div>
+
+
+            </div> -->
+            <form [formGroup]="searchForm">
+                <div class="ri-col">
+                    <div>
+                        <h3 style="color: black; text-transform: none;">Mentors</h3>
+                    </div>
+
+                    <div class="ri-row" style="width: 50%; margin-bottom: 20px; padding-left: 10px; border: 1px solid #ddd; border-radius: 30px;">
+                        <div>
+                            <img style="margin-top: 12px;" src="assets/images/icon/search.png" />
+                        </div>
+                        <div class="search-box position-relative flex1" style="padding-left: 5px;">
+                            <ng-select *ngIf="dataStorage.globalSkillsList" [selectOnTab]="true"
+                                formControlName="skills" placeholder="Skills/Technology"
+                                [items]="dataStorage.globalSkillsList" bindLabel="technologyDescription"
+                                bindValue="technologyId" [multiple]="true" id="txtSkills" class="left">
+                                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                    <div class="ng-value" *ngFor="let item of items | slice:0:3">
+                                        <span class="ng-value-label" title="{{item.technologyDescription}}">
+                                            {{item.technologyDescription}}
+                                            <!-- {{item.technologyDescription | slice:0:4}} -->
+                                            <!-- <span style="margin-left:-3px"
+                                                            title="{{item.technologyDescription}}"
+                                                            *ngIf="item.technologyDescription.length > 4">...</span> -->
+                                        </span>
+
+                                        <span class="ng-value-icon right" (click)="clear(item)"
+                                            aria-hidden="true">×</span>
+                                    </div>
+                                    <div class="ng-value" *ngIf="items.length > 3">
+                                        <span class="ng-value-label">{{items.length - 3}}
+                                            more...</span>
+                                    </div>
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="ri-row" style="flex-wrap: wrap;" *ngIf="MentorsList.length > 0 && Mentorsdata == true">
+                        <mat-card *ngFor="let mentor of MentorsList" class="ri-col"
+                            style="box-shadow: 0px 2px 5px 0px #857f7f; padding: 10px; min-width: 350px; max-width: 350px; margin: 0px 20px 20px 0px;">
+                            <!-- row1 -->
+                            <div class="ri-row"
+                                style="border-bottom: 1px solid #dedede; min-height: 40px; align-items: center;">
+                                <div *ngIf="mentor.name !=''" class="flex1"
+                                    style="font-size: 16px; font-weight: bold; padding-left: 5px;" title="{{mentor.name}}">{{mentor.name |
+                                    slice:0:15}} {{mentor.name.length > 15? '...': ''}}</div>
+                                <div *ngIf="mentor.name ==''" class="flex1"
+                                    style="font-size: 16px; font-weight: bold; padding-left: 5px;">Not Available</div>
+                                <div class="ri-row" style="flex: 0.8; justify-content: center;">
+                                    <ngb-rating class="star-rating" max="5" [readonly]="true" [(rate)]="mentor.ratings">
+                                    </ngb-rating>
+                                    <!-- Stars -->
+                                </div>
+                            </div>
+
+                            <!-- row2 -->
+                            <div class="ri-row" style="margin-top: 5px; min-height: 30px; align-items: center;">
+                                <div style="font-weight: 600;">Technology:</div>
+                                <div *ngIf="mentor.skills != ''"
+                                    style="padding-left: 5px; padding-top: 1px; font-size: 13px; font-weight: 500;" title="{{mentor.skills}}">{{mentor.skills |
+                                    slice:0:25}} {{mentor.skills.length > 25? '...': ''}}</div>
+                                <div *ngIf="mentor.skills == ''"
+                                    style="padding-left: 5px; padding-top: 1px; font-size: 13px;">Not Available</div>
+                            </div>
+
+                            <!-- row3 -->
+                            <div class="ri-row" style="align-items: center; min-height: 30px;">
+                                <div style="font-weight: 600;">Experience:</div>
+                                <div style="padding-left: 5px; font-size: 13px; font-weight: 500;">{{!!mentor.experience ?
+                                    convertToYandM(mentor.experience) : 'Not Available'}}</div>
+                            </div>
+
+                            <!-- row4 -->
+                            <div class="ri-row" style="align-items: center; min-height: 30px;">
+                                <div style="font-weight: 600;">Current Company:</div>
+                                <div *ngIf="mentor.currentCompany !='' && mentor.currentCompany.length <= 20" style="padding-left: 5px; font-size: 13px; font-weight: 500;">
+                                    {{mentor.currentCompany | slice:0:20}} {{mentor.currentCompany.length > 20 ? '...':
+                                    ''}}
+                                </div>
+                                <div *ngIf="mentor.currentCompany !='' && mentor.currentCompany.length > 20" title="{{mentor.currentCompany}}" style="padding-left: 5px; font-size: 13px; font-weight: 500;">
+                                    {{mentor.currentCompany | slice:0:20}} {{mentor.currentCompany.length > 20 ? '...':
+                                    ''}}
+                                </div>
+                                <div *ngIf="mentor.currentCompany ==''" style="padding-left: 5px; font-size: 13px; font-weight: 500;">Not
+                                    Available</div>
+                            </div>
+
+                            <!-- row5 -->
+                            <div class="ri-row" style="align-items: center; min-height: 30px;">
+                                <div style="font-weight: 600;">Previous Companies:</div>
+                                <div *ngIf="mentor.previousCompanies !='' && mentor.previousCompanies.length <= 20" style="padding-left: 5px; font-size: 13px; font-weight: 500;">
+                                    {{mentor.previousCompanies | slice:0:20}} {{mentor.previousCompanies.length > 20 ?
+                                    '...': ''}}</div>
+                                <div *ngIf="mentor.previousCompanies !='' && mentor.previousCompanies.length > 20" title="{{mentor.previousCompanies}}" style="padding-left: 5px; font-size: 13px; font-weight: 500;">
+                                        {{mentor.previousCompanies | slice:0:20}} {{mentor.previousCompanies.length > 20 ?
+                                        '...': ''}}</div>
+                                <div *ngIf="mentor.previousCompanies ==''" style="padding-left: 5px; font-size: 13px;">
+                                    Not
+                                    Available</div>
+                            </div>
+
+                            <!-- row6 -->
+                            <div class="ri-row" style="align-items: center; min-height: 30px;">
+                                <div style="font-weight: 600;">Interviews Taken:</div>
+                                <div style="padding-left: 5px; font-size: 13px; font-weight: 500;">{{!!mentor.interviewsTaken ?
+                                    mentor.interviewsTaken : 'Not Available'}}</div>
+                            </div>
+
+                            <!-- row7 -->
+                            <div class="ri-row-center" style="padding-top: 5px;">
+                                <button (click)="gotochat(mentor)"
+                                    style="border: 2px solid #99226e; border-radius: 5px; width: 70px; background: #fff; color: #99226e; font-weight: 600;">Chat</button>
+                            </div>
+                        </mat-card>
+                    </div>
+
+                    <div class="ri-col" *ngIf="MentorsList.length == 0 && Mentorsdata == true" style="margin-top: 50px;">
+                        <div class="ri-row" style="justify-content: center;">
+                            <img src="../../../assets/images/rockinterview/no-mentors.png">
+                        </div>
+                        <div class="ri-row" style="justify-content: center; margin-top: 20px;">
+                            <span style="font-size: 20px; color: #99226e; font-weight: 600;">No Mentors Found</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <app-detailed-footer class="footerf" *ngIf="Mentorsdata"></app-detailed-footer>
+</app-authorize-layout>

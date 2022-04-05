@@ -1,0 +1,51 @@
+<app-authorize-layout>
+    <section class="register-page section-b-space">
+        <div class="container">
+            <div class="ri-col">
+                <div>
+                    <h3 style="color: black; text-transform: none;">Rock Hiring ID</h3>
+                </div>
+                <div class="ri-row" style="min-height: 300px; flex-wrap: wrap;">
+                    <div class="flex1 ri-col-center">
+                        <mat-card class="ri-col" style="border: 1px solid #99226e; padding: 15px 20px; min-width: 335px; border-radius: 5px; box-shadow: 0px 3px 8px 0px #857f7f;">
+                            <div><h4 style="color: black;">Rock ID:</h4></div>
+                            <div class="ri-row">
+                                <div class="flex1">
+                                    <h4 *ngIf="HiringDetails != null" style="color: black;"><b>{{HiringDetails.hiringId}}</b></h4>
+                                </div>
+                                <div>
+                                    <img (click)="CopyId()" style="height: 20px; width: 20px; margin-right: 10px; cursor: pointer;" src="../../../assets/images/Hiring/Hiring-Copy.png">
+                                    <!-- <img style="height: 20px; width: 20px; cursor: pointer;" src="../../../assets/images/Hiring/Hiring-Share.png"> -->
+                                </div>
+                            </div>
+                        </mat-card>
+                    </div>
+                    <div class="flex1 ri-col-center mt-4">
+                        <div style="max-width: 350px; text-align: center;">
+                            <h4 style="color: black; text-transform: none;">
+                                Rock Hiring ID is an unique identifier for you, which has Interview Reports, Ratings, Recommendations from the Platform.
+                            </h4>
+                        </div>
+                        <div style="max-width: 350px; padding-top: 50px; text-align: center;">
+                            <h4 style="color: black; font-weight: 300;">
+                                Share Rock Hiring ID directly with Recruiters and Enterprises.
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="ri-row-center" style="padding-top: 20px;">
+                    <div class="ri-col">
+                        <!-- <div>
+                            <h4 style="color: black; font-weight: 300;">No Report Yet? No Worries</h4>
+                        </div> -->
+                        <div class="ri-row-center" style="padding-top: 10px;" *ngIf="!!HiringDetails && !HiringDetails.interviewCompleted">
+                            <button (click)="ScheduleInterview()" class="btn primary-btn btn-default btn-gradient mt-1">
+                                Schedule Interview
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</app-authorize-layout>

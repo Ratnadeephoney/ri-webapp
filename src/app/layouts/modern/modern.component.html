@@ -1,0 +1,32 @@
+<app-modern-nav [selectedModule]="selectedModule" (onFindModuleClick)="onFindModuleClick($event)"></app-modern-nav>
+<!-- <app-modern-header></app-modern-header> -->
+
+<div #divHeaderSection id='divHeaderSection'>
+<app-modern-header-jobs *ngIf="selectedModule == dataStorage.globalModuleNames.JOBS"></app-modern-header-jobs>
+<app-modern-header-trainings *ngIf="selectedModule == dataStorage.globalModuleNames.TRAININGS"></app-modern-header-trainings>
+<app-modern-header-profiles *ngIf="selectedModule == dataStorage.globalModuleNames.FIND_PROFILES"></app-modern-header-profiles>
+</div>
+<!-- <app-ecommerce-banner-slider></app-ecommerce-banner-slider> -->
+
+
+<app-modern-about></app-modern-about>
+<app-modern-about-other></app-modern-about-other>
+<!-- <app-modern-sass-business></app-modern-sass-business> -->
+<!-- <app-yoga-subscribe></app-yoga-subscribe> -->
+<app-modern-ebook></app-modern-ebook>
+<!-- <app-modern-services></app-modern-services>
+<app-modern-function></app-modern-function> -->
+<!-- <app-modern-team></app-modern-team> -->
+<app-modern-testimonial></app-modern-testimonial>
+<!-- <app-modern-sass-business></app-modern-sass-business> -->
+<!-- <app-modern-screenshots></app-modern-screenshots>
+<app-modern-team-member></app-modern-team-member>
+<app-modern-pricing></app-modern-pricing> -->
+<!-- <app-modern-blog></app-modern-blog> -->
+<!-- <app-modern-brand></app-modern-brand> -->
+
+<!-- <app-modern-subscribe></app-modern-subscribe>
+<app-modern-footer></app-modern-footer> -->
+
+<!-- <app-more-info></app-more-info> -->
+<app-detailed-footer  (onFindModuleClick)="onFindModuleClick($event)"></app-detailed-footer>

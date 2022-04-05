@@ -1,0 +1,129 @@
+<app-authorize-layout>
+    <div class="container pb-5 page-video-profile">
+        <div class="row">
+            <div>
+                <h4 class="pagename"><b> Video Resume</b></h4>
+            </div>
+            <table style="border: none; margin-left:31%; margin-top:8%" *ngIf="videoProfiles.length==0 && isDataLoaded">
+                <tr>
+                    <td>
+                        <h4 class="pagetitle">How Video Resume helps you</h4>
+                    </td>
+                </tr><br><br>
+                <tr>
+                    <td>
+                        <img src="assets/images/my videos app-04.png" style="width:10%;" alt=""> <span
+                            class="name">Create a Brand</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="assets/images/my videos app-07.png" style="width: 6%;" alt=""
+                            style="margin-left:8px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="assets/images/my videos app-05.png" style="width:15%;" alt=""> <span class="name">Get
+                            Notified</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="assets/images/my videos app-07.png" style="width: 6%;" alt=""
+                            style="margin-left:8px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="assets/images/my videos app-06.png" style="width:15%;" alt=""> <span class="name">Go
+                            Authentic</span>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <br><br>
+                <tr>
+                    <td>
+                        <span class="no-videos">You don't have any Videos</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="ri-row" style="justify-content: flex-end; min-height: 60px;">
+            <div class="ri-row" style="align-items: center;">
+                <input type="file" accept="video/*" (change)="getFile($event)" #file style="display: none;">
+                <img src="../../../assets/images/add-topic.png" (click)="file.click()"
+                    style="cursor: pointer; width: 35px; height: 35px"> <span (click)="file.click()" style="cursor: pointer; padding-left: 5px;">Upload Video</span>
+            </div>
+        </div>
+        <div>
+            <div class="row col-md-12" *ngIf="isDataLoaded">
+                <div class="row col-md-5 main-div" [ngClass]="{'active': showVideo && videoIdx==videoProfile.videoId}"
+                    *ngFor="let videoProfile of videoProfiles; let i = index">
+                    <div class="col-md-12">
+                        <video *ngIf="showVideo && videoIdx==videoProfile.videoId" #myVideo
+                            (click)="onVideoClick($event)" width="100%" height="350" controls
+                            controlsList="download fullscreen" autoplay (ended)="stopVid()">
+                            <source [src]="videoUrl" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="ri-row" style="flex-wrap: wrap; flex:1">
+                        <div class="image-div">
+                            <img [src]="videoProfile.videoThumbnailPath"
+                                (click)="playStopVideo(videoProfile, videoProfile.videoId)" />
+                        </div>
+                        <div class="content-div" style="flex: 2; min-width: 100px;">
+                            <div>
+                                <h4>{{videoProfile.videoTitle}}</h4>
+                                <span>{{videoProfile.createdDate | date: 'hh:mm a, d MMM yy'}}</span>
+                            </div>
+                        </div>
+                        <div class="action-div ri-col" style="flex-wrap: wrap;">
+                            <div class="ri-col" style="flex:1; justify-content:space-evenly">
+                                <button class="btn play-button" style="margin-bottom: 20px;" *ngIf="!showVideo || videoIdx!=videoProfile.videoId"
+                                    (click)="playStopVideo(videoProfile, videoProfile.videoId)">
+                                    <img src="assets/images/whiteplay.png" />
+                                </button>
+                                <button class="btn play-button" style="margin-bottom: 20px;" *ngIf="showVideo && videoIdx==videoProfile.videoId"
+                                    (click)="playStopVideo(videoProfile, videoProfile.videoId)">
+                                    <img src="assets/images/stop.png" />
+                                </button>
+                            </div>
+                            <div class="ri-col" style="flex:1; justify-content:space-evenly">
+                                <img src="assets/images/delete.png" class="delete-png"
+                                    (click)="deleteVideo(videoProfile)" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-3 image-div">
+                        <img [src]="videoProfile.videoThumbnailPath"
+                            (click)="playStopVideo(videoProfile, videoProfile.videoId)" />
+                    </div> -->
+                    <!-- <div class="col-md-7 content-div">
+                        <div>
+                            <h4>{{videoProfile.videoTitle}}</h4>
+                            <span>{{videoProfile.createdDate | date: 'hh:mm a, d MMM yy'}}</span>
+                        </div>
+
+                    </div> -->
+                    <!-- <div class="col-md-2 action-div">
+                        <button class="btn play-button" *ngIf="!showVideo || videoIdx!=videoProfile.videoId"
+                            (click)="playStopVideo(videoProfile, videoProfile.videoId)">
+                            <img src="assets/images/whiteplay.png" />
+                        </button>
+                        <button class="btn play-button" *ngIf="showVideo && videoIdx==videoProfile.videoId"
+                            (click)="playStopVideo(videoProfile, videoProfile.videoId)">
+                            <img src="assets/images/stop.png" />
+                        </button>
+                        <img src="assets/images/delete.png" class="delete-png" (click)="deleteVideo(videoProfile)" />
+
+                    </div> -->
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-detailed-footer></app-detailed-footer>
+</app-authorize-layout>

@@ -1,0 +1,61 @@
+app-feedback-popup {
+    .fbPopup {
+        height: 600px;
+        overflow-y: auto;
+        width: 700px;
+        background: white;
+        margin-left: -6rem;
+    }
+
+    .fbPopup::-webkit-scrollbar {
+        width: 6px;
+        background-color: #fff;
+    }
+    .fbPopup::-webkit-scrollbar-thumb {
+        background-color: #9a0365;
+        border-radius: 0px;
+    }
+    
+}
+
+@media (min-width: 1220px) and (max-width: 1250px) {
+    app-feedback-popup {
+        .fbPopup {
+            height: 500px !important;
+        }
+    }
+}
+
+@media (min-width: 1360px) and (max-width: 1370px) {
+    app-feedback-popup {
+        .fbPopup {
+            height: 560px !important;
+        }
+    }
+}
+
+@media screen and (max-width: 1720px) {
+    app-feedback-popup {
+        .fbPopup {
+            height: 700px !important;
+        }
+    }
+}
+
+@media screen and (max-width: 1930px) {
+    app-feedback-popup {
+        .fbPopup {
+            height: 800px !important;
+        }
+    }
+}
+
+@media screen and (max-width: 750px) {
+    app-feedback-popup {
+        .fbPopup {
+            width: 100% !important;
+            height: auto !important;
+            margin-left: 0px !important;
+        }
+    }
+}

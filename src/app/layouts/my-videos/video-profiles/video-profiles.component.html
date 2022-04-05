@@ -1,0 +1,28 @@
+<div #modal data-target="#modal" class="intfbPopup" >
+    <div class="modal-header p-2" style="background-color: #9a0365;">
+        <!-- <h4 class="text-white" *ngIf="data.userType == 1">Interviewer Feedback</h4> -->
+        <h4 class="text-white" >Profile name</h4>
+        <button aria-label="Close" class="close text-white sm-close-right" data-dismiss="modal"
+            (click)="onModalDismiss(false)" type="button" style="right: -150px; outline: none;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+    <div class="modal-body">
+        <form class="theme-form" [formGroup]="videoForm">
+        <div>
+            <label for="">Name your video profile</label>
+            <input type="text" autocomplete="off" class="form-control" id="filename"
+             maxlength="50" formControlName="filename"><br>
+
+            <a  style="color: #9a0365;margin-left:350px;" (click)="onModalDismiss(false)">Skip</a>
+            <a href=""></a>
+
+            <a style="color: #9a0365; margin-left:30px;"
+            (click)="save()" >Save</a>
+        
+        </div>
+    </form>
+    </div>
+    
+</div>

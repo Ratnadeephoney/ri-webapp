@@ -1,0 +1,95 @@
+app-jobseeker-trainings-works{
+
+  .main-div {
+    width: 80%;
+    margin-left: 10rem;
+    display: flex;
+    flex-direction: row;
+    margin-top: 2rem;
+  }
+  p {
+      font-size: 15px;
+  }
+
+  h2 {
+    font-weight: 700; 
+    color: rgb(68, 63, 63); 
+    // font-size: 25px; 
+    font-family: sans-serif; 
+    // line-height: 3;
+    margin-bottom: 3rem;
+  }
+
+  .textDiv {
+      margin: 3rem 2rem;
+      width: 55%;
+      
+    .headingText {
+        font-weight: 700;
+        color: #494949;
+        line-height: 4;
+        margin-top: 20px;
+      }
+      p{
+          line-height: 1.8;
+          font-size: 15px;
+      }
+  }
+
+  .download-btn {
+    font-size: 12px;
+    margin-left: 10px;
+  }
+
+  .feedbackClass {
+    padding: 10px 15px 10px 15px;
+    box-shadow: 0px 0px 32px 0px rgba(215, 32, 232, 0.2);
+    background-color: rgba(255,255,255,0.8);
+    height: 100%;
+    margin: 3rem 2rem;
+    width: 50%;
+  }
+
+  section {
+    padding: 10px 0px;
+
+  }
+
+  .list-items {
+    // line-height: 30px;
+    font-weight: 400;
+    font-size: 15px;
+    // padding: 5px 0px;
+    i {
+        font-size: 5px;
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+  }
+
+  @media screen and (max-width: 750px) {
+    .main-div {
+      width: 100% !important;
+      margin-left: 0rem;
+      flex-direction: column !important;
+    }
+    .textDiv {
+      width: 90%;
+      margin: 1rem;
+
+      h2 {
+        margin-bottom: 2rem;
+      }
+
+      .headingText {
+        margin-top: 10px;
+      }
+    }
+    .feedbackClass {
+      width: 90%;
+      padding: 0px;
+      margin: 3rem 1rem;
+      border-radius: 10px;
+    }
+  }
+}

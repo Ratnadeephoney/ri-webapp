@@ -1,0 +1,18 @@
+<div #modal class="login-modal" data-target="#modal" class="intfbPopup">
+    <div class="modal-header p-2">
+        <h4 class="text-white">{{dataforshowing.header}}</h4>
+        <button aria-label="Close" class="close text-white sm-close-right" data-dismiss="modal"
+            (click)="onModalDismiss(false)" type="button" style="right: -150px; outline: none;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="ri-row-center">
+            <span>{{dataforshowing.message}}</span>
+        </div>
+        <div class="ri-row-center" style="padding-top: 15px;">
+            <button *ngIf="dataforshowing.button1 != null" class="btn btn1 btn-default info radius-0 btn-search btn-gradient btn-search col-sm-12" (click)="onModalDismiss(false)">{{dataforshowing.button1}}</button>
+            <button class="btn btn1 btn-default info radius-0 btn-search btn-gradient btn-search col-sm-12" style="margin-left: 10px;" (click)="onModalDismiss(true)">{{dataforshowing.button2}}</button>
+        </div>
+    </div>
+</div>

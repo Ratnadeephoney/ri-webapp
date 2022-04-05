@@ -1,0 +1,94 @@
+app-launch-popup{
+    .modal-body{
+        background-image: radial-gradient(circle, #970a99, #8b0992, #80088b, #750784, #6a067d, #620578, #5b0473, #53036e, #4c036b, #460267, #3f0264, #390260);
+        .container{
+            margin: 0px !important;
+            .left-section{
+                border-right: 1px solid #fff;
+            }
+            @media only screen and (max-width: 991px) {
+                .left-section{
+                    border-right: none;
+                    border-bottom: 1px solid #fff;
+                }
+            }
+            h3{
+                text-align: center;
+                color: #fff;
+                text-transform: initial;
+            }
+
+           
+            p{
+                color: #fff !important;
+                font-size: calc(16px + (14 - 13) * ((100vw - 300px) / (1920 - 300)));
+                margin-top:1rem;
+               
+                margin-left: 3rem;
+
+                img{
+                    margin-right: 20px;
+                    width: 8%;
+                }
+                span{
+                    margin-left: 3rem;
+                    line-height: 1;
+                    position: absolute;
+                }
+            }
+
+            @media only screen and (max-width: 1366px){
+                p{
+                    margin-top: 1.5rem !important; 
+                    font-size: calc(14px + (14 - 13) * ((100vw - 300px) / (1920 - 300))) !important;
+                }
+                p.header{
+                    font-size: calc(16px + (14 - 13) * ((100vw - 300px) / (1920 - 300))) !important;
+                }
+            }
+
+            @media only screen and (max-width: 991px) {
+                p{
+                    margin-left: 0rem;
+                    span{
+                        margin-left: 0rem;
+                    }
+                }
+            }
+
+            p.header{
+                font-size: calc(20px + (14 - 13) * ((100vw - 300px) / (1920 - 300)));
+                margin-left: 0rem;
+                text-align: center;
+            }
+            button{
+                margin: 0px auto;
+    display: block;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    color: rgb(128, 4, 82);
+    padding: 2px 12px;
+    font-size: 14px;
+    a{
+        color: rgb(128, 4, 82);
+    }
+            }
+        }
+    }
+    .div-close{
+        position: absolute;
+        top: -2%;
+        right: 0%;
+        span{
+            font-size: 30px;
+        }
+    }
+    @media only screen and (max-width: 991px) {
+        .div-close{
+            position: absolute;
+            top: 0%;
+            right: 0%;
+        }
+    }
+    
+}

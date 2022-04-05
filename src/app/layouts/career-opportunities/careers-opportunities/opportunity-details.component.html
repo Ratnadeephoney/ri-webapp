@@ -1,0 +1,54 @@
+<div class="container" style="font-family: Montserrat !important;">
+    <div>
+        <!-- Header part -->
+    </div>
+    <div style="margin: 20px 0px;">
+        <div *ngFor="let j of careerOpportunities" [id]="j.jobTitle">
+            <div class="jobType">
+                <h4>{{j.jobTitle}}</h4>
+            </div>
+            <div style="display: block !important; flex-direction: column;">
+                <div *ngFor="let t of j.jobs; let i = index;" [id]="t.jobTitle" fxFlex="100%" style="padding:10px 0px; display: block !important; flex-direction: column !important; 
+            background-color: #eeeeee; margin: 0px;  border: 1px solid #cccccc;">
+                    <div fxFlex="100%"
+                        style="cursor: pointer;font-size:17px; display: flex; flex-direction: row; margin-top: 5px;">
+                        <div style="display: flex; width: 100%;">
+                            <div style="width: 95%; cursor: pointer;" (click)="getJobDescription(t.jobId); t.isChecked = !t.isChecked">
+                                <span style="font-weight: 500;margin-left:15px; color: #444444;"
+                                    >{{t.jobTitle}}
+                                </span>
+                            </div>
+                            <div style="float: right; width: 5%;">
+                                <span *ngIf="!t.isChecked" (click)="getJobDescription(t.jobId); t.isChecked = true"
+                                    style="color: #444444; margin-left: 10px;">+</span>
+                                <span *ngIf="t.isChecked" (click)="t.isChecked = false"
+                                    style="color: #444444; margin-left: 10px;">-</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- expandedJobId == t.jobId && -->
+                    <div fxFlex='100%' *ngIf=" t.isChecked"
+                        style="margin-top: 15px; background-color: #ffffff; display: block !important; flex-direction: column !important; margin-bottom: -10px;">
+
+                        <!-- <div fxFlex="100%" style="color: #444444 !important; font-size: 15px; padding: 10px;"
+                            [innerHTML]="jobDescription">
+                        </div> -->
+
+                        <div fxFlex="100%" style="color: #444444 !important; font-size: 15px; padding: 10px;" [innerHTML]="t.answer">
+                            <!-- {{t.answer}} -->
+                        </div>
+
+                        <!-- <div class="btn-custom submit-resume">
+                            <a class="submitResumeBtn">
+                                <span class="ng-scope"> Submit Resume </span>
+                            </a>
+                        </div> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

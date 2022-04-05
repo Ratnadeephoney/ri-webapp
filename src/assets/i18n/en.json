@@ -1,0 +1,145 @@
+{
+    "ERRORS": {
+        "EMAIL": {
+            "REQUIRED": {
+                "LABEL": "Please enter Email Id"
+            },
+            "PATTERN": {
+                "LABEL": "Working Email Address is invalid"
+            },
+            "MINLENGTH": {
+                "LABEL": "Email min length"
+            },
+            "MAXLENGTH": {
+                "LABEL": "Email max length"
+            }
+        },
+        "MOBILENUMBER": {
+            "REQUIRED": {
+                "LABEL": "Please enter Mobile Number"
+            },
+            "PATTERN": {
+                "LABEL": "Please enter a valid mobile number"
+            },
+            "MINLENGTH": {
+                "LABEL": "Please enter a valid mobile number"
+            },
+            "MAXLENGTH": {
+                "LABEL": "Please enter a valid mobile number"
+            }
+        },
+        "FIRST_NAME": {
+            "REQUIRED": {
+                "LABEL": "Please enter First Name"
+            },
+            "PATTERN": {
+                "LABEL": "First name is invalid. Enter only characters."
+            },
+            "MINLENGTH": {
+                "LABEL": "First name min length"
+            },
+            "MAXLENGTH": {
+                "LABEL": "First name max length"
+            }
+        },
+        "LAST_NAME": {
+            "REQUIRED": {
+                "LABEL": "Please enter Last Name"
+            },
+            "PATTERN": {
+                "LABEL": "Last name is invalid. Enter only characters."
+            },
+            "MINLENGTH": {
+                "LABEL": "Last name min length"
+            },
+            "MAXLENGTH": {
+                "LABEL": "Last name max length"
+            }
+        },
+        "COMPANY": {
+            "REQUIRED": {
+                "LABEL": "Company Name is required"
+            },
+            "MAXLENGTH": {
+                "LABEL": "Maximum 50 characters."
+            },
+            "PATTERN": {
+                "LABEL": "Company Name should be alphanumberic with 1 space in between."
+            }
+        },
+        "JOB_TITLE": {                    
+            "PATTERN": {
+                "LABEL": "Job Title should be alphanumberic"
+            },
+            "MINLENGTH": {
+                "LABEL": "Job Title should be minimum of 2 Character"
+            },
+            "MAXLENGTH": {
+                "LABEL": "Last name max length"
+            }
+        },
+        "NUMBER_OF_OPENJOBS":{
+            "PATTERN": {
+                "LABEL": "Enter only Numbers"
+            }
+        },
+        "PASSWORD": {
+            "REQUIRED": {
+                "LABEL": "Password is required"
+            },
+            "PATTERN": {
+                "LABEL": "Password must contain at least 8 characters, including uppercase, lowercase letters, special characters and numbers."
+            }
+        },
+        "ACCEPT_TERMS":{
+            "REQUIRED":{
+             "LABEL":"Please accept terms & conditions."   
+            }
+        },
+        "EMAIL_EXISTS":{
+            "LABEL":"An account with this email already exist, Please try again"
+        },
+        "PERSONEL_EMAIL":{
+            "LABEL":"Please enter your work email address"
+        },
+        "USER_ROLE": {
+            "REQUIRED": {
+                "LABEL": "Role is required"
+            }
+        },
+        "WEBSITE": {                    
+            "PATTERN": {
+                "LABEL": "Please provide valid website url."
+            }
+        },
+        "VIDEO": {                    
+            "PATTERN": {
+                "LABEL": "Please provide valid youtube url."
+            }
+        },
+        "DESCRIPTION": {
+            "REQUIRED": {
+                "LABEL": "Please select any option"
+            }
+        },
+        "COMMENTS": {
+            "REQUIRED": {
+                "LABEL": "Comments are required"
+            }
+        },
+        "FULLNAME": {
+            "REQUIRED": {
+                "LABEL": "Please enter Full Name"
+            },
+            "PATTERN": {
+                "LABEL": "Full name is invalid. Enter only characters."
+            },
+            "MINLENGTH": {
+                "LABEL": "Full name min length"
+            },
+            "MAXLENGTH": {
+                "LABEL": "Full name max length"
+            }
+        }
+    }
+}

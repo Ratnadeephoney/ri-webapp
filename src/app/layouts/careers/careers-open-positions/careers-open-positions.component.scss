@@ -1,0 +1,97 @@
+app-careers-open-positions{
+
+  .openPositionsDiv {
+    justify-content: center;
+    display: flex;
+    width: 70%;
+    font-family: sans-serif !important;
+    
+    div:nth-child(1) {
+      margin-left: 10rem;
+    }
+    
+    div {
+      width: 310px;
+      padding: 10px 15px;
+      height: 220px;
+    }
+  }
+
+  ul li {
+    font-size: 16px;
+    line-height: 2;
+    border-left: 1px solid #99226e;
+    padding-left: 10px;
+    color: #336699;
+    cursor: pointer;
+  }
+
+  h1 {
+    font-size: 50px; 
+    color: rgb(68, 63, 63);
+    font-family: sans-serif;
+    font-weight: 700;
+  }
+
+  h2 {
+    margin-left: 10px;
+    padding: 5rem 0rem 0rem 0rem;
+    color: rgb(68, 63, 63);
+  }
+
+  hr {
+    width: 100%;
+    margin-top: 5rem;
+    height: 2px;
+    background: linear-gradient(to right, rgba(228, 35, 253, 1) 0%, rgba(147, 13, 100, 1) 50%, rgba(147, 13, 100, 1) 100%);
+  }
+    
+  .secondDiv {
+    margin-bottom: 3rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    .content {
+      width: 70%;
+    }
+    p {
+        font-size: 15px;
+    }
+    .headingText {
+        font-weight: 700;
+        color: #494949;
+        line-height: 4;
+    }
+    p{
+        line-height: 18px;
+        text-align: justify;
+    }
+
+    img {
+        height: 480px;
+        width: 360px;
+    }
+  }
+
+  @media screen and (max-width: 750px) {
+    .openPositionsDiv {
+      flex-direction: column;
+      div:nth-child(1){
+        margin-left: 0rem;
+        margin: 5px;
+        height: 30px;
+      }
+    }
+
+    .secondDiv {
+      flex-direction: column;
+      .content {
+        width: 100%;
+        margin-bottom: 2rem;
+      }
+      img {
+        width: 320px;
+      }
+    }
+  }
+}

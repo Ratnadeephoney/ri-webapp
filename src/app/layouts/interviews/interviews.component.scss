@@ -1,0 +1,202 @@
+app-interviews {
+    section {
+        padding: 45px 0px;
+    }
+    .m-t-10 {
+        margin-top: 10px !important;
+    }
+
+    .personalized-img {
+        height: 2.3rem;
+        position: absolute;
+        z-index: 2;
+        // left: 1vh;
+        width: 20rem;
+      }
+
+    .personalized-div {
+        height: 1.5rem;
+        position: relative;
+        z-index: 2;
+        left: 3vh;
+        max-width: 20rem;
+        top: 1.5rem;
+    
+      }
+    
+      .personalized-img-text {
+        position: absolute;
+        color: #ffffff;
+        top: 0.7rem;
+        left: 2vh;
+        z-index: 5;
+      }
+    h3 {
+        text-transform: capitalize !important;
+        color: #000 !important;
+        font-weight: 600;
+    }
+    .no-interviews {
+        width: 25rem;
+        margin-top: 4rem;
+    }
+    .interview-header {
+        background-color:#faeaf4;
+        border-radius: 10px 10px 0px 0px;
+        // height: 3.5rem;
+    }
+    .main-card {
+        box-shadow: 3px 2px 2px 2px darkgrey;
+        border-radius: 10px;
+        width: inherit;
+        height: 22.5rem;
+    }
+    .feedback-btn {
+        background: white;
+        color: #99226e;
+        font-size: 14px;
+        width: 8rem;
+        border: 2px solid #e896ca;
+        font-weight: 600;
+    }
+    .feedback-btn:hover {
+        background: #ffffff;
+        border: 1px solid #9a0365;
+        color: #9a0365;
+    }
+    .feedback-btn:hover {
+        background: #9a0365;
+        color: #ffffff;
+        font-size: 14px;
+        width: 8rem;
+        border: none;
+    }
+    .feedback-btn:disabled {
+        background: white;
+        color: #99226e;
+        font-size: 14px;
+        width: 8rem;
+        border: 2px solid #e896ca;
+        font-weight: 600;
+    }
+    .completed-int {
+        // background: #e4f9ec;
+        // border: 1px solid #398721;
+        color: #398721;
+        font-size: 16px;
+        cursor: default;
+    }
+    .completed-int:hover {
+        color: #398721;
+    }
+    .scheduled-int {
+        // background: #f9e0d7;
+        // border: 1px solid #ee6f37;
+        color: #ee6f37;
+        font-size: 16px;
+        cursor: default;
+    }
+    .scheduled-int:hover {
+        color: #ee6f37;
+    }
+    .content-div {
+        height: 10rem;
+        overflow-y: auto;
+        label {
+            font-weight: 600;
+        }
+        span {
+            word-break: break-all;
+        }
+    }
+    .content-div::-webkit-scrollbar {
+        width: 3px;
+        background-color: #fff;
+        display: none;
+    }
+    .content-div::-webkit-scrollbar-thumb {
+        // background-color: #9a0365;
+        background-color: #dddddd;
+        border-radius: 0;
+    }
+    .actions-div {
+        height: 8rem;
+    }
+    .cancel-int {
+        color: #9a0365;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    .text-black {
+        color: black !important;
+        font-weight: 600 !important;
+    }
+    // .cancel-int:hover {
+    //     text-decoration: underline;
+    // }
+    // .filter-item {
+    //     font-size: 18px;
+    //     text-decoration: underline;
+    // }
+    .active {
+        color: #fff !important;
+        background-color: #9a0365 !important;
+    }
+    hr {
+        border: none;
+        height: 3px;
+        color: #dddddd; 
+        background-color: #dddddd; 
+    }
+
+    .filter-item {
+        border: 1px solid #9a0365;
+        box-shadow: none;
+        color: #9a0365;
+        padding: 2px 10px;
+        text-align: center;
+    }
+    .filter-item:hover {
+        color: #fff;
+        background-color: #9a0365;
+    }
+
+    .status-row {
+        height: 3rem;
+        align-items: center;
+    }
+
+    @media screen and (max-width: 1366px) {
+        .feedback-btn {
+            width: 7rem;
+        }
+        .feedback-btn:disabled, .feedback-btn:hover {
+            width: 7rem;
+        }
+        .actions-div {
+            height: 7rem;
+        }
+    }
+
+    .hoverTech:hover
+    {
+        transform: scale(1.3);
+        background-color: #9a0365;
+    }
+   
+
+}
+
+#popOver1{
+    background-color: #9a0365;
+   color: #fff;
+   border-radius: 30px;
+   height: 30px;
+   text-align: center;
+   // padding: 10px 0px 10px 0px ;
+   align-items: flex-end;
+   padding-bottom: 28px;
+   // padding-top: 1px;
+
+}

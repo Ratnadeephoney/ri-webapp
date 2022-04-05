@@ -1,0 +1,148 @@
+<a class="overlay-sidebar-header" [class.overlay-sidebar-header-open]="openSide" (click)="closeOverlay()"></a>
+<div class="responsive-btn">
+    <a (click)="toggleSidebar()">
+        <i class="fa fa-bars text-white" aria-hidden="true"></i>
+    </a>
+</div>
+<div class="navbar m-l-auto" id="togglebtn" [class.openSidebar]="openSide">
+    <div class="responsive-btn">
+        <a (click)="toggleSidebar()">
+            <h5>back</h5>
+        </a>
+    </div>
+    <ul class="main-menu sm-main-menu">
+        <!-- 1st Level Menu -->
+        <!-- <li>
+            <a class="btn btn-default primary-btn btn-paj">POST A JOB</a>
+        </li> -->
+        <li (click)="onModuleClick(dataStorage.globalModuleNames.JOBS); closeOverlay()" class="mobile-display">
+            <a>
+                Search Jobs</a>
+        </li>
+        <li (click)="onModuleClick(dataStorage.globalModuleNames.TRAININGS); closeOverlay()" class="mobile-display">
+            <a>
+                Search Trainings
+            </a>
+        </li>
+        <li [routerLink]="dataStorage.globalPathInformation.JOB_ASSURANCE_PROGRAM.PATH"><a 
+            [ngClass]="{'menu-active': (currentRoute == dataStorage.globalPathInformation.JOB_ASSURANCE_PROGRAM.PATH)}"
+            style="font-size: 14px !important; font-weight: 600;">JOB ASSURANCE
+            PROGRAM</a></li>
+
+            <li *ngIf="dataStorage.globalIsLoggedInUser"
+            [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.MY_VIDEOS.PATH}">
+
+            <a [routerLink]="dataStorage.globalPathInformation.COMING_SOON.PATH+'/myvideos'" >
+                <img src="assets/images/video icon.png" width="25" /></a>
+                <!-- <a [routerLink]="dataStorage.globalPathInformation.MY_VIDEOS.PATH" >
+                    <img src="assets/images/video icon.png" width="25" /></a> -->
+            </li>
+
+            <li style="margin-right:25px;" *ngIf="dataStorage.globalIsLoggedInUser && currentRoute != dataStorage.globalPathInformation.CHAT.PATH"
+            [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.CHAT.PATH}">
+
+            <a [routerLink]="dataStorage.globalPathInformation.CHAT.PATH" (click)="afterclick()">
+                <img src="assets/images/chat_new_icon.png" width="25" /><span class="msg-bulb1" *ngIf="dataStorage.globalTotalChatUnreadCount" ></span></a>
+                <!-- <a [routerLink]="dataStorage.globalPathInformation.MY_VIDEOS.PATH" >
+                    <img src="assets/images/video icon.png" width="25" /></a> -->
+            </li>
+        <!-- <li>
+            <a>JOB SEEKER
+                <img class="menu-arrow sm-menu-arrow"
+                    src="assets/images/rockinterview/baseline-keyboard_arrow_down-24px.svg">
+            </a>
+            <ul class="mega-menu-container">
+                <li [routerLink]="dataStorage.globalPathInformation.JOBSEEKER.PATH"><a>INTERVIEW</a></li>
+                <li [routerLink]="dataStorage.globalPathInformation.JOBSEEKER.PATH"
+                    [queryParams]="{ section: 'divAssessment'}"><a>ASSESSMENTS</a></li>
+                <li [routerLink]="dataStorage.globalPathInformation.JOBSEEKER_TRAININGS.PATH"><a>TRAINING</a></li>
+                <li [routerLink]="dataStorage.globalPathInformation.JOB_ASSURANCE_PROGRAM.PATH"><a>JOB ASSURANCE
+                        PROGRAM</a></li>
+            </ul>
+        </li>
+        <li>
+            <a>INTERVIEWER
+                <img class="menu-arrow sm-menu-arrow"
+                    src="assets/images/rockinterview/baseline-keyboard_arrow_down-24px.svg">
+            </a>
+            <ul class="mega-menu-container">
+                <li [routerLink]="dataStorage.globalPathInformation.INTERVIEWER.PATH"><a>BECOME MENTOR</a></li>
+                <li [routerLink]="dataStorage.globalPathInformation.INTERVIEWER.PATH"
+                    [queryParams]="{ section: 'divPeerRating'}"><a>PEER RATING</a></li>
+            </ul>
+        </li>  -->
+        <!-- <li>
+            <a>COMPANY
+                <img class="menu-arrow sm-menu-arrow" src="assets/images/rockinterview/baseline-keyboard_arrow_down-24px.svg">
+            </a>
+            <ul class="mega-menu-container">
+                    <li><a  [routerLink]="dataStorage.globalPathInformation.COMPANY_TEAM.PATH">TEAM</a></li>
+                    <li><a  [routerLink]="dataStorage.globalPathInformation.COMPANY_CAREERS.PATH">CAREERS</a></li>
+                    <li><a  [routerLink]="dataStorage.globalPathInformation.COMPANY_FAQ.PATH">FAQ</a></li>
+               </ul>
+        </li> -->
+        <li (click)="onLoginClick()" *ngIf="!dataStorage.globalIsLoggedInUser">
+            <a class="btn btn-default btn-gradient radius-0 btn-login" style="padding: 3px 10px !important">LOGIN</a>
+        </li>
+        <li *ngIf="dataStorage.globalIsLoggedInUser">
+            <a class="a-loggedin"> <img src="assets/images/rockinterview/user-icon.png" width="20" />
+                <!-- {{dataStorage.globalLoggedInUserData.userName ? dataStorage.globalLoggedInUserData.userName : dataStorage.globalLoggedInUserData.mobileNumber}}</a>  -->
+                <span class="ml-2">{{dataStorage.globalLoggedInUserData.userName ? (dataStorage.globalLoggedInUserData.userName | slice:0:15) : 
+                        dataStorage.globalLoggedInUserData.mobileNumber}}
+                    {{ dataStorage.globalLoggedInUserData.userName ? dataStorage.globalLoggedInUserData.userName.length > 15 ? '...': '' : ''}}
+                </span>
+                <img class="menu-arrow sm-menu-arrow"
+                    src="assets/images/rockinterview/baseline-keyboard_arrow_down-24px.svg">
+            </a>
+            <ul class="mega-menu-container">
+                <li><a [routerLink]="dataStorage.globalPathInformation.MY_PROFILE.PATH">MY PROFILE</a></li>
+                <li><a [routerLink]="dataStorage.globalPathInformation.HIRING_ID.PATH">ROCK HIRING ID</a></li>
+                <li><a [routerLink]="dataStorage.globalPathInformation.SETUP_INTERVIEW.PATH">SETUP INTERVIEW</a></li>
+                <li><a [routerLink]="dataStorage.globalPathInformation.INTERVIEWS.PATH">INTERVIEWS</a></li>
+            
+                <li *ngIf="dataStorage.globalLoggedInUserData.userType==2">
+                    <a [routerLink]="dataStorage.globalPathInformation.CREATE_TRAINING.PATH">CREATE TRAINING</a>
+                </li>
+                <li><a [routerLink]="dataStorage.globalPathInformation.TRAININGS.PATH">TRAININGS</a></li>
+                <li><a [routerLink]="dataStorage.globalPathInformation.JOBS.PATH">JOBS</a></li>
+                
+                <li><a [routerLink]="dataStorage.globalPathInformation.MENTORSLIST.PATH">MENTORS</a></li>
+                <!-- referral -->
+                <li><a [routerLink]="dataStorage.globalPathInformation.REFFERAL.PATH">REFERRAL</a></li>
+                <li>
+                    <a *ngIf="dataStorage.globalLoggedInUserData.userType==1" [routerLink]="dataStorage.globalPathInformation.BECOME_A_MENTOR.PATH">BECOME A MENTOR</a>
+                    <!-- <a *ngIf="dataStorage.globalLoggedInUserData.userType==2" [routerLink]="dataStorage.globalPathInformation.BECOME_A_MENTOR.PATH">MENTOR</a> -->
+                </li>
+                
+                <li *ngIf="dataStorage.globalLoggedInUserData.userType==2"><a [routerLink]="dataStorage.globalPathInformation.BANK_DETAILS.PATH">BANK DETAILS</a></li>
+                <li><a [routerLink]="dataStorage.globalPathInformation.CERTIFICATES.PATH">CERTIFICATES</a></li>
+                <!-- <li><a [routerLink]="dataStorage.globalPathInformation.CHAT.PATH">CHAT</a></li> -->
+                <li><a [routerLink]="dataStorage.globalPathInformation.SETTINGS.PATH">SETTINGS</a></li>
+                <li (click)="onLogoutClick()"><a>LOGOUT</a></li>
+            </ul>
+        </li>
+
+        <li style="margin-left: 25px;" *ngIf="dataStorage.globalIsLoggedInUser && dataStorage.globalLoggedInUserData.userType == 2">
+            <img src="assets/images/rockinterview/Certified-Mentor.png" width="70"> 
+        </li>
+        <!-- <li>
+            <a>RESOURCES</a>
+            <ul class="mega-menu-container">
+                    <li><a>BLOG</a></li>
+                    <li><a>VIDEOS</a></li>
+                    <li><a>SLIDEDESKS</a></li>
+                    <li><a>INFOGRAPHICS</a></li>
+                    <li><a>JOB OF THE DAY</a></li>
+                    <li><a>NEWSLETTERS</a></li>
+                    <li><a>NEW IDEA</a></li>
+                    <li><a>BRAND CENTER</a></li>
+               </ul>
+        </li> -->
+        <!-- <li  [routerLink]="dataStorage.globalPathInformation.CONTACT_US.PATH">
+            <a>CONTACT</a>
+        </li> -->
+        <!-- <li>
+            <a class="btn btn-default primary-btn btn-gradient btn-ent" (click)="onModuleClick(dataStorage.globalModuleNames.FIND_PROFILES);  closeOverlay();">FOR EMPLOYERS</a>
+        </li> -->
+    </ul>
+</div>

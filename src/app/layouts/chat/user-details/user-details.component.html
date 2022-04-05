@@ -1,0 +1,124 @@
+<div #modal class="login-modal" data-target="#modal" class="intfbPopup">
+    <div class="modal-header p-2">
+        <h4 class="text-white">Details</h4>
+        <button aria-label="Close" class="close text-white sm-close-right" data-dismiss="modal"
+            (click)="onModalDismiss()" type="button" style="right: -150px; outline: none;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="ri-col" style="line-height: 25px;" *ngIf="Screenready">
+
+            <div class="ri-row">
+                <div class="labelnew"><span>Name:</span></div>
+                <div>
+                    <span *ngIf="userDetails.userName !='' && userDetails.userName !=null && userDetails.userName.length > 22" title="{{userDetails.userName}}">
+                        <!-- {{userDetails.userName}} -->
+                        {{userDetails.userName | slice:0:22}}{{userDetails.userName > 22 ? '...': ''}}
+                    </span>
+                    <span *ngIf="userDetails.userName !='' && userDetails.userName !=null && userDetails.userName.length <= 22">
+                        <!-- {{userDetails.userName}} -->
+                        {{userDetails.userName | slice:0:22}}{{userDetails.userName > 22 ? '...': ''}}
+                    </span>
+                    <span *ngIf="userDetails.userName =='' || userDetails.userName ==null">NA</span>
+                </div>
+            </div>
+            <div class="ri-row">
+                <div class="labelnew"><span>Role:</span></div>
+                <div>
+                    <span *ngIf="userDetails.role !='' && userDetails.role != null && userDetails.role !='Interviewer'">{{userDetails.role}}</span>
+                    <span *ngIf="userDetails.role !='' && userDetails.role != null && userDetails.role =='Interviewer'">Mentor</span>
+                    <span *ngIf="dataStorage.selectedChatTab!='Employers' && (userDetails.role =='' || userDetails.role == null)">NA</span>
+                    <span *ngIf="dataStorage.selectedChatTab=='Employers' && (userDetails.role =='' || userDetails.role == null)">Employer</span>
+                </div>
+            </div>
+            <div class="ri-col"
+                *ngIf="(dataStorage.selectedChatTab == 'Groups' || dataStorage.selectedChatTab == 'Members')">
+                <div class="ri-row">
+                    <div class="labelnew"><span>Technology:</span></div>
+                    <div>
+                        <span *ngIf="userDetails.technologies !=null && userDetails.technologies != '' && userDetails.technologies.length > 30" title="{{userDetails.technologies}}">
+                            <!-- {{userDetails.technologies}} -->
+                            {{userDetails.technologies | slice:0:30}} {{userDetails.technologies > 30 ? '...': ''}}
+                        </span>
+                        <span *ngIf="userDetails.technologies !=null && userDetails.technologies != '' && userDetails.technologies.length <= 30">
+                            <!-- {{userDetails.technologies}} -->
+                            {{userDetails.technologies | slice:0:30}} {{userDetails.technologies > 30 ? '...': ''}}
+                        </span>
+                        <span *ngIf="userDetails.technologies ==null || userDetails.technologies == ''">NA</span>
+                    </div>
+                </div>
+                <div class="ri-row">
+                    <div class="labelnew"><span>Experience:</span></div>
+                    <div>
+                        <span
+                            *ngIf="userDetails.experience !=null && userDetails.experience != '' && userDetails.experience != '0'">{{convertToYandM(userDetails.experience)}}</span>
+                        <span *ngIf="userDetails.experience ==null || userDetails.experience == ''">NA</span>
+                        <span *ngIf="userDetails.experience =='0'">0 Years</span>
+                    </div>
+                </div>
+                <div class="ri-row" *ngIf="userDetails.role == 'Interviewer'">
+                    <div class="labelnew"><span>No.of Interviews Taken:</span></div>
+                    <div><span>{{userDetails.interviewsTaken}}</span></div>
+                </div>
+                <div class="ri-row" *ngIf="!!userDetails.currentCompany">
+                    <div class="labelnew"><span>Current Company: </span></div>
+                    <div><span>{{!!userDetails.currentCompany ? userDetails.currentCompany : 'NA'}}</span></div>
+                </div>
+                <div class="ri-row" *ngIf="!!userDetails.previousCompany">
+                    <div class="labelnew"><span>Previous Companies: </span></div>
+                    <div><span>{{!!userDetails.previousCompany ? userDetails.previousCompany : 'NA'}}</span></div>
+                </div>
+                <div class="ri-row" *ngIf="userDetails.role == 'Interviewer'">
+                    <div class="labelnew"><span>Feedback/Ratings</span></div>
+                    <div>
+                        <ngb-rating class="star-rating" max="5" [readonly]="true" [(rate)]="userDetails.rating">
+                        </ngb-rating>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="ri-col" *ngIf="dataStorage.selectedChatTab == 'Employers'">
+                <div class="ri-row">
+                    <div class="labelnew"><span>Company Name:</span></div>
+                    <div>
+                        <span *ngIf="employerDetails.company && employerDetails.company.length > 30" title="{{userDetails.company}}">
+                            <!-- {{employerDetails.company}} -->
+                            {{employerDetails.company | slice:0:30}}{{employerDetails.company > 30 ? '...': ''}}
+                            
+                        </span>
+                        <span *ngIf="employerDetails.company && employerDetails.company.length <=30">
+                            <!-- {{employerDetails.company}} -->
+                            {{employerDetails.company | slice:0:30}}{{employerDetails.company > 30 ? '...': ''}}
+                            
+                        </span>
+                        <span *ngIf="!employerDetails.company"> NA </span>
+                    </div>
+                </div>
+                <div class="ri-row">
+                    <div class="labelnew"><span>Website:</span></div>
+                    <div class="my-link" (click)="Navigatetobrowser(employerDetails.website)"
+                        *ngIf="employerDetails.website; else NABlock" [innerHTML]="employerDetails.website"
+                        id="btnWebsite"></div>
+                </div>
+                <div class="ri-row">
+                    <div class="labelnew"><span>Video:</span></div>
+                    <div class="my-link" (click)="Navigatetobrowser(employerDetails.video)" *ngIf="employerDetails.video; else NABlock"
+                        [innerHTML]="employerDetails.video" id="btnVideo"></div>
+                </div>
+                <div class="ri-row">
+                    <div class="labelnew"><span>Why Should you Join Us?:</span></div>
+                    <div *ngIf="employerDetails.whyJoinUs; else NABlock">
+                        <!-- {{employerDetails.whyJoinUs}} -->
+                        {{employerDetails.whyJoinUs | slice:0:150}}
+                        {{employerDetails.whyJoinUs > 30 ? '...': ''}}
+                    </div>
+                </div>
+            </div>
+            <ng-template #NABlock>
+                NA
+            </ng-template>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+<div>
+    <div #modal class="user-login-class text-center" data-target="#modal">
+        <div class="modal-header">
+            <h2>Login</h2>
+            <button aria-label="Close" class="close sm-close-right" data-dismiss="modal" (click)="onModalDismiss()"
+                type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body pt-0">
+            <div class="row text-center">
+                <div class="col-lg-12">
+
+                    <div class="theme-card">
+                        <form class="theme-form" [formGroup]="userLoginForm">
+                            <div class="form-row">
+                                <div class="col-md-8 col-sm-12" >
+                                    <div style="display: flex; border-bottom: 1px solid #d3d3d3;">
+                                        <span class="code">+91</span>
+                                        <span class="code"> - </span>
+                                        <input matInput formControlName="mobileNumber" class="sm-pl-0 " class="mobile"
+                                            (keypress)="onlyDecimalNumberKey($event)" [readOnly]="isOTPSent" maxlength="10" autocomplete="off"
+                                            id="txtMobileNumber" placeholder="Mobile Number" autofocus="true">
+                                        <a class="copyright-text" style="position: absolute;
+                                        right: 10px;" (click)="isOTPSent = !isOTPSent; focusMobileNumber()" *ngIf="isOTPSent" >
+                                            <i aria-hidden="true" class="fa fa-pencil" style="font-size: 20px;
+                                                    margin: 10px 0px 0px 20px;"></i></a>
+                                    </div>  
+                                    
+                                    <div *ngIf="submittedMobile && userLoginForm.get('mobileNumber').invalid">
+                                        <mat-error *ngFor="let validation of validation_messages.mobileNumber">
+                                            <span
+                                                *ngIf="submittedMobile && userLoginForm.get('mobileNumber').hasError(validation.type)">
+                                                {{ validation.message | translate}}
+                                                <!-- Please enter valid mobile number -->
+                                            </span>
+                                        </mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <button class="btn primary-btn btn-send" [disabled]="isOTPSent" (click)="generateOTP()">
+                                        <span>Generate OTP</span>
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            <div class="form-row">
+                                <div class="col-md-8 col-sm-12" >
+                                    <ng-otp-input name="otp" (keyup.enter)="onOTPKeyEnter()" #OTP (onInputChange)="onOTPChange($event)" id="otp" [config]="config"></ng-otp-input>
+
+                                    <div *ngIf="submittedOTP && userLoginForm.get('otp').invalid">
+                                        <mat-error *ngFor="let validation of validation_messages.otp">
+                                            <span
+                                                *ngIf="submittedOTP && userLoginForm.get('otp').hasError(validation.type)">
+                                                {{ validation.message | translate}}
+                                                <!-- Please enter valid mobile number -->
+                                            </span>
+                                        </mat-error>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <button class="btn primary-btn btn-send" style="margin-top: 15px !important;"
+                                        [disabled]="!isOTPSent || !enableResendButton" (click)="generateOTP()">
+                                        <span>Resend OTP</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <a style="color: #99226e; margin-top: 25px;" (click)="onModalDismiss()" >Cancel</a>
+                                <button class="btn-default btn btn-gradient apply-btn" [disabled]="!isOTPSent" (click)="verifyOTP()">
+                                    Login
+                                </button>
+                            </div>
+                        </form>
+                        <hr>
+                        <div class="form-row col-md-12 " style="justify-content: center;">
+                            <a class="btn primary-btn" style="padding: 0px; margin: 10px;"
+                                [href]="dataStorage.globalDownloadAppUrls.PLAY_STORE" target="_blank">
+                                <img src="assets/images/rockinterview/playstore.png" height="37" />
+                            </a>
+                            <div class="sm-hide" style="margin: 20px 10px;">Or</div>
+                            <a class="btn primary-btn " style="padding: 0px; margin: 10px;"
+                                [href]="dataStorage.globalDownloadAppUrls.APPLE_STORE" target="_blank">
+                                <img src="assets/images/rockinterview/app-store.png" height="37" />
+                            </a>
+                        </div>
+                        <div class="p-0 col-md-12 justify-content-center">
+                            <p style="margin-left: -7px;">By proceeding, you agree to the 
+                                <a href="/terms" style="color: #99226e;">Terms of Service</a> &
+                                <a href="/terms" style="color: #99226e;">Privacy Notice</a>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

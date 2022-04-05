@@ -1,0 +1,48 @@
+.mat-dialog-content {
+    padding: 0px;
+  }
+  .ricolor{
+    background-color: #99226e;
+    color: white;
+  }
+  .margin1{
+    margin: 0px;
+  }
+  
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 80%;
+    margin-left:10%;
+   
+  }
+  .center {
+    display: flex;
+    justify-content: center;  
+  }
+ 
+   .bgrd {
+    color: white;
+    position: relative;
+    background-color: #9a0365;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(215, 32, 232, 1)), to(#9a0365));
+    background-image: linear-gradient(rgba(215, 32, 232, 1), #9a0365);
+    background-image: -webkit-gradient(linear, left top, right top, from(rgba(215, 32, 232, 1)), color-stop(#9a0365), color-stop(#9a0365), to(rgba(215, 32, 232, 1)));
+    background-image: linear-gradient(to right,  #9a0365, rgba(215, 32, 232, 1), #9a0365,rgba(215, 32, 232, 1));
+    background-size: 300% 100%;
+  }
+
+  .btncircle {
+    width: 200px;
+        height: 200px;
+        outline-style:initial;
+        border-radius: 100px;
+        cursor: pointer;}

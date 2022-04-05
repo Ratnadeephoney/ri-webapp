@@ -1,0 +1,65 @@
+app-opportunity-details{
+
+  .jobType {
+    padding:10px 0px; 
+    display: block !important; 
+    flex-direction: column !important; 
+    background: linear-gradient(to right, rgba(157, 16, 119, 1) 0%, rgba(215, 32, 232, 1) 100%); 
+    margin: 5px 0px;
+  }
+
+  h4 {
+    color: #ffffff;
+    margin-left: 10px;
+  }
+
+  .submitResumeBtn {
+    background: linear-gradient(to right, rgba(147, 13, 100, 1) 0%, rgba(147, 13, 100, 1) 50%, rgba(228, 35, 253, 1) 100%);
+    outline: none;
+    color: #fff;
+    border: 1px solid #fff !important;
+    border-radius: 50px !important;
+    font-size: 12px !important;
+    padding: 1.5em 3em !important;
+    letter-spacing: 2px;
+    color: #fff;
+    font-weight: 600;
+    line-height: 1.8;
+    font-family: 'Montserrat', sans-serif!important;
+    text-transform: uppercase;
+  }
+
+  .btn-custom {
+    background: transparent;
+    border: 1px solid #fff !important;
+    border-radius: 50px !important;
+    font-size: 12px !important;
+    padding: 1.5em 3em;
+    letter-spacing: 2px;
+    color: #fff;
+    font-weight: 600;
+    line-height: 1.8;
+    font-family: 'Montserrat', sans-serif!important;
+    text-transform: uppercase;
+  }
+
+  .submit-resume {
+    text-align: right;
+    margin-bottom: 11px;
+    border-radius: 8px !important;
+  }
+
+  ul li {
+    list-style: disc;
+    margin-left: 30px;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 2;
+  }
+
+  p{
+    font-size: 16px;
+    line-height: 2;
+  }
+
+}

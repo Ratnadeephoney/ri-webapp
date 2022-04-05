@@ -1,0 +1,36 @@
+app-jobseeker-trainings-banner{
+  
+    .list-items {
+        line-height: 30px;
+        font-weight: 200;
+        font-size: 18px;
+        padding: 5px 0px;
+        i {
+            font-size: 10px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+    }
+
+    .ecommerce .owl-nav [class*=owl-] {
+        position: absolute;
+        top: 70% !important;
+    }
+
+    .download-btn {
+        font-size: 12px;
+        margin-left: 10px;
+      }
+}
+
+@media screen and (max-width: 1930px) {
+    app-jobseeker-trainings-banner {
+        img {
+            margin-left: 2rem;
+        }
+    }
+}
+
+@media screen and (max-width: 1180px) {
+    
+}

@@ -1,0 +1,43 @@
+app-confirmation-popup {
+    .intfbPopup {
+        // width: 40rem;
+    }
+    .modal-content{
+        border-radius: 0;
+    border: none;
+    }
+    .modal-header {
+        background: #98226f;
+        border-radius: 0;
+    }
+ 
+    .feedback-btn {
+        background: #98226f;
+        color: #ffffff;
+        font-size: 14px;
+    }
+    .feedback-btn:hover {
+        color: #ffffff;
+    }
+
+    .close{
+        font-weight: 100;
+    }
+
+    .icon-close{
+        color: #fff;
+    font-size: 20px;
+    margin-right: 5px;
+    margin-top: 3px;
+    cursor: pointer;
+    }
+
+    .modal-title {
+        font-weight: 400;
+    }
+
+    .content-class {
+        line-break: anywhere;
+    }
+   
+}

@@ -1,0 +1,42 @@
+<p>
+    <mat-toolbar class="bgrd">
+    <span>Add People</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="onClose(0)">
+     <mat-icon>close</mat-icon>
+   </button>
+  </mat-toolbar>
+</p>
+  <br>
+  <form [formGroup] ="addForm" (ngSubmit)="onSubmit()"> 
+    <div>
+      <mat-form-field class="example-full-width" floatLabel="never">
+        <input formControlName="userName" matInput placeholder="Name" maxlength="30" spellcheck="false" required>
+        <mat-error *ngIf="addForm.controls['userName'].errors?.required">Username is required.</mat-error>
+        <mat-error *ngIf="addForm.controls['userName'].errors?.pattern">Invalid Username.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" floatLabel="never">
+        <input formControlName="mobileNumer" matInput placeholder="Mobile Number" required maxlength="10"> 
+        <mat-error *ngIf="addForm.controls['mobileNumer'].errors?.required">Mobile Number is required.</mat-error>
+        <mat-error *ngIf="addForm.controls['mobileNumer'].errors?.pattern">Please Enter 10 digit Mobile Number.</mat-error>
+        <mat-error *ngIf="addForm.controls['mobileNumer'].errors?.SameMobileNumberNotAllowed">Oops! Sorry, You Can't Refer Yourself.</mat-error>
+       
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" floatLabel="never">
+        <input formControlName="role" matInput placeholder="Role" spellcheck="false" required maxlength="20"> 
+        <mat-hint>Ex: Admin, Developer, etc..</mat-hint>
+        <mat-error>Role is required.</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field class="example-full-width" floatLabel="never">
+        <input formControlName="userEmail" matInput placeholder="Email" maxlength="50" required> 
+        <mat-error>Invalid email.</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="center">
+      <button class="btn btn-default btn-gradient mt-1" style="padding : 7px 35px" type="submit" [disabled]="addForm.invalid">Add</button>
+    </div>
+  
+  </form>

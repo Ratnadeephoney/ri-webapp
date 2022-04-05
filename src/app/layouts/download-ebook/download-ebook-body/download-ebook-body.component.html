@@ -1,0 +1,106 @@
+<div class="container">
+  <div>
+    <!-- Header part -->
+  </div>
+  <div style="display: flex; flex-direction: row;" class="row" >
+    <div class="col-md-8 col-sm-12">
+      <div style="height: 65px;" class="sm-hide"></div>
+      <h1>Interviewer's Handbook -<br>
+        an ebook from Rock Interview</h1>
+      <p>Mentors at Rock Interview are essentially the guiding light for young talent in the industry as they take their
+        initial steps to success. A big part of the mentors role is to assess candidates and help fine-tune their
+        interviewing skills. This is done by conducting interviews that simulate an actual job interview that the
+        candidate is preparing for.</p>
+      <p>Read through to prepare yourself so you can assess the candidate better, set the tone of an interview
+        successfully, and ensure a mutually beneficial experience.</p>
+    </div>
+    <div class="col-md-4 col-sm-12">
+      <div class="downloadFormDiv">
+        <div class="download-header" [ngStyle]="{'background-image': 'url(assets/images/rockinterview/ebook-bg2.png)'}">
+        </div>
+        <div class="downloadForm">
+          <form class="theme-form" [formGroup]="downloadEbookForm" (ngSubmit)="validateAndSubmit()">
+            <div class="form-row">
+              <div class="col-md-12">
+                <input type="text" autocomplete="off" class="form-control" id="fname" placeholder="First Name*" required=""
+                  formControlName="firstName" maxlength="50">
+                <div *ngIf="submitted == true && downloadEbookForm.get('firstName').invalid">
+                  <mat-error *ngFor="let validation of validation_messages.firstName">
+                    <span *ngIf="submitted==true &&  downloadEbookForm.get('firstName').hasError(validation.type)">
+                      {{ validation.message | translate}}
+                    </span>
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-12">
+                <input type="text" autocomplete="off" class="form-control" id="lname" placeholder="Last Name*" required=""
+                  formControlName="lastName" maxlength="50">
+                <div *ngIf="submitted == true && downloadEbookForm.get('lastName').invalid">
+                  <mat-error *ngFor="let validation of validation_messages.lastName">
+                    <span *ngIf="submitted==true &&  downloadEbookForm.get('lastName').hasError(validation.type)">
+                      {{ validation.message | translate}}
+                    </span>
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-12">
+                <input type="text" autocomplete="off" class="form-control" id="email" placeholder="Email*" required=""
+                  formControlName="emailId">
+                <div *ngIf="submitted == true && downloadEbookForm.get('emailId').invalid">
+                  <mat-error *ngFor="let validation of validation_messages.emailId">
+                    <span *ngIf="submitted==true &&  downloadEbookForm.get('emailId').hasError(validation.type)">
+                      {{ validation.message | translate}}
+                    </span>
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-12">
+                <input type="text" autocomplete="off" class="form-control" id="review" placeholder="Phone*" required=""
+                  formControlName="phone" maxlength="10">
+                <div *ngIf="submitted == true && downloadEbookForm.get('phone').invalid">
+                  <mat-error *ngFor="let validation of validation_messages.phone">
+                    <span *ngIf="submitted==true &&  downloadEbookForm.get('phone').hasError(validation.type)">
+                      {{ validation.message | translate}}
+                    </span>
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-12">
+                  <re-captcha formControlName="reCaptcha" ></re-captcha>
+              </div>
+              <div *ngIf="submitted == true && downloadEbookForm.get('reCaptcha').invalid">
+                  <mat-error>
+                      <span>
+                        Captcha is required
+                      </span>
+                  </mat-error>
+              </div>
+          </div>
+
+            <div class="form-row col-md-12">
+              <button class="btn primary-btn btn-default btn-gradient download-btn"
+                (submit)="validateAndSubmit()">DOWNLOAD EBOOK</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+      <div style="margin-left: 3rem;">
+        <p style="font-size: 12px; text-align: left; margin: 10px 5px;">*All fields are required.</p>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+</div>

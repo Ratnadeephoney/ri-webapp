@@ -1,0 +1,64 @@
+<section class="ecommerce pt-0 sm-hide sm-mb-5r" style="background: linear-gradient(to right, #99226e 20%, #d720e8 100%); color: #ffffff;">
+
+    <owl-carousel-o [options]="jobseekerTrainingsBannerOptions" class="ecommerce-home-slider"
+        style="margin-top: 100px; margin-left: 10rem;">
+        <ng-container>
+
+            <ng-template carouselSlide>
+                <!-- <div style="height: 15rem;">Hello</div> -->
+                <div style="display: flex; flex-direction: row; margin-top: 8rem; margin-left: 12rem;">
+                    <div>
+                        <img src="assets/images/rockinterview/training-banner-01.png"
+                         />
+                    </div>
+                    <div style="font-size: 40px; font-weight: 700; margin-left: 6rem; margin-top: 5rem; color: #ffffff; font-family: sans-serif;">
+                        Strengthen<br>
+                        your profile with<br>
+                        specialised training
+                    </div>
+                    <!-- <div style="margin-left: 15.7rem; max-width: 230px; overflow: hidden;">
+                        <img src="assets/images/rockinterview/training-banner-02.png"
+                        style="max-width: initial; height: 400px;" />
+                    </div> -->
+                </div>
+            </ng-template>
+        </ng-container>
+        <ng-container>
+            <ng-template carouselSlide>
+                <!-- <div style="height: 15rem;">Hello</div> -->
+                <div style="display: flex; flex-direction: row; margin-top: 8rem; margin-left: 12rem;">
+                    <div>
+                        <img src="assets/images/rockinterview/training-banner-02.png"
+                            />
+                    </div>
+                        <div style="margin-left: 6rem; margin-top: 5rem; ">
+                            <ul type="circle">
+                                <div class="list-items">
+                                    <i class="fa fa-circle-o" ></i>Program driven initial assessment</div>
+                                <div class="list-items">
+                                    <i class="fa fa-circle-o" ></i>AI based matching of candidate with expert</div>
+                                <div class="list-items">
+                                    <i class="fa fa-circle-o" ></i>Peer-to-peer coaching  & custom programs</div>
+
+                            </ul>
+                            <p style="line-height: 40px; font-weight: 600; font-size: 28px; color: #ffffff; padding: 15px 0px;">Get Started Now!</p>
+                            <button matButton mat-raised-button style="padding: 10px 20px; border: 1px solid white; 
+                                border-radius: 25px; background: bottom; color: white; margin-top: 15px; font-size: 15px;"
+                                (click)="downloadApp()">
+                                <i class="fa fa-play" style="padding: 5px;" ></i> |
+                                <i class="fa fa-apple" style="padding: 5px;" ></i>
+                                <span class="download-btn">DOWNLOAD APP FREE</span>
+                            </button>
+                        </div>
+                        <!-- <div style="margin-left: 14.7rem; max-width: 230px; overflow: hidden;">
+                            <img src="assets/images/rockinterview/training-banner-01.png"
+                            style="max-width: initial; height: 400px;" />
+                        </div> -->
+
+                </div>
+
+            </ng-template>
+        </ng-container>
+    </owl-carousel-o>
+
+</section>

@@ -1,0 +1,577 @@
+<app-authorize-layout>
+    <section class="register-page section-b-space">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="mb-4">My Profile</h3>
+                    <div class="theme-card">
+                        <form class="theme-form" [formGroup]="myProfileForm"
+                            (ngSubmit)="validateAndSubmit(myProfileForm.value)">
+                            <!-- Basic details -->
+                            <div *ngIf="!showAdditionalDet"
+                                class=" form-row bg-theme-gradient text-white px-3 pt-2 mt-3 mb-3"
+                                style="cursor: pointer;">
+                                <h5 class="col-md-11 text-white mt-0"> Basic details</h5>
+                                <!-- <i class="float-right fa fa-angle-down col-md-1 fs-32" *ngIf="!showBasicDet"></i>
+                                            <i class="float-right fa fa-angle-up col-md-1 fs-32" *ngIf="showBasicDet"></i> -->
+                            </div>
+                            <div *ngIf="!showAdditionalDet" class="">
+                                <div style="border: 1px solid #ddd" class="p-3">
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <input type="text" autocomplete="off" class="form-control" id="uname"
+                                                formControlName="userName" maxlength="50">
+                                            <label for="uname" class="form-control-placeholder"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.userName}">Name
+                                            </label>
+                                            <div *ngIf="submitted == true && myProfileForm.get('userName').invalid">
+                                                <mat-error class="nameError"
+                                                    *ngFor="let validation of validation_messages.userName">
+                                                    <span
+                                                        *ngIf="submitted==true && myProfileForm.get('userName').hasError(validation.type)">
+                                                        {{ validation.message | translate}}
+                                                    </span>
+                                                </mat-error>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="email" autocomplete="off" class="form-control" id="email"
+                                                formControlName="emailId">
+                                            <label for="email" class="form-control-placeholder1"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.emailId}">Email
+                                                Id </label>
+                                            <div *ngIf="submitted == true && myProfileForm.get('emailId').invalid">
+                                                <mat-error class="nameError" *ngFor="let validation of validation_messages.emailId">
+                                                    <span
+                                                        *ngIf="submitted==true && myProfileForm.get('emailId').hasError(validation.type)">
+                                                        {{ validation.message | translate}}
+                                                    </span>
+                                                </mat-error>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <input type="text" autocomplete="off" class="form-control" id="mobile"
+                                                formControlName="mobileNumber" required="" disabled>
+                                            <label for="mobile" class="form-control-placeholder1"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.mobileNumber}">Mobile
+                                                Number <span class="mandatory">*</span></label>
+                                            <div *ngIf="submitted == true && myProfileForm.get('mobileNumber').invalid">
+                                                <mat-error *ngFor="let validation of validation_messages.mobileNumber">
+                                                    <span
+                                                        *ngIf="submitted==true && myProfileForm.get('emailId').hasError(validation.type)">
+                                                        {{ validation.message | translate}}
+                                                    </span>
+                                                </mat-error>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6 selectExperience">
+                                                    <label for="year" class="ml-14" class="form-control-placeholder"
+                                                        [ngClass]="{'form-control-valid': this.myProfileForm.value.years}"
+                                                        *ngIf="this.myProfileForm.value.years ">Exp(Years)</label>
+                                                    <select class="form-control" id="year" formControlName="years"
+                                                        [ngClass]="{'emptySelect': !this.myProfileForm.value.years}">
+                                                        <option value="">Exp(Years)</option>
+                                                        <option *ngFor="let y of yearsList" value="{{y}}"
+                                                            [selected]="y == expyear">{{y}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 selectExperience">
+
+                                                    <label for="month" class="ml-14 form-control-select"
+                                                        [ngClass]="{'form-control-valid': this.myProfileForm.value.months}"
+                                                        *ngIf="this.myProfileForm.value.months ">Exp(Months)</label>
+                                                    <select class="form-control" id="month" name="month"
+                                                        formControlName="months"
+                                                        [ngClass]="{'emptySelect': !this.myProfileForm.value.months}">
+                                                        <option value="">Exp(Months)</option>
+                                                        <option *ngFor="let m of monthsList" value="{{m}}"
+                                                            [selected]="m == expmonth">
+                                                            {{m}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <!-- <label for="month" class="ml-14 form-control-placeholder"  
+                                                                    *ngIf="this.myProfileForm.value.technologies">Exp(Months)</label> -->
+                                            <label *ngIf="this.myProfileForm.value.technologies.length != 0"
+                                                class="resumeLabel">Technologies</label>
+                                            <ng-select [selectOnTab]="true" placeholder="Technologies"
+                                                formControlName="technologies" [items]="dataStorage.globalSkillsList"
+                                                bindLabel="technologyDescription" bindValue="technologyId"
+                                                [multiple]="true" id="txtSkills" class="left">
+                                                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                                    <div class="ng-value" *ngFor="let item of items | slice:0:3">
+                                                        <span class="ng-value-label"
+                                                            title="{{item.technologyDescription}}">
+                                                            {{item.technologyDescription | slice:0:10}}
+                                                            <span style="margin-left:-3px"
+                                                                title="{{item.technologyDescription}}"
+                                                                *ngIf="item.technologyDescription && item.technologyDescription.length > 10">...</span>
+                                                        </span>
+
+                                                        <span class="ng-value-icon right" (click)="clear(item)"
+                                                            aria-hidden="true">×</span>
+                                                    </div>
+                                                    <div class="ng-value" *ngIf="items.length > 3">
+                                                        <span class="ng-value-label">{{items.length - 3}}
+                                                            more...</span>
+                                                    </div>
+                                                </ng-template>
+                                            </ng-select>
+                                        </div>
+                                        <div class="col-md-6 upload">
+                                            <div class="custom-file">
+                                                <label *ngIf="resume.length != 0" class="resumeLabel">Upload
+                                                    Resume</label>
+                                                <input type="file" placeholder="Upload Resume" class="custom-file-input"
+                                                    id="uploadResume" (change)="getFile($event)"
+                                                    title="{{resume.length != 0 ? resume : 'Upload Resume'}}">
+                                                <!-- <label class="custom-file-label" for="uploadResume"
+                                                    title="{{resume.length != 0 ? resume : 'Upload Resume'}}">
+                                                    {{!!resume ? resume : 'Upload Resume'}}
+                                                    <i class="fa fa-paperclip"></i></label> -->
+                                                <label class="custom-file-label" for="uploadResume" *ngIf="!resume"
+                                                    title="{{resume.length != 0 ? resume : 'Upload Resume'}}">
+                                                    <!-- {{!!resume ? resume : 'Upload Resume'}} -->
+                                                    Upload Resume
+                                                    <i class="fa fa-paperclip"></i></label>
+                                                <label class="custom-file-label" for="uploadResume" *ngIf="resume"
+                                                    title="{{resume.length != 0 ? resume : 'Upload Resume'}}">
+                                                    {{resume | slice:0:50}}
+                                                    {{resume.length > 50 ? '...': ''}}
+                                                    <i class="fa fa-paperclip"></i></label>
+                                            </div>
+                                            <div>
+                                                <mat-error *ngIf="resumeError">{{resumeErrorText}}
+                                                </mat-error>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6" *ngIf="userType == 2">
+                                            <h6>Available Time</h6>
+                                            <div class="form-group d-flex justify-content-between form-row pl-1">
+                                                <div class="custom-control custom-checkbox form-check-inline">
+                                                    <input class="custom-control-input" type="checkbox" id="morning"
+                                                        value="morning" formControlName="isMorning">
+                                                    <label class="custom-control-label" for="morning">Morning</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox form-check-inline">
+                                                    <input class="custom-control-input" type="checkbox" id="afternoon"
+                                                        value="afternoon" formControlName="isAfternoon">
+                                                    <label class="custom-control-label"
+                                                        for="afternoon">Afternoon</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox form-check-inline">
+                                                    <input class="custom-control-input" type="checkbox" id="evening"
+                                                        value="evening" formControlName="isEvening">
+                                                    <label class="custom-control-label" for="evening">Evening</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group clearfix ml-3 row" style="margin-top: 1.4rem;">
+                                            <!-- <label class="ml-14">Are you working?</label>
+                                            <div class="float-right">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" (click)="employedValueChange(2);"
+                                                        type="radio" style="width: auto;" id="workingYes"
+                                                        formControlName="isEmployed" value="2"
+                                                        [checked]="employed == 2">
+                                                    <label class="form-check-label" for="workingYes">Yes</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" (click)="employedValueChange(1);"
+                                                        type="radio" style="width: auto;" id="workingNo"
+                                                        formControlName="isEmployed" value="1"
+                                                        [checked]="employed == 1">
+                                                    <label class="form-check-label" for="workingNo">No</label>
+                                                    </div>
+                                                </div> -->
+                                            <div class="col-md-5">
+                                                <div class="custom-control custom-checkbox form-check-inline flex-fill">
+                                                    <input class="custom-control-input" formControlName="isEmployed"
+                                                        type="checkbox" id="working" value="working">
+                                                    <label class="custom-control-label" for="working">Working</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="custom-control custom-checkbox form-check-inline flex-fill">
+                                                    <input class="custom-control-input" formControlName="jap"
+                                                        type="checkbox" id="jap" value="jap">
+                                                    <label class="custom-control-label" for="jap">Job Assessment
+                                                        Program</label>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <!-- <div class="form-row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group clearfix mb-0">
+                                                        <label>Are you intersted in JAP?</label>
+                                                        <div class="float-right">
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio" style="width: auto;"
+                                                                     id="interstedJapYes" formControlName="JAPValue" value="1">
+                                                                <label class="form-check-label" for="interstedJapYes">Yes</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio" style="width: auto;"
+                                                                     id="interstedJapNo" formControlName="JAPValue" value="0">
+                                                                <label class="form-check-label" for="interstedJapNo">No</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group clearfix position-relative mb-0">
+                                                        <label class="col-8 p-0" for="interestInFreelanch">Are you
+                                                            interested in freelancing?</label>
+                                                        <div class="material-switch float-right">
+                                                            <input id="interestInFreelanch" name="interestInFreelanch1"
+                                                                type="checkbox" formControlName="addFreelancing"  />
+                                                            <label for="interestInFreelanch"><span
+                                                                    class="lever bg-theme"></span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+
+                                </div>
+                                <div class="col-md-12 mt-2 p-0">
+                                    <button type="button"
+                                        class="btn btn-default btn-gradient radius-0 btn-next pull-right"
+                                        (click)="showAdditionalDetails()">Additional Details <i
+                                            class=" fa fa-angle-right ml-2"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Additional details -->
+                            <div *ngIf="showAdditionalDet"
+                                class=" form-row bg-theme-gradient text-white px-3 pt-2 mt-3 mb-3"
+                                style="cursor: pointer;">
+                                <h5 class="col-md-11 text-white mt-0"> Additional details</h5>
+                                <!-- <i class="float-right fa fa-angle-down col-md-1 fs-32" *ngIf="!showAdditionalDet"></i>
+                                            <i class="float-right fa fa-angle-up col-md-1 fs-32" *ngIf="showAdditionalDet"></i> -->
+                            </div>
+                            <div *ngIf="showAdditionalDet" class="">
+                                <div style="border: 1px solid #ddd" class="p-2">
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <h6 class="col-12 text-muted">Interested In</h6>
+                                            <div class="col-md align-self-start">
+                                                <!-- <div class="form-group d-flex">
+                                                    <div
+                                                        class="custom-control custom-checkbox form-check-inline flex-fill">
+                                                        <input class="custom-control-input"
+                                                            formControlName="giveTraining" type="checkbox"
+                                                            id="giveTraining" value="giveTraining">
+                                                        <label class="custom-control-label" for="giveTraining">Give
+                                                            Training</label>
+                                                    </div>
+                                                    <div
+                                                        class="custom-control custom-checkbox form-check-inline flex-fill">
+                                                        <input class="custom-control-input"
+                                                            formControlName="takeTraining" type="checkbox"
+                                                            id="takeTraining" value="takeTraining">
+                                                        <label class="custom-control-label" for="takeTraining">Take
+                                                            Training</label>
+                                                    </div>
+                                                </div> -->
+                                                <div class="form-group d-flex mt-2">
+                                                    <div
+                                                        class="custom-control custom-checkbox form-check-inline flex-fill">
+                                                        <input class="custom-control-input"
+                                                            formControlName="freelancing" type="checkbox"
+                                                            id="freelancing" value="freelancing">
+                                                        <label class="custom-control-label"
+                                                            for="freelancing">Freelancing</label>
+                                                    </div>
+                                                    <div
+                                                        class="custom-control custom-checkbox form-check-inline flex-fill">
+                                                        <input class="custom-control-input" formControlName="jobChange"
+                                                            type="checkbox" id="jobChange" value="jobChange">
+                                                        <label class="custom-control-label" for="jobChange">Job
+                                                            Change</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" *ngIf="myProfileForm.get('jobChange').value == true">
+                                            <div class="form-group clearfix">
+                                                <label for="jobChangeDuration"
+                                                    *ngIf="this.myProfileForm.value.jobChangeDuration != 0">
+                                                    Job Change Duration</label>
+                                                <!-- [ngClass]="{'form-control-valid': (this.myProfileForm.value.jobChangeDuration), 'form-control-disabled' : (this.myProfileForm.value.isEmployed == 1), 'form-control-duration' : (this.myProfileForm.value.isEmployed != 1)}"> -->
+                                                <select id="jobChangeDuration" class="form-control"
+                                                    name="jobChangeDuration" formControlName="jobChangeDuration"
+                                                    [ngClass]="{'emptySelect': !this.myProfileForm.value.jobChangeDuration}">
+                                                    <option value="0">Job Change Duration</option>
+                                                    <option *ngFor="let n of noticePeriodData"
+                                                        [selected]="n.noticePeriodId == jCDuration"
+                                                        value="{{n.noticePeriodId}}">
+                                                        {{n.noticePeriodDescription}}</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <label for="currCTC" class="ml-14" class="form-control-placeholder"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.currentCTC}"
+                                                *ngIf="this.myProfileForm.value.currentCTC">Current
+                                                CTC</label>
+                                            <select class="form-control" id="currCTC" formControlName="currentCTC"
+                                                [ngClass]="{'emptySelect': !this.myProfileForm.value.currentCTC}">
+                                                <option value="">Current CTC</option>
+                                                <option *ngFor="let c of currentCTCData" value="{{c.currentCTCId}}"
+                                                    [selected]="c.currentCTCId == curCTC">
+                                                    {{c.currentCTCDescription}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="expecCTC" class="ml-14" class="form-control-placeholder"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.expectedCTC}"
+                                                *ngIf="this.myProfileForm.value.expectedCTC">Expected
+                                                CTC</label>
+                                            <select class="form-control" id="expecCTC" formControlName="expectedCTC"
+                                                [ngClass]="{'emptySelect': !this.myProfileForm.value.expectedCTC}">
+                                                <option value="">Expected CTC</option>
+                                                <option *ngFor="let e of expectedCTCData" value="{{e.expectedCTCId}}"
+                                                    [selected]="e.expectedCTCId == expCTC">
+                                                    {{e.expectedCTCPercentage}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <input type="text" autocomplete="off" class="form-control" id="qual"
+                                                formControlName="qualification" required="false" maxlength="50" (keypress)="nospecificcharacter($event)" >
+                                            <label for="qual" class="form-control-placeholder"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.qualification}">Qualification
+                                            </label>
+
+                                            <div *ngIf="submitted == true && myProfileForm.get('qualification').invalid">
+                                                <mat-error class="nameError" *ngFor="let validation of validation_messages.qualification">
+                                                    <span
+                                                        *ngIf="submitted==true && myProfileForm.get('qualification').hasError(validation.type)">
+                                                        {{ validation.message | translate}}
+                                                    </span>
+                                                </mat-error>
+                                            </div>
+                                          
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" autocomplete="off" class="form-control" id="preCompanies"
+                                                formControlName="previousCompanies" required="false" maxlength="50">
+                                            <label for="preCompanies" class="form-control-placeholder"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.previousCompanies}">Previous
+                                                Companies
+                                            </label>
+
+                                            <div *ngIf="submitted == true && myProfileForm.get('previousCompanies').invalid">
+                                                <mat-error class="nameError" *ngFor="let validation of validation_messages.previousCompanies">
+                                                    <span
+                                                        *ngIf="submitted==true && myProfileForm.get('previousCompanies').hasError(validation.type)">
+                                                        {{ validation.message | translate}}
+                                                    </span>
+                                                </mat-error>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <input type="text" autocomplete="off" class="form-control" id="curCompany"
+                                                formControlName="currentCompany" required="false" maxlength="50">
+                                            <label for="curCompany" class="form-control-placeholder"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.currentCompany}">Current
+                                                Company
+                                            </label>
+
+                                            <div *ngIf="submitted == true && myProfileForm.get('currentCompany').invalid">
+                                                <mat-error class="nameError" *ngFor="let validation of validation_messages.currentCompany">
+                                                    <span
+                                                        *ngIf="submitted==true && myProfileForm.get('currentCompany').hasError(validation.type)">
+                                                        {{ validation.message | translate}}
+                                                    </span>
+                                                </mat-error>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" autocomplete="off" class="form-control"
+                                                id="preferCompany" formControlName="preferredCompany" required="false"
+                                                maxlength="50">
+                                            <label for="preferCompany" class="form-control-placeholder"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.preferredCompany}">Preferred
+                                                Company
+                                            </label>
+
+                                            <div *ngIf="submitted == true && myProfileForm.get('preferredCompany').invalid">
+                                                <mat-error class="nameError" *ngFor="let validation of validation_messages.preferredCompany">
+                                                    <span
+                                                        *ngIf="submitted==true && myProfileForm.get('preferredCompany').hasError(validation.type)">
+                                                        {{ validation.message | translate}}
+                                                    </span>
+                                                </mat-error>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <!-- <input type="text" autocomplete="off" class="form-control" id="curLocation"
+                                                formControlName="currentLocation" required="false" maxlength="50">
+                                            <label for="curLocation" class="form-control-placeholder"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.currentLocation}">Current
+                                                Location
+                                            </label> -->
+
+                                            <label for="curLocation" class="ml-14" class="form-control-placeholder"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.currentLocation}"
+                                                *ngIf="this.myProfileForm.value.currentLocation">Current Location
+                                            </label>
+                                            <select class="form-control" id="curLocation"
+                                                formControlName="currentLocation"
+                                                [ngClass]="{'emptySelect': !this.myProfileForm.value.currentLocation}">
+                                                <option value="">Current Location</option>
+                                                <option *ngFor="let e of dataStorage.globalLocationsList"
+                                                    value="{{e.locationName}}"
+                                                    [selected]="e.locationName == currentLoc">
+                                                    {{e.locationName}}</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <!-- <input type="text" autocomplete="off" class="form-control"
+                                                id="preferLocation" formControlName="preferredLocation" required="false"
+                                                maxlength="50">
+                                            <label for="preferLocation" class="form-control-placeholder"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.preferredLocation}">Preferred
+                                                Location
+                                            </label> -->
+                                            <label for="preferLocation" class="ml-14" class="form-control-placeholder"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.preferredLocation}"
+                                                *ngIf="this.myProfileForm.value.preferredLocation">Preferred Location
+                                            </label>
+                                            <select class="form-control" id="preferLocation"
+                                                formControlName="preferredLocation"
+                                                [ngClass]="{'emptySelect': !this.myProfileForm.value.preferredLocation}">
+                                                <option value="">Preferred Location</option>
+                                                <option *ngFor="let e of dataStorage.globalLocationsList"
+                                                    value="{{e.locationName}}"
+                                                    [selected]="e.locationName == preferredLoc">
+                                                    {{e.locationName}}</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <img src="assets/images/github.png" class="github"  />
+                                           <input type="text" autocomplete="off" class="form-control mb-0" id="github"
+                                                formControlName="github" required="false" >
+                                                
+                                            <label for="github" class="form-control-placeholder"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.github}">Github
+                                            </label>
+                                            <span class="hint">Example: https://www.github.com/rockinterview</span>
+                                           &nbsp;<a class="link-get-sample" (click)="onGetSampleClick('Github')" *ngIf="this.myProfileForm.get('github').invalid || !this.myProfileForm.get('github').value">Get Sample</a>&nbsp;
+                                            <!-- <span style="color:gray;margin-left:2%; font-size:12px;">Example: https://www.github.com/praveenl</span> -->
+                                            <div *ngIf="submitted == true && myProfileForm.get('github').invalid">
+                                                <mat-error class="nameError mt-1"
+                                                    *ngFor="let validation of validation_messages.github">
+                                                    <span
+                                                        *ngIf="submitted==true && myProfileForm.get('github').hasError(validation.type)">
+                                                        {{ validation.message | translate}}
+                                                    </span>
+                                                </mat-error>
+                                                
+                                            </div>
+                                           
+                                        </div>
+                                        <div class="col-md-6" >
+                                            <img src="assets/images/linkedIn.png" class="linkedin"  />
+                                            <input type="text" autocomplete="off" class="form-control mb-0" id="linkedIn"
+                                            formControlName="linkedIn" required="false" >
+                                            
+                                        <label for="linkedIn" class="form-control-placeholder"
+                                            [ngClass]="{'form-control-valid': this.myProfileForm.value.linkedIn}">LinkedIn
+                                            
+                                        </label>
+                                        <span class="hint">Example: https://www.linkedin.com/rockinterview</span>
+                                        &nbsp;<a class="link-get-sample" (click)="onGetSampleClick('Linkedin')" *ngIf="this.myProfileForm.get('linkedIn').invalid || !this.myProfileForm.get('linkedIn').value">Get Sample</a>
+                                        <div *ngIf="submitted == true && myProfileForm.get('linkedIn').invalid">
+                                            <mat-error class="nameError mt-1"
+                                                *ngFor="let validation of validation_messages.linkedIn">
+                                                <span
+                                                    *ngIf="submitted==true && myProfileForm.get('linkedIn').hasError(validation.type)">
+                                                    {{ validation.message | translate}}
+                                                </span>
+                                            </mat-error>
+                                           
+                                        </div>
+                                       
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="col-md-6" style="margin-top: 10px;">
+                                            
+                                            <input type="text" autocomplete="off" class="form-control" id="desig"
+                                            formControlName="designation" required="false" maxlength="50">
+                                        <label for="desig" class="form-control-placeholder"
+                                            [ngClass]="{'form-control-valid': this.myProfileForm.value.designation}">Designation
+                                        </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                           
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            
+
+                                        </div>
+                                        <div class="col-md-6">
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mt-2 p-0">
+                                    <button type="button" class="btn btn-default btn-gradient radius-0 btn-next"
+                                        (click)="showAdditionalDetails()"><i class=" fa fa-angle-left mr-2"></i>Basic
+                                        Details </button>
+                                </div>
+
+
+                            </div>
+                            <!-- </div> -->
+
+                            <div class="form-row col-md-12 justify-content-center" style="margin-top: 5px;">
+                                <button class="btn btn-default btn-gradient mt-1"
+                                    (submit)="validateAndSubmit(myProfileForm.value)">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- <h3 class="mb-4">My Profile</h3> -->
+                </div>
+            </div>
+        </div>
+    </section>
+</app-authorize-layout>

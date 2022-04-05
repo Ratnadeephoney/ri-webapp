@@ -1,0 +1,121 @@
+app-user-login {
+    .login-modal {
+        width: 32rem;
+        height: 28rem;
+    }
+
+    .user-login-class {
+        // width: 31rem;
+        height: 28.5rem;
+        padding: 10px;
+    }
+
+    .modal-header {
+        padding: 1rem 0rem 1rem 1rem;
+        border-bottom: none;
+        h2 {
+            margin-left: 12rem;
+            // margin-bottom: 3rem;
+        }
+        // .close {
+        //     padding: 1rem 1rem;
+        //     margin: -2rem -1rem -1rem auto;
+        // }
+        .close {
+            position: absolute;
+            right: -45px;
+            top: 0;
+            background: #f5f5f5;
+            opacity: 1 !important;
+            color: #000;
+            z-index: 2;
+            margin: 0; 
+        }
+    }
+
+    .register-page .theme-card {
+        padding: 0;
+        border: none;
+        line-height: 0;
+    }
+
+    .mobile{
+        height: 40px !important;
+        font-size: 1rem !important;
+        border: none;
+        outline: none;
+        margin-left: 5px;
+    }
+
+    .ri_mobilenumber {
+        width: 50%;
+        border-radius: 50px;
+        outline: none;
+        border: 1px solid #99146b;
+        height: 47px;
+    }
+
+    .btn-send {
+        position: absolute;
+        right: -10px;
+        outline: none;
+        padding: 2px;
+        border: 1px solid #99226e;
+        border-radius: 20px;
+        height: 30px;
+        margin-top: 10px !important;
+        box-shadow: none !important;
+        width: 8rem;
+        span {
+            color: #99226e;
+            font-weight: 500;
+        }
+    }
+
+    .code {
+        height: 30px;
+        font-size: 1rem;
+        margin-top: 0.5rem;
+        margin-left: 5px;
+    }
+
+    .apply-btn {
+        outline: none;
+        height: 30px;
+        padding: 0px 30px !important;
+        margin: 20px;
+    }
+
+    .form-row {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .otpClass {
+        width: '40px';
+        height: '40px';
+        margin-top: '10px';
+        font-size: '14px';
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .user-login-class {
+        width: 100% !important;
+        height: auto !important;
+    }
+    .modal-header {
+        h2 {
+            margin-left: 7rem !important;
+        }
+    }
+    .form-row:nth-child(2) {
+        flex-direction: column !important;
+        height: auto !important;
+        margin: 3rem 0rem !important;
+    }
+
+    .btn-send {
+        width: 100% !important;
+    }
+}

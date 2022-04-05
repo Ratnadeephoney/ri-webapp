@@ -1,0 +1,104 @@
+app-my-videos {
+    .page-video-profile{
+        min-height: 600px;
+    }
+    .main-div{
+        box-shadow: 3px 2px 2px 2px darkgrey;
+        border-radius: 10px;
+        margin: 10px 3%;
+        height: 160px;
+        overflow: auto;
+        .image-div{
+            height: 160px;
+            width: 160px;
+            position: relative;
+            img{
+                max-height: 100%;
+                max-width: 100%;
+                width: auto;
+                height: auto;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin: auto;
+            }
+        }
+        .content-div{
+            div{
+                padding: 10%;
+            }
+            h3, h4, span{ color: #434345}
+            h4{font-weight: 600;}
+        }
+
+        .action-div{
+            .delete-png{
+                height: 20px;
+                width: 20px;
+                margin: 0px auto;
+                display: block;
+                // margin-top: 40px;
+                cursor: pointer;
+            }
+            .play-button{
+                color: #fff;
+                // margin: 0px auto;
+    display: block;
+    // margin-top: 30px;
+    background-color: #98226f;
+    padding: 0 14px;
+    img{
+        width: 9px;
+        margin-top: -3px;
+    }
+            }
+        }
+    }
+    .main-div.active{
+        height: auto !important;
+    }
+    section {
+        padding: 45px 0px;
+    }
+    .m-t-10 {
+        margin-top: 10px !important;
+    }
+  
+
+    
+.pagename{
+    color:black; 
+    margin-left:40px;
+    margin-top:50px;
+    font-size:25px;
+}
+
+.no-videos{
+    color: rgb(128, 4, 82);
+    font-size: 18px;
+    margin-left: -50px;
+}
+
+
+.name{
+    margin-left:3%; 
+    font-size:16px;
+}
+
+.pagename2{
+    color:black; 
+    margin-left:30px;
+    margin-top:4%;
+    font-size:25px;
+}
+
+.pagetitle{
+    margin-left:-100px; 
+    font-size:24px;
+}
+
+}
+
+

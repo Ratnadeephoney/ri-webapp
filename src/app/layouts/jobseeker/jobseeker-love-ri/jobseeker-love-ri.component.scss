@@ -1,0 +1,28 @@
+app-jobseeker-love-ri {
+    .secondDiv {
+        margin-bottom: 3rem;
+        width: 70%;
+      .headingText {
+          font-weight: 700;
+          color: #494949;
+          line-height: 4.5;
+        }
+        p{
+            line-height: 18px;
+        }
+    }
+
+    @media screen and (max-width: 750px) {
+        h3 {
+            line-height: normal !important;
+            margin: 10px 0px;
+        }
+
+        .secondDiv {
+            width: 90%;
+            p {
+                font-size: 15px;
+            }
+        }
+    }
+}

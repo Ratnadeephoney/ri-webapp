@@ -1,0 +1,58 @@
+<section class="agency breadcrumb-section ">
+    <div class="container">
+        <div class="row">
+            <!-- <div class="col-12">
+                <h2 class="breadcrumb-text text-center">Search Trainings Here</h2>
+
+            </div> -->
+            <div class="col-md-8 col-sm-12" style="margin: 30px auto;">
+                <form [formGroup]="searchForm">
+
+                    <div class="row search-area">
+
+                        <div class="col-md-10 col-sm-12">
+                            <div class="row">
+                                <div class="col-md-1 col-sm-2 col-xs-2" style="width: 10%;">
+                                    <img style="margin-top: 12px;" src="assets/images/icon/search.png" />
+                                </div>
+                                <div class="col-md-11 col-sm-10 col-xs-10 p-0 sm-ml-7" style="width: 84%;">
+                                    <ng-select [selectOnTab]="true" placeholder="Search Skills" formControlName="skills"
+                                        [items]="dataStorage.globalSkillsList" bindLabel="technologyDescription"
+                                        bindValue="technologyId" [multiple]="true" id="txtSkills" class="left">
+                                        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                            <div class="ng-value" *ngFor="let item of items | slice:0:5">
+                                                <span class="ng-value-label" title="{{item.technologyDescription}}">
+                                                    {{item.technologyDescription | slice:0:10}} <span
+                                                        style="margin-left:-3px" title="{{item.technologyDescription}}"
+                                                        *ngIf="item.technologyDescription && item.technologyDescription.length > 10">...</span>
+                                                </span>
+
+                                                <span class="ng-value-icon right" (click)="clear(item)"
+                                                    aria-hidden="true">×</span>
+                                            </div>
+                                            <div class="ng-value" *ngIf="items.length > 5">
+                                                <span class="ng-value-label">{{items.length - 5}} more...</span>
+                                            </div>
+                                        </ng-template>
+                                    </ng-select>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-2 col-sm-12 sm-ml-7">
+                            <button class="btn btn-default primary-btn info radius-0 btn-search btn-gradient btn-search col-sm-12"
+                                (click)="onSearchBtnClick()">Search</button>
+                        </div>
+
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+        <div class="mt-5 text-center " style="animation: btndown 2s linear infinite;cursor: pointer;">
+            <i class="fa fa-angle-double-down" style="font-size: 4rem;" (click)="onScrollDownClick()"></i>
+        </div>
+</section>

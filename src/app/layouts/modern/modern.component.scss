@@ -1,0 +1,42 @@
+app-modern {
+   
+}
+@media only screen and (max-width: 1396px) {
+    .container {
+        margin-top: 3.5rem;
+    }
+    .header.app2 .img-mobile .headaer-image {
+        width: 415px !important;
+        margin-left: -50px !important;
+    }
+}
+
+// @media only screen and (max-width: 1365px) {
+//     app-modern {
+//         .header.app2 .img-mobile .headaer-image {
+//             width: 415px !important;
+//             margin-left: -50px !important;
+//         }
+//     }
+// }
+
+@media (min-width: 1200px) and (max-width: 1280px){
+    app-modern {
+        .container-xl, .container-lg, .container-md, .container-sm, .container {
+            max-width: 1350px;
+        }
+        .header.app2 .img-mobile .headaer-image {
+            width: 455px !important;
+            margin-left: -150px !important;
+        }
+    }
+}
+
+@media (min-width: 1281px) and (max-width: 1365px) {
+    app-modern {
+        .header.app2 .img-mobile .headaer-image {
+            width: 455px !important;
+            margin-left: -150px !important;
+        }
+    }
+}

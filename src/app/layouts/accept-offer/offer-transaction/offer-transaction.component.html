@@ -1,0 +1,57 @@
+<section class="container text-center" id="divTransaction">
+    <div *ngIf="this.offerType == this.dataStorage.globalOfferTypes.ACCEPT">
+    <img 
+    *ngIf="(response && response.statusCode == 404) || (response && response.statusCode == 409 && !response.accepted)" 
+    src="assets/images/rockinterview/reject-offer-icon.png"/>
+    <img 
+    *ngIf=" (response && response.statusCode == 409 && response.accepted) ||  (response && response.statusCode == 200)" 
+    src="assets/images/rockinterview/accept-offer-icon.png"/>
+    <h2>{{response && response.statusMessage}}</h2>
+    <p *ngIf="response && response.comments" class="mt-5">
+       <strong>Comments:</strong>
+       {{response && response.comments}}
+      </p>
+ </div>
+
+ <div *ngIf="this.offerType == this.dataStorage.globalOfferTypes.REJECT">
+     <div *ngIf="(response && response.statusCode != 200)
+     || 
+     (response && response.statusCode == 200 && response.statusMessage == 'Offer Rejected Successfully')">
+            <img *ngIf="(response && response.statusCode == 404) || (response && response.statusCode == 409 && !response.accepted)
+            || (response && response.statusCode == 200 && response.statusMessage == 'Offer Rejected Successfully')" src="assets/images/rockinterview/reject-offer-icon.png"/>
+            <img *ngIf="(response && response.statusCode == 409 && response.accepted)" src="assets/images/rockinterview/accept-offer-icon.png"/>
+            <h2>{{response && response.statusMessage}}</h2>
+            <p *ngIf="response && response.comments" class="mt-5">
+                  <strong>Comments:</strong>
+                  {{response && response.comments}}
+                 </p>
+     </div>
+     <div *ngIf="response && response.statusCode == 200 && response.statusMessage == 'RolledOutOffer'" class="theme-card"> 
+         <form class="theme-form" [formGroup]="offerRejectForm" (ngSubmit)="rejectJobOffer()">
+               <h2>Reject Offer</h2>
+               <br/>
+               <div class="form-row">
+                     <div class="col-md-12">
+                         <textarea cols="40" placeholder="Enter comments here" rows="5" maxlength="400" style="width: 100%" formControlName="comments"></textarea>
+                         <div *ngIf="submitted == true && offerRejectForm.get('comments').invalid">
+                             <mat-error >
+                                 <span>
+                                     Comments are required
+                                 </span>
+                             </mat-error>
+                         </div>
+                     </div>
+
+                     <div class="form-row col-md-12" >
+                           <button class="btn primary-btn btn-default btn-gradient" style="margin: 0px 0px 0px auto;"
+                               (submit)="rejectJobOffer()">Reject Offer</button>
+                       </div>
+                 </div>
+
+         </form>
+     </div>
+        
+</div>
+
+</section>
+

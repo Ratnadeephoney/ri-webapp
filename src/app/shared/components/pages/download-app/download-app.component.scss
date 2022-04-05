@@ -1,0 +1,36 @@
+app-download-app {
+    .register-page .theme-card {
+        padding: 0;
+        border: none;
+        line-height: 0;
+    }
+
+    input{
+        height: 40px !important;
+        padding: 0 22px !important;
+        font-size: 1rem !important;
+        border: none;
+        outline: none;
+    }
+
+    .ri_mobilenumber {
+        width: 50%;
+        border-radius: 50px;
+        outline: none;
+        border: 1px solid #99146b;
+        height: 47px;
+    }
+
+    .btn-send {
+        position: absolute;
+        top: -19px;
+        right: 0px;
+        outline: none;
+    }
+
+    // @media screen and (max-width: 750px) {
+    //     .close {
+    //         right: 0px !important;
+    //     }
+    // }
+}

@@ -1,0 +1,210 @@
+
+<div class="container my-4">
+    <div class="ri-row" >   
+        <div class="col-lg-1">
+            <div class="avatar-circle">
+                <span class="initials">{{data.refId.refIntial}} </span>
+            </div>
+        </div>
+           <div class="col-lg-10">
+                <a style="font-size: 16px;  padding-left: 5px;">{{data.refId.refName}} </a>
+                <div><a style="padding-left: 5px;">{{data.refId.refrole}}</a></div>
+            </div>
+            <div class="col-lg-1">
+                <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="close()">
+                    <mat-icon>close</mat-icon></button>
+            </div>
+            
+     </div>  
+     <hr/>
+     <!-- form -->
+     <form [formGroup] ="giveFeedbackForm" (ngSubmit)="onSubmit()"> 
+          
+     <!-- next  -->
+        <div  class="ri-row marginpadding">
+            <div class="col-lg-8">
+                <span><b>Domain :</b></span>
+            </div>
+            <div class="col-lg-4 str">
+                <ngb-rating max="5" formControlName="domain" class="star-rating" >    
+                </ngb-rating>
+            </div>
+           
+        </div>
+        <!-- tech -->
+        <div  class="ri-row marginpadding">
+            <div class="col-lg-8">
+                <span><b>Technical :</b></span>
+
+            </div>
+            <div class="col-lg-4 str">
+                <ngb-rating max="5" formControlName="technical" class="star-rating">
+                </ngb-rating>
+            </div>
+             
+        </div>
+        <!-- commu -->
+        <div  class="ri-row marginpadding">
+            <div class="col-lg-8">
+                <span><b>Communication :</b></span>
+            </div>
+            <div class="col-lg-4 str">
+                <ngb-rating max="5" formControlName="communication" class="star-rating">
+                </ngb-rating>
+            </div>
+           
+        </div>
+        <!-- att -->
+        <div  class="ri-row marginpadding">
+            <div class="col-lg-8">
+                <span><b>Attitude :</b></span>
+            </div>
+            <div class="col-lg-4 str">
+                <ngb-rating max="5" formControlName="attitude" class="star-rating">
+                </ngb-rating>
+            </div>      
+        </div>
+        
+        <!-- workAssosiatio -->
+        <div  class="ri-row marginpadding">
+            <div class="col-lg-7">
+                <label style="margin-right: 5px;"><b>Work Association : </b></label>
+                <mat-form-field style="width:250px;" appearance="outline">  
+                    <input formControlName="workAssociation" style="width:250px;" matInput placeholder="company name" maxlength="30">  
+                  </mat-form-field>
+            </div>
+            <!-- project -->
+            <div class="col-lg-5" >  
+                <label style="margin-right: 10px;"><b>Projects : </b></label>
+                <mat-form-field appearance="outline">  
+                    <input formControlName="project" matInput maxlength="50">  
+                  </mat-form-field> 
+            </div>
+        </div>
+
+        <!-- skills -->
+         <div class="ri-row marginpadding2">
+            <div class="col-lg-7">
+                <label style="margin-right: 94px; float:left;"><b>Skills : </b></label>
+                <!--mat-form-field appearance="outline"> 
+                    <mat-select>
+                        <input (keyup)="onKey($event.target.value)">
+                       
+                        <mat-option *ngFor="let skill of skillList" [value]="skill">
+                          {{skill.technologyDescription}}
+                        </mat-option>
+                     
+                    </mat-select>
+
+
+                  </mat-form-field-->
+                  <!--ng-select  style="border:1px solid rgb(160, 159, 159);float:left; 
+                  border-radius:5px ; width:200px;
+                  margin-left:4px;height: 33px;"
+                                            [selectOnTab]="true" 
+                                            [items]="dataStorage.globalSkillsList"
+                                            [multiple]="true"
+                                            bindLabel="technologyDescription"
+                                            id="txtSkills"
+                                            bindValue="technologyId"
+                                            
+                                            [(ngModel)]="optionalTags">
+                                            <ng-template  ng-multi-label-tmp let-items="items" let-clear="clear">
+                                                <div class="ng-value" *ngFor="let item of items | slice:0:1">
+                                                    <span style="text-align:center; margin-top: -4px;" class="ng-value-label" title="{{item.technologyDescription}}">
+                                                        {{item.technologyDescription | slice:0:10}}
+                                                        <span style="margin-left:-3px margin-top: -4px;"
+                                                            title="{{item.technologyDescription}}"
+                                                            *ngIf="item.technologyDescription && item.technologyDescription.length > 10">...</span>
+                                                    </span>
+    
+                                                    <span class="ng-value-icon right" (click)="clear(item)"
+                                                        aria-hidden="true">×</span>
+                                                </div>
+                                                <div class="ng-value" *ngIf="items.length > 1">
+                                                    <span class="ng-value-label">{{items.length - 1}}
+                                                        more...</span>
+                                                </div>
+                                            </ng-template>
+                                    
+                                           
+                    </ng-select-->
+                    <ng-select  style="border:1px solid rgb(160, 159, 159);float:left; 
+                            border-radius:5px ; width:250px;
+                            margin-left:4px;height: 35px;"
+                                            [selectOnTab]="true" 
+                                            [items]="dataStorage.globalSkillsList"
+                                            [multiple]="true"
+                                            bindLabel="technologyDescription"
+                                            id="txtSkills"
+                                            bindValue="technologyId"
+                                            [(ngModel)]="optionalTags"
+                                            formControlName="skills">
+                                            
+                                            <ng-template ng-multi-label-tmp let-items="items" let-isSelected="selectedSkills" let-clear="clear">
+                                                <div class="ng-value" *ngFor="let item of items | slice:0:2">
+                                                    <!--span (click)="addselectedSkills(item.technologyId)"></span-->
+                                                    <span  class="ng-value-label"  title="{{item.technologyDescription}}">
+                                                        {{item.technologyDescription | slice:0:7}}
+                                                        <span  style="margin-left:-3px "
+                                                            title="{{item.technologyDescription}}" 
+                                                            *ngIf="item.technologyDescription && item.technologyDescription.length > 6">...</span>
+                                                            
+                                                        </span>
+    
+                                                    <span class="ng-value-icon right" (click)="clear(item)"
+                                                        aria-hidden="true">×</span>
+
+                                                        
+                                                </div>
+                                                <div class="ng-value" *ngIf="items.length > 2">
+                                                    
+                                                    <span class="ng-value-label">{{items.length - 2}}
+                                                        more...</span>
+                                                </div>
+                                            </ng-template> 
+
+                                    
+                                           
+                                        </ng-select>
+            </div>
+            
+            <!-- duration -->
+            <div class="col-lg-5" >  
+                <label style="margin-right: 5px;"><b>Duration : </b></label>
+                <mat-form-field appearance="outline">  
+                    <input formControlName="duration" matInput placeholder="Years or Months" maxlength="20">  
+                  </mat-form-field> 
+            </div>
+        </div> 
+        <!-- Feedback -->
+        <div  class="ri-row marginpadding2">
+            <div class="col-lg-2">
+                <label style="margin-right: 15px;"><b>Feedback :</b></label>
+            </div>
+            <div class="col-lg-10">
+                <mat-form-field class = "tp-full-width" appearance="outline" style="left: 10px;">  
+                    <textarea 
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="3"
+                    cdkAutosizeMaxRows="5"
+                    formControlName="feedback" matInput maxlength="150" #message>  </textarea>
+                    <mat-hint align="end">{{message.value.length}}/150</mat-hint>
+                  </mat-form-field>  
+                   
+            </div>      
+        </div>
+        <!-- button -->
+        
+        
+<br>
+<br>
+
+<div class="center ">
+    <button class="btn btn-default btn-gradient mt-1" style="padding : 7px 35px" type="submit" [disabled]="giveFeedbackForm.invalid">Add</button>
+  </div>
+</form>
+
+     <!-- end -->
+         
+   

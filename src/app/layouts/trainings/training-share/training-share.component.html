@@ -1,0 +1,30 @@
+<div #modal class="login-modal" data-target="#modal" class="intfbPopup">
+    <div class="modal-header p-2">
+        <h4 class="text-white">Jobseekers</h4>
+        <button aria-label="Close" class="close text-white sm-close-right" data-dismiss="modal"
+            (click)="onModalDismiss(false)" type="button" style="right: -150px; outline: none;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="ri-col">
+            <div class="ri-row" *ngFor="let js of jobseekersList">
+                <div style="padding-top: 3px;" *ngIf="js.isSuggested!=true">
+                    <input type="checkbox" [value]="js.userId" (change)="selectJS($event, js)" [disabled]="js.isSuggested" [(ngModel)]="js.selected" />
+                </div>
+                <div style="padding-top: 3px;" *ngIf="js.isSuggested==true">
+                    <input type="checkbox" [value]="js.userId" (change)="selectJS($event, js)" [disabled]="js.isSuggested" [(ngModel)]="js.isSuggested" />
+                </div>
+                <div *ngIf="js.userName!=null && js.userName!=''" [ngClass]="{'opacity1': js.isSuggested==true}" style="padding-left: 5px;">
+                    {{js.userName}}
+                </div>
+                <div *ngIf="js.userName==null || js.userName==''" [ngClass]="{'opacity1': js.isSuggested==true}" style="padding-left: 5px; padding-top: 1px;">
+                    NA
+                </div>
+            </div>
+        </div>
+        <div class="ri-row-center" style="padding-top: 10px;">
+            <button class="btn btn1 btn-default primary-btn info radius-0 btn-search btn-gradient btn-search col-sm-12" (click)="onModalDismiss(true)">Submit</button>
+        </div>
+    </div>
+</div>

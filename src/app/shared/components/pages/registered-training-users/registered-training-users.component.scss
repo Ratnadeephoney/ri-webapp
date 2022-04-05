@@ -1,0 +1,31 @@
+app-registered-training-users {
+    .intfbPopup {
+        // width: 40rem;
+    }
+    .modal-header {
+        background: #9a0365 !important;
+    }
+    .avatar {
+        border: 1px solid #9a0365;
+        border-radius: 20px;
+        font-size: 1rem;
+        width: 2rem;
+        color: #9a0365;
+    }
+    .status {
+        border-radius: 20px;
+    }
+    .registered {
+        color: #ee6f37;
+        border: 1px solid #ee6f37;
+    }
+    .in-progress {
+        color: #496def;
+        border: 1px solid #496def;
+    }
+    .completed {
+        color: #d3379a;
+        border: 1px solid #d3379a;
+    }
+        
+}

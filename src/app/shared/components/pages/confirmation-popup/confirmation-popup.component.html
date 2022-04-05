@@ -1,0 +1,24 @@
+<div #modal class="login-modal" data-target="#modal" class="intfbPopup" >
+    <div class="modal-header p-2">
+        <h4 class="text-white modal-title"> {{data.title ? data.title : 'Confirm'}} </h4>
+        <!-- <button aria-label="Close" class="close text-white sm-close-right" data-dismiss="modal" (click)="onModalDismiss(false)"
+         type="button" style="right: -150px; outline: none;">
+            <i class="fa fa-close"></i>
+        </button> -->
+
+        <i class="fa fa-close" class="icon-close" (click)="onModalDismiss(false)"></i>
+        
+    </div>
+    <div class="modal-body">
+        <div >
+            <div class="col-lg-12 text-center">
+               <p class="content-class">{{data.contentText}}</p>
+            </div>
+            <div class="col-md-12 justify-content-center row pl-0 mt-4">
+                <button class="btn feedback-btn mr-2 shadow-none"  (click)="onModalDismiss(true)">Yes</button>
+                <button class="btn feedback-btn ml-2" (click)="onModalDismiss(false)" >No</button>
+            </div>
+        </div>
+
+    </div>
+</div>

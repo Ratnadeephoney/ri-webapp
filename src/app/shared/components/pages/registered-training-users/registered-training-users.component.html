@@ -1,0 +1,40 @@
+<div #modal class="login-modal" data-target="#modal" class="intfbPopup">
+    <div class="modal-header p-2">
+        <h5 class="text-white">Registered Users</h5>
+        <button aria-label="Close" class="close text-white sm-close-right" data-dismiss="modal"
+            (click)="onModalDismiss(false)" type="button" style="right: -150px; outline: none;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+    <div class="modal-body">
+        <div>
+            <p>This Training has been shared to 2 users. You can view registered users details below.</p>
+        </div>
+        <hr>
+        <div *ngFor="let user of registeredUsersList" class="mt-2">
+            <div class="row">
+                <div class="col-md-1">
+                    <p class="avatar text-center mt-0">{{user.avatar}}</p>
+                </div>
+                <div class="col-md-7 pl-3">
+                    <p *ngIf="!!user.userName; else NABlock">
+                        {{user.userName ? (user.userName | slice:0:15) : 
+                            user.mobileNumber}}
+                        {{ user.userName ? user.userName.length > 15 ? '...': '' : ''}}
+                    </p>
+                    <p *ngIf="!!user.designation; else NABlock">{{user.designation}}</p>
+                </div>
+                <div class="col-md-4 mt-2">
+                    <p class="status p-1 text-center" 
+                    [ngClass]="{'registered': user.status == 'Registered', 'in-progress': user.status == 'In Progress', 'completed': user.status == 'Completed'}"
+                    > {{user.status}} </p>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <ng-template #NABlock>
+            <p>Not Available</p>
+        </ng-template>
+    </div>
+</div>

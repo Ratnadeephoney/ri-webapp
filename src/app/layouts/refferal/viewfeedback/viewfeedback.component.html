@@ -1,0 +1,103 @@
+<div class="container my-4">
+    <div class="ri-row" >   
+        <div class="col-lg-1">
+            <div class="avatar-circle">
+                <span class="initials">{{description.avatar}} </span>
+            </div>
+        </div>
+           <div class="col-lg-10">
+                <a style="font-size: 16px;  padding-left: 5px;">{{description.name}} </a>
+                <div><a style="padding-left: 5px;">{{description.role}}</a></div>
+            </div>
+            <div class="col-lg-1">
+                <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="close()">
+                    <mat-icon>close</mat-icon></button>
+            </div>
+     </div> 
+     <hr/>
+
+     <!-- next  -->
+        <div  class="ri-row marginpadding">
+            <div class="col-lg-8">
+                <span><b>Domain :</b></span>
+            </div>
+            <div class="col-lg-4" >
+                <ngb-rating max="5" class="star-rating" [readonly]="true" rate={{description.domain}}>
+                </ngb-rating>
+            </div>
+        </div>
+        <!-- tech -->
+        <div  class="ri-row marginpadding">
+            <div class="col-lg-8">
+                <span><b>Technical :</b></span>
+            </div>
+            <div class="col-lg-4" >
+                <ngb-rating max="5" class="star-rating" [readonly]="true" rate={{description.technical}}>
+                </ngb-rating>
+            </div>
+        </div>
+        <!-- commu -->
+        <div  class="ri-row marginpadding">
+            <div class="col-lg-8">
+                <span><b>Communication :</b></span>
+            </div>
+            <div class="col-lg-4" >
+                <ngb-rating max="5" class="star-rating" [readonly]="true" rate={{description.communication}}>
+                </ngb-rating>
+            </div>
+        </div>
+        <!-- att -->
+        <div  class="ri-row marginpadding">
+            <div class="col-lg-8">
+                <span><b>Attitude :</b></span>
+            </div>
+            <div class="col-lg-4" >
+                <ngb-rating max="5" class="star-rating" [readonly]="true" rate={{description.attitude}}>
+                </ngb-rating>
+            </div>
+        </div>
+        
+        <!-- workAssosiatio -->
+
+        <div  class="ri-row marginpadding">
+            <div class="col-lg-8">
+                <span><b>Work Association : </b></span> {{description.workAssociation}}
+            </div>
+            <div class="col-lg-4" >
+                <span><b>Duration : </b></span>{{description.duration}}
+            </div>
+        </div>
+        <!-- project -->
+        <div  class="ri-row marginpadding">
+            <div class="col-lg-12">
+                <span><b>Projects : </b></span> 
+                {{description.project}}
+            </div>
+        </div>
+
+        <!-- skills -->
+        <div  class="ri-row marginpadding2">
+            <div class="col-lg-12">
+                <span><b>Skills : </b></span>  {{description.skills}}
+            </div>
+        </div>
+        <!-- Feedback -->
+        <div  class="ri-row marginpadding2">
+            <div class="col-lg-12">
+                <span><b>Feedback : </b></span> {{description.feedback}}
+               
+            </div>
+        </div>
+<br><br>
+        <div class="center ">
+    <button class="btn btn-default btn-gradient mt-1" style="padding : 7px 35px" (click)="close()">Close</button>
+  </div>
+        
+       
+            
+       
+
+     </div>
+     <!-- end -->
+         
+   

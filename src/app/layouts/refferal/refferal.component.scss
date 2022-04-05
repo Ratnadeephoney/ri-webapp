@@ -1,0 +1,89 @@
+
+.request {
+    background-color: #f9e1f1;
+    color: #98236e;
+    border: 2px solid #98236e;
+    border-radius: 5px; 
+  }
+  .requested {
+      background-color: #f9e8eb;
+      color: #f56a79;
+      border: 2px solid #f56a79;
+      border-radius: 5px; 
+  }
+  
+
+  .btnstyle{
+      background-color: #f9e1f1;
+      color: #98236e;
+      border: 2px solid #98236e;
+      border-radius: 5px; 
+  }
+  
+  .avatar-circle {
+      width: 50px;
+      height: 50px;
+      background-color:#98236e;
+      text-align: center;
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+    }
+    .initials {
+      position: relative;
+      top: 12.5px; /* 25% of parent */
+      font-size: 25px; /* 50% of parent */
+      line-height: 25px; /* 50% of parent */
+      color: #fff;
+      // font-family: "Courier New", monospace;
+      // font-weight: bold;
+    }
+  
+    hr {
+      width: 90%;               
+      margin-left:0;
+    }
+  
+    .nodata {
+       font-size:20px;
+       color:rgb(128, 4, 82);
+       text-transform: inherit;
+       margin-top: 10rem;
+   }
+  
+   .tabcolor{
+     background-color: rgb(128, 4, 82);
+     color :white;
+   }
+
+   
+   .btnadd {
+    display :inline-block;
+    text-decoration :none;
+    color : rgb(128, 4, 82);
+    width : 40px;
+    height :40px;
+    line-height : 40px;
+    border-radius: 50%;
+    border : solid 2px rgb(128, 4, 82);
+    text-align : center;
+    overflow : hidden;
+    vertical-align :middle;
+    transition : .6s;
+    font-weight: normal;
+    font-size: 40px;
+    background-color: none;
+   }
+
+ .btnadd:hover{
+  background-color: rgb(128, 4, 82);
+  color : #fff;
+ }
+ .btnforadd{
+  padding: 0;
+  border: none;
+  background: none;
+ }
+
+   
+   

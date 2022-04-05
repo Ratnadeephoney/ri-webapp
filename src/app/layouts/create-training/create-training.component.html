@@ -1,0 +1,640 @@
+<app-authorize-layout>
+    <section class="container" style="padding-right: 50px; padding-top: 30px;">
+        <h3 *ngIf="dataStorage.EditTraining" style="color: black;"><b>Edit Training</b></h3>
+        <h3 *ngIf="!dataStorage.EditTraining" style="color: black;"><b>Create Training</b></h3>
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-9">
+                    <form class="theme-form" [formGroup]="addTrainingForm">
+                        <div>
+                            <br><br>
+                            <div class="wizard">
+                                <div class="wizard-inner">
+                                    <div class="connecting-line"></div>
+                                    <ul class="nav nav-tabs justify-content-between" role="tablist">
+                                        <li role="presentation" class="active" [ngClass]="{ 'active':activeTab >= 1}">
+                                            <a aria-controls="step1" role="tab" aria-expanded="true"><span
+                                                    class="round-tab"><i class="fa "
+                                                        [ngClass]="{'fa-pencil': activeTab == 1, 'fa-check': activeTab > 1}"></i></span>
+                                                <i class="pl-2">Basic<br />
+                                                    Details</i></a>
+                                        </li>
+                                        <li role="presentation" class="disabled" [ngClass]="{ 'active':activeTab >= 2}">
+                                            <a aria-controls="step2" role="tab" aria-expanded="false"><span
+                                                    class="round-tab"><i class="fa "
+                                                        [ngClass]="{'fa-pencil': (activeTab == 2 || activeTab == 3), 'fa-check': activeTab > 2}"></i></span>
+                                                <i>Topic<br /> Details</i></a>
+                                        </li>
+                                        <li role="presentation" class="disabled"
+                                            [ngClass]="{ 'active':activeTab >= 4 }">
+                                            <a aria-controls="step3" role="tab" aria-expanded="false"><span
+                                                    class="round-tab"><i class="fa "
+                                                        [ngClass]="{'fa-pencil': activeTab == 4, 'fa-check': activeTab > 4}"></i></span>
+                                                <i>Attachments</i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="ri-col" *ngIf="Tab1active && !Tab2active && !Tab3active">
+                            <div class="form-row mt-4">
+                                <div class="col-md-6 m-b-30">
+                                    <input type="text" autocomplete="off" class="form-control" id="ttitle" style="border: none; border-bottom: 1px solid #ced4da; border-radius: 0 !important"
+                                        formControlName="trainingTitle" maxlength="50">
+                                    <label for="ttitle" class="form-control-placeholder"
+                                        [ngClass]="{'form-control-valid': this.addTrainingForm.value.trainingTitle}">Training
+                                        Title <span class="mandatory">*</span>
+                                    </label>
+                                    <div *ngIf="submitted == true && addTrainingForm.get('trainingTitle').invalid">
+
+                                        <mat-error class="trainingError">
+                                            Please enter Training title.
+                                        </mat-error>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mt-1">
+
+                                    <ng-select [selectOnTab]="true" formControlName="technologies" (focus)="skillfocused=true" (focusout)="skillfocused=false"
+                                        [items]="dataStorage.globalSkillsList" bindLabel="technologyDescription"
+                                        bindValue="technologyId" [multiple]="true" id="txtSkills" class="left mb-3">
+                                        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                            <div class="ng-value" *ngFor="let item of items | slice:0:3">
+                                                <span class="ng-value-label" title="{{item.technologyDescription}}">
+                                                    {{item.technologyDescription | slice:0:10}}
+                                                    <span style="margin-left:-3px"
+                                                        title="{{item.technologyDescription}}"
+                                                        *ngIf="item.technologyDescription && item.technologyDescription.length > 10">...</span>
+                                                </span>
+
+                                                <span class="ng-value-icon right" (click)="clear(item)"
+                                                    aria-hidden="true">×</span>
+                                            </div>
+                                            <div class="ng-value" *ngIf="items.length > 3">
+                                                <span class="ng-value-label">{{items.length - 3}}
+                                                    more...</span>
+                                            </div>
+                                        </ng-template>
+                                    </ng-select>
+                                    <label class="form-control-placeholder" for="txtSkills"
+                                        [ngClass]="{'form-control-valid': this.addTrainingForm.value.technologies.length != 0 || this.skillfocused}">Skills
+                                        <span class="mandatory">*</span></label>
+                                    <div *ngIf="submitted == true && addTrainingForm.get('technologies').invalid">
+                                        <mat-error class="skillError">
+                                            Please select at least one skill.
+                                        </mat-error>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-4 p-0 mb-4">
+                                <textarea class="form-control" id="tdesc"
+                                    formControlName="trainingDescription"></textarea>
+                                <label for="tdesc" class="form-control-placeholder"
+                                    [ngClass]="{'form-control-valid': this.addTrainingForm.value.trainingDescription}">Training
+                                    Description <span class="mandatory">*</span>
+                                </label>
+                                <div *ngIf="submitted == true && addTrainingForm.get('trainingDescription').invalid">
+                                    <mat-error class="ml-2">
+                                        Please enter Training Description.
+                                    </mat-error>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4" style="min-height: 200px;" *ngIf="!Tab1active && Tab2active && !Tab3active">
+
+                            <div class="topics-table" *ngIf="EnableTopicAdd">
+                                <div class="toplist-details">
+                                    <form [formGroup]="addTopicForm">
+                                        <div class="row">
+                                            <div class="col-md-2 m-b-30" style="padding-right: 0px; min-width: 100px;">
+                                                <input matInput formControlName="topicName" autocomplete="off"
+                                                    class="form-control" id="topicTitle">
+                                                <label for="topicTitle"
+                                                    [ngClass]="{'form-control-valid': this.addTopicForm.value.topicName}"
+                                                    class="form-control-placeholder">Topic Title<span
+                                                        class="mandatory">*</span></label>
+                                                <div>
+                                                    <mat-error class="nameError"
+                                                        *ngIf="isTopicSubmitted && addTopicForm.get('topicName').hasError('required')">
+                                                        Enter Topic title
+                                                    </mat-error>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 m-b-30" style="padding-right: 0px; min-width: 150px;">
+                                                <input matInput formControlName="topicDescription" class="form-control"
+                                                    id="topicDesc">
+                                                <label for="topicDesc"
+                                                    [ngClass]="{'form-control-valid': this.addTopicForm.value.topicDescription}"
+                                                    class="form-control-placeholder">Topic Description</label>
+                                            </div>
+                                            <div class="col-md-3 m-b-30" style="padding-right: 0px; min-width: 150px;">
+                                                <input type="number" matInput id="topicDur"
+                                                    formControlName="topicDuration" class="form-control">
+                                                <label for="topicDur"
+                                                    [ngClass]="{'form-control-valid': this.addTopicForm.value.topicDuration}"
+                                                    class="form-control-placeholder">Duration (in hours)<span
+                                                        class="mandatory">*</span></label>
+                                                <div>
+                                                    <mat-error class="nameError"
+                                                        *ngIf="isTopicSubmitted && addTopicForm.get('topicDuration').hasError('required')">
+                                                        Enter Duration
+                                                    </mat-error>
+                                                    <mat-error class="nameError"
+                                                        *ngIf="isTopicSubmitted && addTopicForm.get('topicDuration').hasError('min')">
+                                                        Enter value > 0
+                                                    </mat-error>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 m-b-30" style="padding-right: 0px; min-width: 100px;">
+                                                <input type="number" matInput id="topicPrice" class="form-control"
+                                                    formControlName="topicPrice">
+                                                <label for="topicPrice"
+                                                    [ngClass]="{'form-control-valid': this.addTopicForm.value.topicPrice}"
+                                                    class="form-control-placeholder">Price<span
+                                                        class="mandatory">*</span></label>
+                                                <div>
+                                                    <mat-error class="nameError"
+                                                        *ngIf="isTopicSubmitted && addTopicForm.get('topicPrice').hasError('required')">
+                                                        Enter Price
+                                                    </mat-error>
+                                                    <mat-error class="nameError"
+                                                        *ngIf="isTopicSubmitted && addTopicForm.get('topicPrice').hasError('min')">
+                                                        Enter value > 0
+                                                    </mat-error>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2" style="text-align: center; padding-right: 0px;">
+                                                <button class="btn btn-default btn-gradient pt-1 pb-1"
+                                                    *ngIf="!selectedTopicInfo" (click)="addTopic()">Add</button>
+                                                <button class="btn btn-default btn-gradient pt-1 pb-1"
+                                                    *ngIf="selectedTopicInfo && selectedTopicInfo.topicId"
+                                                    (click)="updateTopic()">Update</button>
+                                                <button class="btn"
+                                                    *ngIf="selectedTopicInfo && selectedTopicInfo.topicId"
+                                                    (click)="cancelTopic()">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <br><br>
+                            <div style="padding-left: 0px !important;" *ngIf="topicList.length > 0"
+                                class="topics-table topic-list Tablecls">
+                                <div class="row newcl1" style="height: 40px; align-items: center;"
+                                    *ngIf="topicList.length > 0">
+                                    <div class="col-md-3">
+                                        <p><b>Topic Title</b></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p><b>Topic Description</b></p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p><b>Topic Duration</b></p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p><b>Topic Price</b></p>
+                                    </div>
+
+                                </div>
+                                <div class="row" [ngClass]="{'bdbtm': topicList.length>1}"
+                                    *ngFor="let topic of topicList"
+                                    style="line-height: 30px; min-height: 50px; align-items: center;">
+                                    <div class="col-md-3">
+                                        <span>{{topic.topicName}}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span *ngIf="topic.topicDescription != null">{{topic.topicDescription}}</span>
+                                        <span *ngIf="topic.topicDescription == null">NA</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span>{{topic.duration}}</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span>{{topic.price}}</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <img src="../../../assets/images/edit-color.png"
+                                            style="height: 1.2rem !important; cursor: pointer; margin-right: 1rem !important;"
+                                            class="attachment-icon mr-2" (click)="editTopic(topic)" />
+                                        <img src="../../../assets/images/delete-color.png" class="attachment-icon"
+                                            style="cursor: pointer; height: 1.2rem !important;"
+                                            (click)="deleteTopic(topic)" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="forsm" *ngIf="topicList.length > 0">
+                                <div class="ri-col" [ngClass]="{'bdbtm': topicList.length>1}"
+                                    style="line-height: 30px; margin-bottom: 20px;" *ngFor="let topic of topicList">
+                                    <div class="ri-row">
+                                        <div class="flex1" style="min-width: 140px;">
+                                            <span><b>Topic Title: </b></span>
+                                        </div>
+                                        <div class="flex1">
+                                            <span>{{topic.topicName}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="ri-row">
+                                        <div class="flex1" style="min-width: 140px;">
+                                            <span><b>Topic Description: </b></span>
+                                        </div>
+                                        <div class="flex1">
+                                            <span
+                                                *ngIf="topic.topicDescription != null">{{topic.topicDescription}}</span>
+                                            <span *ngIf="topic.topicDescription == null">NA</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="ri-row">
+                                        <div class="flex1" style="min-width: 140px;">
+                                            <span><b>Topic Duration: </b></span>
+                                        </div>
+                                        <div class="flex1">
+                                            <span>{{topic.duration}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="ri-row">
+                                        <div class="flex1" style="min-width: 140px;">
+                                            <span><b>Topic Price: </b></span>
+                                        </div>
+                                        <div class="flex1">
+                                            <span>{{topic.price}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="ri-row"
+                                        style="margin-top: 10px; margin-bottom: 10px; justify-content: flex-end;">
+                                        <img src="../../../assets/images/edit-color.png"
+                                            style="height: 1.2rem !important; cursor: pointer; margin-right: 1rem !important;"
+                                            class="attachment-icon mr-2" (click)="editTopic(topic)" />
+                                        <img src="../../../assets/images/delete-color.png" class="attachment-icon"
+                                            style="cursor: pointer; height: 1.2rem !important;"
+                                            (click)="deleteTopic(topic)" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="topicList.length==0 && !EnableTopicAdd" class="ri-col"
+                                style="align-items: center;">
+                                <div (click)="AddTopicNew()">
+                                    <img src="../../../assets/images/add-topic.png"
+                                        style="cursor: pointer; width: 50px; height: 50px;">
+                                </div>
+                                <div style="padding-top: 5px;">
+                                    <span>Add Topic</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="!Tab1active && !Tab2active && Tab3active">
+                            <div class="form-row mt-4">
+                                <div class="upload" style="width: 100%;">
+                                    <div class="custom-file">
+                                        <!-- <label *ngIf="resume.length != 0" class="resumeLabel">Attachment</label> -->
+                                        <input type="file" placeholder="Attachment" class="custom-file-input"
+                                            id="uploadAttachment" (change)="getFile($event)"
+                                            title="{{courseImageInfo.fileName.length != 0 ? courseImageInfo.fileName : 'Training Image(Optional)'}}">
+                                        <label class="custom-file-label" for="uploadAttachment" title="Attachment"><img
+                                                src="assets/images/rockinterview/attachment.png"
+                                                class="attachment-icon pull-right" />Attachment</label>
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div *ngIf="attachments.length>0">
+                                <h4 style="color: black;">Attachments List</h4>
+                            </div>
+                            <div class="ri-row" *ngIf="attachments.length>0" style="flex-wrap: wrap;">
+                                <div class="ri-col" *ngFor="let attachment of attachments"
+                                    style="width: 210px; margin: 5px; padding: 5px; box-shadow: 0px 1px 2px 1px #857f7f;">
+                                    <div>
+                                        <img src="../../../assets/images/attachments-pdf.png"
+                                            style="width: 200px; height: 100px;">
+                                    </div>
+                                    <div>
+                                        <span>
+                                            <!-- {{attachment.attachmentName}} -->
+                                            {{attachment.attachmentName | slice:0:20}}
+                                            {{attachment.attachmentName.length > 20 ? '...': ''}}
+                                        </span>
+                                    </div>
+                                    <div class="row"
+                                        style="align-items: center; justify-content: space-evenly; min-height: 50px;">
+                                        <div>
+                                            <img src="../../../assets/images/download_New.png"
+                                                (click)="OpenAttachment(attachment)"
+                                                style="cursor: pointer; height: 25px; width: 25px">
+                                        </div>
+                                        <div>
+                                            <img src="../../../assets/images/delete-color.png"
+                                                (click)="DeleteAttachment(attachment)"
+                                                style="cursor: pointer; height: 25px; width: 25px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <br><br>
+                        <div class="ri-row" style="justify-content: flex-end;">
+                            <div *ngIf="Tab1active && !Tab2active && !Tab3active && dataStorage.EditTraining">
+                                <button class="btn form-control btn-default btn-gradient pt-0 pb-0"
+                                    (click)="Cancel()">Back</button>
+                            </div>
+                            <div *ngIf="!Tab1active && Tab2active && !Tab3active">
+                                <button class="btn form-control btn-default pt-0 pb-0 prevbtn"
+                                    (click)="Previousfrompage2()">Previous</button>
+                            </div>
+                            <div style="padding-left: 5px;" *ngIf="Tab1active && !Tab2active && !Tab3active">
+                                <button *ngIf="!dataStorage.EditTraining"
+                                    class="btn form-control btn-default btn-gradient pt-0 pb-0"
+                                    (click)="NextFromPage1()">Next</button>
+                                <button *ngIf="dataStorage.EditTraining"
+                                    class="btn form-control btn-default btn-gradient pt-0 pb-0"
+                                    (click)="NextFromPage1()">Update</button>
+                            </div>
+                            <div style="padding-left: 5px;" *ngIf="!Tab1active && Tab2active && !Tab3active">
+                                <button class="btn form-control btn-default btn-gradient pt-0 pb-0"
+                                    (click)="NextFromPage2()">Next</button>
+                            </div>
+                            <div style="padding-left: 5px;" *ngIf="!Tab1active && !Tab2active && Tab3active">
+                                <button class="btn form-control btn-default pt-0 pb-0 prevbtn"
+                                    (click)="PreviousfromPage3()">Previous</button>
+                            </div>
+                            <div style="padding-left: 5px;" *ngIf="!Tab1active && !Tab2active && Tab3active">
+                                <button class="btn form-control btn-default btn-gradient pt-0 pb-0"
+                                    (click)="BackToList()">Back
+                                    To List</button>
+                            </div>
+                        </div>
+                        <!-- <div>
+                    <h5>Training Details</h5>
+                    <div class="col-md-11">
+                        <div style="border: 1px solid #ddd;
+                        padding: 1rem;">
+                            <div class="form-row mt-4">
+                                <div class="col-md-6">
+                                    <input type="text" autocomplete="off" class="form-control" id="ttitle"
+                                        formControlName="trainingTitle" maxlength="50">
+                                    <label for="ttitle" class="form-control-placeholder"
+                                        [ngClass]="{'form-control-valid': this.addTrainingForm.value.trainingTitle}">Training
+                                        Title<span class="mandatory">*</span>
+                                    </label>
+                                    <div *ngIf="submitted == true && addTrainingForm.get('trainingTitle').invalid">
+
+                                        <mat-error class="nameError">
+                                            Please enter valid Training title.
+                                        </mat-error>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mt-1">
+                                    <label class="resumeLabel"
+                                        *ngIf="this.addTrainingForm.value.technologies.length != 0">Technologies
+                                        <span class="mandatory">*</span></label>
+                                    <ng-select [selectOnTab]="true" placeholder="Technologies*"
+                                        formControlName="technologies" [items]="dataStorage.globalSkillsList"
+                                        bindLabel="technologyDescription" bindValue="technologyId" [multiple]="true"
+                                        id="txtSkills" class="left mb-3">
+                                        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                            <div class="ng-value" *ngFor="let item of items | slice:0:3">
+                                                <span class="ng-value-label" title="{{item.technologyDescription}}">
+                                                    {{item.technologyDescription | slice:0:10}}
+                                                    <span style="margin-left:-3px"
+                                                        title="{{item.technologyDescription}}"
+                                                        *ngIf="item.technologyDescription.length > 10">...</span>
+                                                </span>
+
+                                                <span class="ng-value-icon right" (click)="clear(item)"
+                                                    aria-hidden="true">×</span>
+                                            </div>
+                                            <div class="ng-value" *ngIf="items.length > 3">
+                                                <span class="ng-value-label">{{items.length - 3}}
+                                                    more...</span>
+                                            </div>
+                                        </ng-template>
+                                    </ng-select>
+                                    <div *ngIf="submitted == true && addTrainingForm.get('technologies').invalid">
+                                        <mat-error class="nameError">
+                                            Please select at least one technology.
+                                        </mat-error>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-4 p-0 mb-4">
+                                <textarea class="form-control" id="tdesc"
+                                    formControlName="trainingDescription"></textarea>
+                                <label for="tdesc" class="form-control-placeholder"
+                                    [ngClass]="{'form-control-valid': this.addTrainingForm.value.trainingDescription}">Training
+                                    Description
+                                </label>
+                                <div *ngIf="submitted == true && addTrainingForm.get('trainingDescription').invalid">
+                                    <mat-error class="ml-2">
+                                        Please enter Training Description.
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <div class="form-row mt-4">
+                                <div class="col-md-4 upload">
+                                    <div class="custom-file">
+                                        <label *ngIf="resume.length != 0" class="resumeLabel">Trianing
+                                            Image</label>
+                                        <input type="file" placeholder="Training Image(Optional)"
+                                            class="custom-file-input" id="uploadImage"
+                                            (change)="getFile($event, uploadType.IMAGE)" formControlName="trainingImage"
+                                            title="{{courseImageInfo.fileName.length != 0 ? courseImageInfo.fileName : 'Training Image(Optional)'}}">
+                                        <label class="custom-file-label" for="uploadImage"
+                                            title="{{courseImageInfo.fileName.length != 0 ? courseImageInfo.fileName : 'Training Image(Optional)'}}">
+                                            {{!!courseImageInfo.fileName ? courseImageInfo.fileName : 'Training Image(Optional)'}}
+                                            <img src="assets/images/rockinterview/attachment.png"
+                                                class="attachment-icon pull-right" /></label>
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-md-8"></div>
+                                <div class="col-md-2">
+                                    <button type="button" *ngIf="!courseId"
+                                        class="btn form-control btn-default btn-gradient primary-btn pt-0 pb-0"
+                                        (click)="createCourse()">Create Training</button>
+                                    <button type="button" *ngIf="courseId && !isEditCourseClicked"
+                                        class="btn form-control btn-default btn-gradient primary-btn pt-0 pb-0"
+                                        (click)="isEditCourseClicked =true">Edit Training</button>
+
+                                    <button type="button" *ngIf="courseId && isEditCourseClicked"
+                                        class="btn form-control btn-default btn-gradient primary-btn pt-0 pb-0"
+                                        (click)="isEditCourseClicked =false">Update Training</button>
+
+                                </div>
+                                <div class="col-md-2"> <button class="btn mr-2" *ngIf="courseId && isEditCourseClicked"
+                                        (click)="isEditCourseClicked = false">Cancel</button></div>
+                            </div>
+                        </div>
+
+                        <div class="form-row mt-4" *ngIf="courseId">
+                            <div class="col-md-4 upload">
+                                <div class="custom-file">
+                                    <label *ngIf="resume.length != 0" class="resumeLabel">Attachements
+                                    </label>
+                                    <input type="file" placeholder="Attachments" class="custom-file-input"
+                                        id="uploadAttachement" (change)="getFile($event, uploadType.ATTACHMENT)"
+                                        formControlName="trainingAttachments"
+                                        title="{{resume.length != 0 ? resume : 'Attachments'}}">
+                                    <label class="custom-file-label" for="uploadAttachement"
+                                        title="{{resume.length != 0 ? resume : 'Attachments'}}">
+                                        {{!!resume ? resume : 'Attachments'}}
+                                        <img src="assets/images/rockinterview/attachment.png"
+                                            class="attachment-icon pull-right" /></label>
+                                </div>
+                                <div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 upload">
+                                <div class="custom-file">
+                                    <label *ngIf="resume.length != 0" class="resumeLabel">Video</label>
+                                    <input type="file" placeholder="Video" class="custom-file-input" id="uploadVideo"
+                                        (change)="getFile($event)" formControlName="trainingVideo"
+                                        title="{{resume.length != 0 ? resume : 'Video'}}">
+                                    <label class="custom-file-label" for="uploadVideo"
+                                        title="{{resume.length != 0 ? resume : 'Video'}}">
+                                        {{!!resume ? resume : 'Video'}}
+                                        <img src="assets/images/rockinterview/attachment.png"
+                                            class="attachment-icon pull-right" /></label>
+                                </div>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="mt-4" *ngIf="courseId">
+                    <div>
+                        <h5>Topic Details
+                        </h5>
+                        <div *ngIf="submitted == true && topicList.length == 0" class="mb-4">
+                            <mat-error>
+                                Please enter valid topic details.
+                            </mat-error>
+                        </div>
+                    </div>
+
+
+
+                    <div class="topics-table pl-4 pr-4">
+                        <div class="toplist-details">
+                            <form [formGroup]="addTopicForm">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <input matInput formControlName="topicName" autocomplete="off"
+                                            class="form-control" placeholder="Topic Title" id="topicTitle">
+                                        <div>
+                                            <mat-error class="nameError"
+                                                *ngIf="isTopicSubmitted && addTopicForm.get('topicName').hasError('required')">
+                                                Enter Topic title
+                                            </mat-error>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input matInput formControlName="topicDescription"
+                                            placeholder="Topic Description" class="form-control" id="topicDesc">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="number" matInput id="topicDur" formControlName="topicDuration"
+                                            class="form-control" placeholder="No of Hours">
+                                        <div>
+                                            <mat-error class="nameError"
+                                                *ngIf="isTopicSubmitted && addTopicForm.get('topicDuration').hasError('required')">
+                                                Enter Duration
+                                            </mat-error>
+                                            <mat-error class="nameError"
+                                                *ngIf="isTopicSubmitted && addTopicForm.get('topicDuration').hasError('min')">
+                                                Enter value > 0
+                                            </mat-error>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="number" matInput id="topicPrice" class="form-control"
+                                            formControlName="topicPrice" placeholder="Price">
+                                        <div>
+                                            <mat-error class="nameError"
+                                                *ngIf="isTopicSubmitted && addTopicForm.get('topicPrice').hasError('required')">
+                                                Enter Price
+                                            </mat-error>
+                                            <mat-error class="nameError"
+                                                *ngIf="isTopicSubmitted && addTopicForm.get('topicPrice').hasError('min')">
+                                                Enter value > 0
+                                            </mat-error>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-default btn-gradient primary-btn pt-1 pb-1"
+                                            *ngIf="!selectedTopicInfo" (click)="addTopic()">Add</button>
+                                        <button class="btn btn-default btn-gradient primary-btn pt-1 pb-1"
+                                            *ngIf="selectedTopicInfo && selectedTopicInfo.topicId"
+                                            (click)="updateTopic()">Update</button>
+                                        <button class="btn" *ngIf="selectedTopicInfo && selectedTopicInfo.topicId"
+                                            (click)="cancelTopic()">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="topics-table topic-list pl-4 pr-4">
+                        <div class="row" *ngIf="topicList.length > 0">
+                            <div class="col-md-3">
+                                <p><b>Topic Name</b></p>
+                            </div>
+                            <div class="col-md-3">
+                                <p><b>Topic Description</b></p>
+                            </div>
+                            <div class="col-md-2">
+                                <p><b>Topic Duration</b></p>
+                            </div>
+                            <div class="col-md-2">
+                                <p><b>Topic Price</b></p>
+                            </div>
+
+                        </div>
+                        <div class="row" *ngFor="let topic of topicList">
+                            <div class="col-md-3">
+                                <span>{{topic.topicName}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span>{{topic.topicDescription}}</span>
+                            </div>
+                            <div class="col-md-2">
+                                <span>{{topic.duration}}</span>
+                            </div>
+                            <div class="col-md-2">
+                                <span>{{topic.price}}</span>
+                            </div>
+                            <div class="col-md-2">
+                                <img src="assets/images/rockinterview/courses/edit-course.png"
+                                    class="attachment-icon mr-2" (click)="editTopic(topic)" />
+                                <img src="assets/images/rockinterview/courses/remove-topic.png" class="attachment-icon"
+                                    (click)="deleteTopic(topic)" />
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</app-authorize-layout>

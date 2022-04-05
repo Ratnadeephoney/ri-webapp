@@ -1,0 +1,94 @@
+app-int-feedback {
+    .intfbPopup {
+        // width: 42rem;
+    }
+    .modal-content {
+        width: 42rem !important;
+    }
+    .modal-header {
+        background: #9a0365;
+    }
+    .modal-body {
+        width: 35rem;
+    }
+    // label {
+    //     width: 10rem;
+    // }
+    .rating {
+        img {
+            width: 20px;
+        }
+    }
+    .star-rating {
+        font-size: 25px;
+        margin-top: -8px;
+        color: #99226e;
+        outline: none;
+    }
+    .feedback {
+        border: 1px solid darkgray;
+        height: 4rem;
+        width: 100%;
+        overflow-y: auto;
+    }
+    .feedback::-webkit-scrollbar {
+        width: 4px;
+        background-color: #fff;
+    }
+    .feedback::-webkit-scrollbar-thumb {
+        background-color: #9a0365;
+        border-radius: 0;
+    }
+    label {
+        font-weight: 600;
+    }
+
+    ng-select{
+        background: #fff;
+        height: 3rem;
+        border: 1px solid #ddd;
+        // box-shadow: 8px 1px 4px 4px whitesmoke;
+        .ng-value-container{
+            margin-top: 1px;
+        .ng-value{
+            background: #ddd;
+            margin: 2px;
+            padding: 4px 2px;
+            height: 28px;
+            // margin-top: 6px;
+            margin-top: 1%;
+            .ng-value-label{
+                font-size: 12px;
+            }
+        }
+        }
+          .ng-clear-wrapper{margin-top: 1rem;}
+          .ng-dropdown-panel{background: #fff;}
+          input{height: 2.7rem !important;}
+          .ng-option-selected{background: #ddd;}
+          .ng-option{padding: 6px;}
+          .ng-placeholder {
+            position: absolute;
+            z-index: 1;
+            // font-size: 15px !important;
+            // color: darkgray;
+            // font-weight: 300;
+            margin-left: 10px;
+        }
+        .ng-input {
+            // margin-top: -5px;
+        }
+      }
+
+    @media screen and(max-width: 1366px) {
+        .modal-body {
+            width: 28.5rem;
+        }
+    }
+
+    @media (min-width: 1025px) and (max-width: 1280px) {
+        .modal-body {
+            width: 35rem;
+        }
+    }
+}

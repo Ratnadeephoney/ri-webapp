@@ -1,0 +1,18 @@
+<app-loader></app-loader>
+<router-outlet></router-outlet>
+<div class="div-fixed-bottom" *ngIf="switchToApp">
+    <div>
+            <img src="assets/images/rockinterview/round-logo.png" />
+        <p class="mt-2 text-center pl-2 pr-2" >Hey, We recommend using Mobile App for superior experience. Try now ! </p>
+        <div class="row col-md-12 mt-2 m-0">
+            <button class="btn btn-default radius-0 p-1 switch-to-app"><a  href="https://rockii.in/dashboard">Switch to the App</a></button>
+            <button class="btn btn-default radius-0 p-1" style="border-left: none;" (click)="switchToApp = false">Not Now</button>
+        </div>
+    </div>
+    
+
+</div>
+
+
+
+

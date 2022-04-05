@@ -1,0 +1,110 @@
+.roecolor{
+    background-color:  gray;
+  }
+  .res{
+    background-color: green;
+  }
+  
+  .mat-dialog-container {
+    padding: 2px !important;
+  }
+  .center {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .initials {
+    position: relative;
+    top: 12.5px; /* 25% of parent */
+    font-size: 25px; /* 50% of parent */
+    line-height: 25px; /* 50% of parent */
+    color: #fff;
+   // font-family: "Courier New", monospace;
+   // font-weight: bold;
+  }
+  hr{
+    width: 100%;       
+  }
+  
+  
+  .star-rating{
+    gap: 5px 10px;
+    font-size: 27px;
+    margin-top: -6px;
+     color: #9a0365;
+    outline: none;
+    gap: 5px 10px;
+    
+  
+  }
+  .str{
+    left: 15px;
+  }
+  
+  //style=""
+  .marginpadding{
+    margin-top: 5px; 
+    min-height: 30px; 
+  }
+  .marginpadding2{
+    margin-top: 10px; 
+    min-height: 30px; 
+  }
+  label {
+    display : inline
+  }
+  
+  .no-space-break{
+    white-space:nowrap;
+  }
+  .example-form-field {
+    width: 200px;
+  }
+  
+  :host ::ng-deep .mat-form-field-wrapper{
+    margin: 0 !important;
+    padding: 0;
+  }
+  
+  ::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}
+  ::ng-deep .mat-form-field-label-wrapper { top: -1.5em; }
+  
+  ::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-2em) scale(.75);
+    width: 133.33333%;
+  }
+  
+  .tp-full-width {
+  width: 97%;
+  }
+  
+  ng-select{
+    background:#fff;
+    height: 2rem;
+    border-bottom: 1px solid #ddd;
+  
+    .ng-value-container{
+        margin-top: 1px;
+        margin-left: 15px;
+        
+    }
+  }
+
+  ng-select .ng-dropdown-panel {
+    border: 1px solid #ddd;
+    border-top: none;
+    left: 0;
+    //margin-top: 9px;
+    background: white;
+    margin-top:15px;
+};
+  .ng-value{
+    background: #ddd;
+    margin: 2px;
+    //padding: 4px 2px;
+    height: 20px;
+    margin-top: 2px;
+    .ng-value-label{
+        font-size: 12px;
+    }
+  }

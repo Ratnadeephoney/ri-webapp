@@ -1,0 +1,188 @@
+<div>
+    <div #modal class="user-registration-class text-center" data-target="#modal">
+        <div class="modal-header">
+            <div class="text-center heading">
+                <h4>Looks like you have not registered with us.</h4>
+                <h4>Please register to proceed.</h4>
+            </div>
+            <button aria-label="Close" class="close sm-close-right" data-dismiss="modal" (click)="onModalDismiss()"
+                type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row text-center">
+                <div class="col-lg-12">
+
+                    <div class="theme-card">
+                        <form class="theme-form" [formGroup]="userRegistrationForm">
+                            <div class="form-row" style="margin: 0px !important;">
+                                <label style="color: #000; font-size: 15px;">Select your role</label>
+                                <!-- <mat-radio-group>
+                                    <mat-radio-button>
+                                        <img src="assets/images/rockinterview/jobseeker_role.png"
+                                            style="width: 25px;" />
+                                        <span style="color: #99226e;">Jobseeker</span>
+                                    </mat-radio-button>
+                                    <mat-radio-button>
+                                        <img src="assets/images/rockinterview/interviewer_role.png"
+                                            style="width: 25px;" />
+                                        <span style="color: #99226e;">Interviewer</span>
+                                    </mat-radio-button>
+                                </mat-radio-group> -->
+
+                                <div >
+                                    <input type="radio" style="width: auto;" formControlName="userRole" value="1">
+                                    <span>
+                                        <img src="assets/images/rockinterview/jobseeker_role.png"
+                                            style="width: 20px;" />
+                                        <span class="radioText">Jobseeker</span>
+                                    </span>
+                                    <input type="radio" style="width: auto; margin-left: 10px;" formControlName="userRole" value="2">
+                                    <span>
+                                        <img src="assets/images/rockinterview/interviewer_role.png"
+                                            style="width: 20px;" />
+                                        <span class="radioText">Interviewer</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div *ngIf="showForm">
+                                <div class="form-row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <label for="uname">Name </label>
+                                        <input type="text" autocomplete="off" id="uname" formControlName="userName"
+                                             maxlength="50">
+                                        <div *ngIf="submitted==true && userRegistrationForm.get('userName').invalid">
+                                            <mat-error *ngFor="let validation of validation_messages.userName">
+                                                <span
+                                                    *ngIf="submitted==true && userRegistrationForm.get('userName').hasError(validation.type)">
+                                                    {{ validation.message | translate}}
+                                                    <!-- Please enter valid mobile number -->
+                                                </span>
+                                            </mat-error>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="form-row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <label>Email Id<span class="required-mark">*</span></label>
+                                        <input matInput formControlName="emailId">
+                                        <div *ngIf="submitted==true && userRegistrationForm.get('emailId').invalid">
+                                            <mat-error *ngFor="let validation of validation_messages.emailId">
+                                                <span
+                                                    *ngIf="submitted==true && userRegistrationForm.get('emailId').hasError(validation.type)">
+                                                    {{ validation.message | translate}}
+                                                    <!-- Please enter valid mobile number -->
+                                                </span>
+                                            </mat-error>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <label>Mobile Number<span class="required-mark">*</span></label>
+                                        <input matInput readonly formControlName="mobileNumber" class="sm-pl-0 " class="mobile"
+                                            (keypress)="onlyDecimalNumberKey($event)" maxlength="10" autocomplete="off"
+                                            id="txtMobileNumber">
+                                        <div *ngIf="submitted==true && userRegistrationForm.get('mobileNumber').invalid">
+                                            <mat-error *ngFor="let validation of validation_messages.mobileNumber">
+                                                <span
+                                                    *ngIf="submitted==true && userRegistrationForm.get('mobileNumber').hasError(validation.type)">
+                                                    {{ validation.message | translate}}
+                                                    <!-- Please enter valid mobile number -->
+                                                </span>
+                                            </mat-error>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 form-row" style="margin-top: 0px !important;">
+                                        <!-- <label class="exp">Experience</label>
+                                        <select formControlName="experience">
+                                            <option *ngFor="let e of experiences" value="e.experienceId">{{e.experience}}
+                                            </option>
+                                        </select> -->
+                                        <div class="col-md-6 col-sm-6">
+                                            <label class="exp">Exp(Years)</label>
+                                            <!-- <input matInput (keypress)="validateExperience($event,'y')" formControlName="years"
+                                            maxlength="2"> -->
+                                            <select formControlName="years">
+                                                <option *ngFor="let y of yearsList" value="{{y}}">{{y}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <label class="exp">Exp(Months)</label>
+                                            <!-- <input matInput (keypress)="validateExperience($event,'m')" formControlName="months"
+                                            maxlength="2"> -->
+                                            <select formControlName="months">
+                                                <option *ngFor="let m of monthsList" value="{{m}}">{{m}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="form-row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <label>Technologies</label>
+                                        <ng-select [selectOnTab]="true" formControlName="technologies"
+                                            [items]="dataStorage.globalSkillsList" bindLabel="technologyDescription" bindValue="technologyId"
+                                            [multiple]="true" id="txtSkills" class="left">
+                                            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                                <div class="ng-value" *ngFor="let item of items | slice:0:3">
+                                                    <span class="ng-value-label" title="{{item.technologyDescription}}">
+                                                        {{item.technologyDescription | slice:0:4}} <span style="margin-left:-3px"
+                                                            title="{{item.technologyDescription}}"
+                                                            *ngIf="item.technologyDescription.length > 4">...</span>
+                                                    </span>
+    
+                                                    <span class="ng-value-icon right" (click)="clear(item)"
+                                                        aria-hidden="true">×</span>
+                                                </div>
+                                                <div class="ng-value" *ngIf="items.length > 3">
+                                                    <span class="ng-value-label">{{items.length - 3}} more...</span>
+                                                </div>
+                                            </ng-template>
+                                        </ng-select>
+                                    </div>
+                                </div>
+    
+                                <div class="form-row">
+                                    <div class="cold-md-12 col-sm-12">
+                                        <label>Upload Resume</label>
+    
+                                        <div class="file-upload" style="text-align: right; ">
+    
+                                            <label for="file-input"
+                                                style="width: 100%; margin-bottom: 0px; cursor: pointer; border-bottom: 1px solid #ddd;">
+                                                <span style="float:left;"
+                                                    title="{{fileName}}">{{fileName |slice:0: 25}}</span>
+                                                <span style="float:left;" *ngIf="fileName.length > 25">...</span>
+                                                <img src="assets/images/rockinterview/attachment.png"
+                                                    style="height: 13px;" />
+                                            </label>
+    
+                                            <input id="file-input" type="file" formControlName="resume"
+                                                (change)="getFile($event)" />
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="text-center">
+    
+                                    <button class="btn-default btn btn-gradient register-btn" (click)="validateAndRegister()">
+                                        Register
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div *ngIf="!showForm">
+                                <h4 style="padding: 10px;">Please select any role to proceed</h4>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

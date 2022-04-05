@@ -1,0 +1,91 @@
+<section class="app2 header overflow-unset" id="home">
+        <div class="app2-header bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-7 col-md-8">
+                        <div class="center-text">
+    
+                            <div style="width: 100%;">
+                                <div class="row header-text">
+                                    <h1>Connecting Job Seekers
+                                        <span> to industry experts and jobs </span>
+                                    </h1>
+    
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                                <h5 class="type-ahead-title left">Select Skill</h5></div>
+                                                <div class="col-md-6">
+                                                        <h5 class="type-ahead-title right">Select Location</h5></div>
+                                    </div>
+                                    <div class="col-md-12 search-area">
+                                       <form [formGroup]="searchForm">
+                                                <!-- <i class="fa fa-search"></i> -->
+                                                <ng-select [selectOnTab]="true" formControlName="skills"  [items]="dataStorage.globalSkillsList" bindLabel="technologyDescription"
+                                                bindValue="technologyId" [multiple]="true" id="txtSkills"  class="left">
+                                                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                                    <div class="ng-value" *ngFor="let item of items | slice:0:2">
+                                                        <span class="ng-value-label" title="{{item.technologyDescription}}">
+                                                            {{item.technologyDescription | slice:0:4}} <span style="margin-left:-3px"
+                                                                title="{{item.technologyDescription}}" *ngIf="item.technologyDescription.length > 4">...</span>
+                                                        </span>
+        
+                                                        <span class="ng-value-icon right" (click)="clear(item)"
+                                                            aria-hidden="true">×</span>
+                                                    </div>
+                                                    <div class="ng-value" *ngIf="items.length > 2">
+                                                        <span class="ng-value-label">{{items.length - 2}} more...</span>
+                                                    </div>
+                                                </ng-template>
+                                            </ng-select>
+                                       
+                                       
+                                                <ng-select [selectOnTab]="true"  formControlName="locations" [items]="dataStorage.globalLocationsList" bindLabel="locationName"
+                                                bindValue="locationId" [multiple]="true" id="txtSkills" class="right">
+                                                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                                    <div class="ng-value" *ngFor="let item of items | slice:0:2">
+                                                        <span class="ng-value-label" title="{{item.locationName}}">
+                                                            {{item.locationName | slice:0:4}} <span style="margin-left:-3px"
+                                                                title="{{item.locationName}}" *ngIf="item.locationName.length > 4">...</span>
+                                                        </span>
+        
+                                                        <span class="ng-value-icon right" (click)="clear(item)"
+                                                            aria-hidden="true">×</span>
+                                                    </div>
+                                                    <div class="ng-value" *ngIf="items.length > 2">
+                                                        <span class="ng-value-label">{{items.length - 2}} more...</span>
+                                                    </div>
+                                                </ng-template>
+                                            </ng-select>
+                                      
+                                        <button class="btn btn-default primary-btn info radius-0 btn-search btn-gradient" [routerLink]="dataStorage.globalPathInformation.JOBS.PATH">Search</button>
+                                    </form>
+                                    </div>
+    
+    
+                                    <!-- <input type="text" class="form-control col-md-6" id="fname" placeholder="First Name" required=""> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-md-4">
+                        <div class="img-mobile set-abs">
+                            <img *ngIf="mode == 1"
+                                src="https://rockinterview.in/wp-content/uploads/revslider/new16-03-2020/slider-clipart5.png"
+                                alt="" class="headaer-image">
+                            <img *ngIf="mode == 2"
+                                src="https://rockinterview.in/wp-content/uploads/revslider/new16-03-2020/slider-training-clipart6.png"
+                                alt="" class="headaer-image">
+                            <img *ngIf="mode == 3"
+                                src="https://rockinterview.in/wp-content/uploads/revslider/new16-03-2020/slider-post-clipart6.png"
+                                alt="" class="headaer-image">
+    
+                        </div>
+                        <!-- <div class="wave-orange"></div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="wave"></div>
+        </div>
+    </section>

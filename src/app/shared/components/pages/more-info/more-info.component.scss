@@ -1,0 +1,33 @@
+app-more-info{
+   h2{
+    font-size: calc(30px + (36 - 20) * ((100vw - 300px) / (1920 - 300)));
+    // font-weight: 700;
+    margin-bottom: 2rem;
+    color: #000;
+   }
+    .div-info-box{
+        border: 1px solid;
+        padding: 42px;
+        button{
+            box-shadow: 0px 5px 40px 10px rgba(240, 192, 223, 1);
+            font-size: 14px;
+            // padding: 1rem 3rem;
+        }
+        margin-bottom: 4rem;
+    }
+
+    @media screen and (max-width: 480px) {
+        .mybtn {
+            min-width: 170px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        .newbtn {
+            min-width: 200px !important;
+        }
+    }
+} 

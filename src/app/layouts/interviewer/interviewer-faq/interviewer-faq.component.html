@@ -1,0 +1,62 @@
+<div class="container breadcrumb">
+    <div style="display: flex; flex-direction: row; margin: 10px 0px;">
+        <div>
+            <img src="assets/images/rockinterview/ri-innerpage-logo.png" />
+        </div>
+        <div style="margin-top: 3px;">
+            <a title="Go to Rock Interview." ><span >Rock Interview</span></a>
+            <a> / Interviewer / FAQ</a>
+        </div>
+        
+    </div>
+    <div class="diff"></div>
+    
+</div>
+
+
+<div class="container">
+    <div>
+        <!-- Header part -->
+    </div>
+    <div style="margin: 20px 0px;">
+        <div *ngFor="let j of faqList" [id]="j.faqID">
+            <div class="faqType">
+                <h4>{{j.faqTitle}}</h4>
+            </div>
+            <div style="display: block !important; flex-direction: column;">
+                <div *ngFor="let t of j.faqs; let i = index;" class="main-div">
+                    <div fxFlex="100%"
+                        style="cursor: pointer;font-size:17px; display: flex; flex-direction: row; margin-top: 5px;">
+                        <div style="display: flex; width: 100%;" class="div-expand">
+                            <div class="title" (click)="getfaqDescription(t.faqId); t.isChecked = !t.isChecked">
+                                <span
+                                    >{{t.faqTitle}} </span>
+                            </div>
+                            <div style="float: right; width: 5%;">
+                                <span *ngIf="!t.isChecked" (click)="getfaqDescription(t.faqId); t.isChecked = true"
+                                    style="color: #444444; margin-left: 10px;">+</span>
+                                <span *ngIf="t.isChecked" (click)="t.isChecked = false"
+                                    style="color: #444444; margin-left: 10px;">-</span>
+                            </div>
+    
+                        </div>
+    
+                    </div>
+                    <div fxFlex='100%' *ngIf=" t.isChecked"
+                        style="margin-top: 15px; background-color: #ffffff; display: block !important; flex-direction: column !important; margin-bottom: -10px;">
+                        <div fxFlex="100%" style="color: #444444 !important; font-size: 15px; padding: 10px;" [innerHTML]="t.answer">
+                            <!-- {{t.answer}} -->
+                        </div>
+    
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div style="height: 100px;">
+    
+</div>

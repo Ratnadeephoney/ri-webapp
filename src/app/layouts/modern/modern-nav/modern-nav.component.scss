@@ -1,0 +1,95 @@
+app-modern-nav{
+    header{position: fixed !important; top: 0;}
+    .loding-header{
+        background: #fff;
+    }
+    .btn{
+        padding: 10px 25px !important;
+    margin-left: 15px;
+    }
+    .btn.btn-js{
+        background-color: #fff;
+    color: rgb(128, 4, 82) !important;
+    border: 1px solid rgb(128, 4, 82);
+    }
+    .btn.btn-ent, .btn.btn-ent:hover{
+        background: #083aac;
+        color: #fff !important;
+        padding: 2px 10px !important;
+        border: 1px solid;
+    }
+    .btn-ent:focus{
+        background: #083aac;
+        color: #fff !important;
+    }
+    // .btn.btn-ent:hover{
+    //     border: none;
+    // }
+
+    .main-menu a{
+        padding-bottom: 5px;
+        margin-bottom: 6px;
+    }
+
+    // .menu-active{
+    //     border-bottom: 3px solid #9a0365;
+      
+    //     padding: 0 1px;
+        
+    //     border-image-source: linear-gradient(to right, rgba(215, 32, 232, 1), #9a0365, #9a0365, rgba(215, 32, 232, 1));
+    //     border-image-slice: 1;
+    // }
+
+    .menu-active {
+        text-decoration: none;
+        position: relative;
+    }
+    .menu-active:after {
+        content: '';
+        width: 100%;
+        display: block;
+        margin-top: 3px;
+        bottom: 0;
+        border-width: 0px 0px 2.5px;
+        border-style: solid;
+        text-align: center;
+              border-image-source: linear-gradient(to right, rgba(215, 32, 232, 1), #9a0365, #9a0365, rgba(215, 32, 232, 1));
+     border-image-slice: 1;
+    }
+
+    .animated-bg i{right:0 !important;}
+
+    ul.main-menu li a {
+        color: inherit;
+    }
+
+    ul.main-menu li a:hover {
+        color: inherit;
+    }
+
+}
+
+@media only screen and (max-width: 1230px) {
+    app-modern-nav {
+        ul.main-menu li a {
+            padding: 5px !important;
+            font-size: 14px !important;
+        }
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    app-modern-nav {
+        ul.main-menu li a {
+            padding: 10px !important;
+        }
+    }
+}
+
+@media (min-width: 1500px) and (max-width: 1715px) {
+    app-modern-nav {
+        ul.main-menu li a {
+            font-size: 16px !important;
+        }
+    }
+}

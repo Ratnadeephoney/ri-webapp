@@ -1,0 +1,559 @@
+<app-authorize-layout>
+
+    <section class="signup-step-container p-0">
+        <h3 class="m-4 ml-16">Setup Interview</h3>
+        <div class="container">
+            <!-- <h3 class="font-weight-bold text-dark mt-3 mb-3">Setup Interview</h3> -->
+
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-9">
+                    <!-- <h3 class="mb-4 mt-4">Setup Interview</h3> -->
+                    <div class="wizard">
+                        <div class="wizard-inner">
+                            <div class="connecting-line"></div>
+                            <ul class="nav nav-tabs justify-content-between" role="tablist">
+                                <li role="presentation" class="active" [ngClass]="{ 'active':activeTab >= 1}">
+                                    
+                                    <a aria-controls="step1" role="tab" aria-expanded="true"><span class="round-tab"><i
+                                                class="fa "
+                                                [ngClass]="{'fa-pencil': activeTab == 1, 'fa-check': activeTab > 1}"></i></span>
+                                        <i class="pl-2">Basic<br />
+                                            Details</i></a>
+                                </li>
+                                <li role="presentation" class="disabled" [ngClass]="{ 'active':activeTab >= 2}">
+                                    <a aria-controls="step2" role="tab" aria-expanded="false"><span class="round-tab"><i
+                                                class="fa "
+                                                [ngClass]="{'fa-pencil': (activeTab == 2 || activeTab == 3), 'fa-check': activeTab > 2}"></i></span>
+                                        <i>Select<br /> Interviewer</i></a>
+                                </li>
+                                <li role="presentation" class="disabled" [ngClass]="{ 'active':activeTab >= 4 }">
+                                    <a aria-controls="step3" role="tab" aria-expanded="false"><span class="round-tab"><i
+                                                class="fa "
+                                                [ngClass]="{'fa-pencil': activeTab == 4, 'fa-check': activeTab > 4}"></i></span>
+                                        <i>Interview <br /> Date &amp;
+                                            Time</i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <form class="login-box" [formGroup]="setupInterviewForm">
+                            <div class="tab-content" id="main_form">
+                                <div class="tab-pane active mt-4" role="tabpanel" id="step1"
+                                    [ngClass]="{ 'active':activeTab=== 1}">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group mb-4">
+                                                <label class="text-dark">Technologies<span
+                                                        class="text-danger">*</span></label>
+                                                <div class="search-box position-relative">
+                                                    <!-- <input class="form-control form-control-lg" type="text"
+                                                                    name="name" placeholder="Enter Technologies"> -->
+                                                    <ng-select *ngIf="dataStorage.globalSkillsList" [selectOnTab]="true"
+                                                        placeholder="Enter technologies" formControlName="technologies"
+                                                        [items]="dataStorage.globalSkillsList"
+                                                        bindLabel="technologyDescription" bindValue="technologyId"
+                                                        [multiple]="true" id="txtSkills" class="left">
+                                                        <ng-template ng-multi-label-tmp let-items="items"
+                                                            let-clear="clear">
+                                                            <div class="ng-value"
+                                                                *ngFor="let item of items | slice:0:3">
+                                                                <span class="ng-value-label"
+                                                                    title="{{item.technologyDescription}}">
+                                                                    {{item.technologyDescription}}
+                                                                    <!-- {{item.technologyDescription | slice:0:4}} -->
+                                                                    <!-- <span style="margin-left:-3px"
+                                                                        title="{{item.technologyDescription}}"
+                                                                        *ngIf="item.technologyDescription.length > 4">...</span> -->
+                                                                </span>
+
+                                                                <span class="ng-value-icon right" (click)="clear(item)"
+                                                                    aria-hidden="true">×</span>
+                                                            </div>
+                                                            <div class="ng-value" *ngIf="items.length > 3">
+                                                                <span class="ng-value-label">{{items.length - 3}}
+                                                                    more...</span>
+                                                            </div>
+                                                        </ng-template>
+                                                    </ng-select>
+                                                    <!-- <button type="button"
+                                                        class="btn next-step m-0 search btn-sm">Search</button> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 form-inline">
+                                            <div class="form-group mt-3">
+                                                <label for="interviewLevel" class="pr-3">Interview
+                                                    Level<span class="text-danger">*</span></label>
+                                                <select name="interviewLevel" formControlName="interviewLevel"
+                                                    class="form-control" id="interviewLevel">
+                                                    <option [value]="JSONtoString(level)"
+                                                        *ngFor="let level of interviewLevels">{{level.name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="list-inline text-right nav-btns">
+                                        <li class="d-inline-block">
+                                            <button (click)="onStepClick(2, 1)" aria-controls="step2" type="button"
+                                                class="btn btn-default btn-gradient btn-next">Next</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane" role="tabpanel" id="step2" [ngClass]="{ 'active':activeTab=== 2}">
+                                    <div class="row fs-15 p-3 pl-lg-5 bg-white plan-details">
+                                        <table class="table table-borderless table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" width="60%"></th>
+                                                    <th scope="col" class="text-theme text-center">Free</th>
+                                                    <th scope="col" class="text-theme text-center">Paid/Member</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><img src="assets/images/rockinterview/setup-interview/duration-of-interview.png"
+                                                            class="img-feature" width="20" />
+                                                        Duration of Interview</td>
+                                                    <td class="text-center">20 Mins</td>
+                                                    <td class="text-center">45 Mins - 1 Hr</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><img src="assets/images/rockinterview/setup-interview/select-interviewer.png"
+                                                            class="img-feature" width="20" />Select Interviewer</td>
+                                                    <td class="text-center">
+                                                        <img src="assets/images/rockinterview/setup-interview/wrong.png"
+                                                            width="20" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <img src="assets/images/rockinterview/setup-interview/right.png"
+                                                            width="20" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="assets/images/rockinterview/setup-interview/detailed-feedback.png"
+                                                            class="img-feature" width="20" />
+                                                        Detailed Feedback
+                                                    </td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/wrong.png"
+                                                            width="20" /></td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/right.png"
+                                                            width="20" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="assets/images/rockinterview/setup-interview/short-feedback.png"
+                                                            class="img-feature" width="20" />
+                                                        Short Feedback
+                                                    </td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/wrong.png"
+                                                            width="20" /></td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/right.png"
+                                                            width="20" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="assets/images/rockinterview/setup-interview/av-file.png"
+                                                            class="img-feature" width="20" />
+                                                        AV File
+                                                    </td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/right.png"
+                                                            width="20" /></td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/right.png"
+                                                            width="20" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="assets/images/rockinterview/setup-interview/recommendations.png"
+                                                            class="img-feature" width="20" />
+                                                        Recommendations
+                                                    </td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/wrong.png"
+                                                            width="20" /></td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/right.png"
+                                                            width="20" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="assets/images/rockinterview/setup-interview/reschedule-date-time.png"
+                                                            class="img-feature" width="20" />
+                                                        Reschedule Date &amp; Time
+                                                    </td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/wrong.png"
+                                                            width="20" /></td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/right.png"
+                                                            width="20" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="assets/images/rockinterview/setup-interview/select-interviewer.png"
+                                                            class="img-feature" width="20" />
+                                                        Select Interviewer
+                                                    </td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/wrong.png"
+                                                            width="20" /></td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/right.png"
+                                                            width="20" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="assets/images/rockinterview/setup-interview/Free-Training-Demo.png"
+                                                            class="img-feature" width="20" />
+                                                        Free Training Demo
+                                                    </td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/right.png"
+                                                            width="20" /></td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/right.png"
+                                                            width="20" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="assets/images/rockinterview/setup-interview/sharing-profile-to-enterprises.png"
+                                                            class="img-feature" width="20" />
+                                                        Sharing Profile to Enterprises<span class="text-danger">*</span>
+                                                    </td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/wrong.png"
+                                                            width="20" /></td>
+                                                    <td class="text-center"><img
+                                                            src="assets/images/rockinterview/setup-interview/right.png"
+                                                            width="20" /></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="col-12 text-center small">
+                                            <p class="mb-0"><span class="text-danger">*</span>Not a Job Guarantee
+                                            </p>
+                                            <p class="mb-0">Get your membership for more Interviews</p>
+                                            <p class="mb-0"
+                                                *ngIf="setupInterviewMetadata && setupInterviewMetadata.isFirstInterviewTakenFree">
+                                                You have already avalied the free Interview</p>
+
+                                            <hr />
+                                        </div>
+                                        <ul class="col-12 list-inline text-right mb-0">
+                                            <li class="d-inline-block"><button type="button"
+                                                    class="btn btn-default btn-previous text-theme mr-4"
+                                                    (click)="onStepClick(1, 0)">Previous</button></li>
+                                            <li class="d-inline-block"><button type="button"
+                                                    class="btn btn-default btn-gradient btn-next text-theme"
+                                                    style="border: 1px solid;"
+                                                    (click)="activeTab = activeTab + 2; getTimeslotInfo(); selectedInterviewInfo.isFreeSelected = true">Free</button>
+                                            </li>
+                                            <li class="d-inline-block"><button type="button"
+                                                    class="btn btn-default btn-gradient btn-next ml-4"
+                                                    style="border: 1px solid;"
+                                                    (click)="activeTab = activeTab + 1; getInterviewersBySkillIds(); selectedInterviewInfo.isFreeSelected  = false; ">Paid</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <br>
+                                    <!--  <div class="row">
+                                        <ul class="list-inline text-right col p-0">
+                                            <li class="d-inline-block">
+                                                <button type="button" aria-controls="step1" (click)="onStepClick(1, 0)"
+                                                    class="btn prev-step">Previous</button>
+                                            </li>
+                                            <li class="d-inline-block">
+                                                <button type="button" aria-controls="step3" (click)="onStepClick(4, 1)"
+                                                    class="btn next-step ml-4">Next</button>
+                                            </li>
+                                        </ul>
+                                    </div> -->
+
+                                </div>
+                                <div class="tab-pane" role="tabpanel" id="step3" [ngClass]="{ 'active':activeTab=== 3}">
+                                    <div class="invrs-details-section">
+                                        <h5 class="mb-3 mt-4" *ngIf="interviewersList && interviewersList.length > 0">
+                                            Interviewers Details</h5>
+                                        <div class="row mb-1 overflow-y-auto invrs-details"
+                                            *ngIf="interviewersList && interviewersList.length > 0">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-sm-6" *ngFor="let i of interviewersList"
+                                                        (click)="selectedInterviewInfo.interviewer = i;onStepClick(4, 1)">
+                                                        <div class="card mb-4 invr-de-box "
+                                                            [ngClass]="{'active': false}">
+                                                            <div class="card-body pt-1 pb-2">
+                                                                <span class="position-absolute star-rate">
+                                                                    <i class="fa"
+                                                                        [ngClass]="{'fa-star': i.ratings >= 1, 'fa-star-o': i.ratings < 1}"></i>
+                                                                    <i class="fa"
+                                                                        [ngClass]="{'fa-star': i.ratings >= 2, 'fa-star-o': i.ratings < 2}"></i>
+                                                                    <i class="fa"
+                                                                        [ngClass]="{'fa-star': i.ratings >= 3, 'fa-star-o': i.ratings < 3}"></i>
+                                                                    <i class="fa"
+                                                                        [ngClass]="{'fa-star': i.ratings >= 4, 'fa-star-o': i.ratings < 4}"></i>
+                                                                    <i class="fa"
+                                                                        [ngClass]="{'fa-star': i.ratings >= 5, 'fa-star-o': i.ratings < 5}"></i>
+                                                                </span>
+
+                                                                <p class="fs-18 mb-1" style="font-weight: bold;"
+                                                                    *ngIf="!!i.name; else NABlock">
+                                                                    {{i.name}}
+                                                                </p>
+                                                                <!-- <div class="">
+                                                                    <p class="mb-0 fs-16" [title]="i.skills"
+                                                                        *ngIf="i.skills.length != 0; else NABlock">
+                                                                        {{i.skills.length > 30 ? i.skills.slice(0,30) + '...' : i.skills}}</p>
+                                                                    <p class="mb-0 fs-16">Experience - <span
+                                                                            *ngIf="!!i.experience && i.experience != '0'; else NABlock">{{ convertToYears(i.experience)}}</span>
+                                                                    </p>
+                                                                    <p class="mb-0 fs-16">Interviews Taken - <span
+                                                                            *ngIf="!!i.interviewsTaken; else NABlock">{{i.interviewsTaken}}</span>
+                                                                    </p>
+                                                                    <p class="mb-0 fs-16">Companies Worked - <span
+                                                                            *ngIf="!!i.companies; else NABlock">{{i.companies}}</span>
+                                                                    </p>
+                                                                    <p *ngIf="i.isRecommended" class="text-theme pull-right">
+                                                                        <b>Recommended</b>
+                                                                    </p>
+                                                                </div> -->
+                                                                <div class="ri-row">
+                                                                    <div class="ri-col flex1">
+                                                                        <p class="mb-0 fs-16" [title]="i.skills"
+                                                                            *ngIf="i.skills.length != 0; else NABlock">
+                                                                            {{i.skills.length > 30 ?
+                                                                            i.skills.slice(0,30) + '...' : i.skills}}
+                                                                        </p>
+                                                                        <p class="mb-0 fs-16">Experience - <span
+                                                                                *ngIf="!!i.experience && i.experience != '0'; else NABlock">{{
+                                                                                convertToYears(i.experience)}}</span>
+                                                                        </p>
+
+                                                                        <p class="mb-0 fs-16">Companies Worked - <span
+                                                                                *ngIf="!!i.companies; else NABlock">{{i.companies}}</span>
+                                                                        </p>
+                                                                        <p class="mb-0 fs-16">Interviews Taken - <span
+                                                                                *ngIf="!!i.interviewsTaken; else NABlock">{{i.interviewsTaken}}</span>
+                                                                        </p>
+                                                                        <!-- <p *ngIf="i.isRecommended"
+                                                                            class="text-theme pull-right">
+                                                                            <b>Recommended</b>
+                                                                        </p> -->
+                                                                    </div>
+                                                                    <div class="ri-col"
+                                                                        style="flex:0.23; align-items: center; justify-content: space-around;">
+                                                                        <div
+                                                                            style="font-size: 15px; font-weight: bold;">
+                                                                            ₹ {{InterviewPrice}}</div>
+                                                                        <div *ngIf="i.isRecommended" class="recomm1">
+                                                                            <img src="assets/images/rockinterview/Recommended.png"
+                                                                                width="30">
+                                                                        </div>
+                                                                        <div *ngIf="i.isRecommended" class="recomm2"
+                                                                            style="display: none;">
+                                                                            <img src="assets/images/rockinterview/recommended-hover.png"
+                                                                                width="30">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <p class="pl-3 mt-1 mb-0 fs-16">
+                                                                    <span *ngIf="setupInterviewMetadata.membershipStatusCode == 200 && setupInterviewMetadata.interviewsRemaining > 0; else showPrice"><del>&#8377;{{setupInterviewForm.value.interviewLevel.price}}</del>  &nbsp;&nbsp;Free</span>
+                                                                    
+                                                                    <ng-template #showPrice>
+                                                                        <span> &#8377;{{setupInterviewForm.value.interviewLevel.price}} </span>
+                                                                    </ng-template>
+                                                                </p> -->
+                                                                <ng-template #NABlock>
+                                                                    Not Available
+                                                                </ng-template>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row no-interviewer mt-3"
+                                            *ngIf="isInterviewerDataLoaded &&  interviewersList && interviewersList.length == 0">
+                                            <img src="assets/images/rockinterview/setup-interview/no-interviewer.png"
+                                                width="150" />
+                                            <p class="text-theme mt-3">
+                                                There is no interviewer available for this
+                                                technology. Don't worry, System will help to
+                                                find great interviewer for you. Go ahead and
+                                                schedule the interview
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                    <div>
+                                        <br>
+                                        <ul class="list-inline float-right">
+                                            <li class="d-inline-block">
+                                                <button type="button" class="btn btn-default btn-previous"
+                                                    (click)=" (setupInterviewMetadata && setupInterviewMetadata.membershipStatusCode == 200 && setupInterviewMetadata.interviewsRemaining > 0) ?  onStepClick(1, 0) : (setupInterviewMetadata && setupInterviewMetadata.isEligibleForOffer  || setupInterviewMetadata && setupInterviewMetadata.isFirstInterview) ? onStepClick(2, 0) : onStepClick(1, 0)">Previous</button>
+                                            </li>
+                                            <li class="d-inline-block">
+                                                <button type="button" aria-controls="step4" (click)="onStepClick(4, 1)"
+                                                    class="btn btn-default btn-gradient btn-next ml-4">Skip</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" role="tabpanel" id="step4" [ngClass]="{ 'active':activeTab=== 4}">
+                                    <!--Step 3 of 1-->
+                                    <!-- <h5 class="mb-3">Date and Time</h5> -->
+                                    <div class="pt-2">
+                                        <p class="fs-18 mb-1" *ngIf="selectedInterviewInfo.interviewer.interviewerId">
+                                            <b>{{selectedInterviewInfo.interviewer.name
+                                                ?selectedInterviewInfo.interviewer.name: 'NA'}}</b>
+                                        </p>
+                                        <div class="row align-items-center mb-4">
+                                            <p class="col-10" *ngIf="selectedInterviewInfo.interviewer.interviewerId">
+                                                {{selectedInterviewInfo.interviewer.skills
+                                                ?selectedInterviewInfo.interviewer.skills: 'NA'}}
+                                            </p>
+                                            <p class="col-10" *ngIf="!selectedInterviewInfo.interviewer.interviewerId">
+                                                Don't Worry! System will find great interviewer for you.</p>
+                                            <h4 class="col-2"
+                                                *ngIf="selectedInterviewInfo.isFreeSelected || 
+                                            (setupInterviewMetadata && setupInterviewMetadata.membershipStatusCode == 200 && setupInterviewMetadata.interviewsRemaining > 0) || (setupInterviewMetadata && setupInterviewMetadata.isEligibleForOffer && selectedInterviewInfo.isFreeSelected); else elseFreePrice">
+                                                <del>&#8377;
+                                                    {{StringtoJSON(setupInterviewForm.value.interviewLevel).price}}</del>
+                                                &nbsp; Free
+                                            </h4>
+                                            <ng-template #elseFreePrice>
+                                                <h4 class="col-2">&#8377;
+                                                    {{StringtoJSON(setupInterviewForm.value.interviewLevel).price}}</h4>
+                                            </ng-template>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="card border-0 date-box">
+                                        <!-- <div
+                                            class="shadow-sm p-2 mb-4 bg-white border-top text-center position-relative">
+                                            <input [owlDateTime]="dt1" formControlName="interviewDate"
+                                                autocomplete="off" placeholder="" style="    width: 0;
+                                            border: none;" [min]="minDate" [max]="maxDate" id="btnIntDateTime"
+                                                (dateTimeChange)="onDateChange($event)">
+
+                                            <strong class=""
+                                                [owlDateTimeTrigger]="dt1">{{selectedInterviewInfo.interviewDate | date:
+                                                'MMM dd, yyyy'}}
+                                                <owl-date-time #dt1 [pickerType]="'calendar'"></owl-date-time>
+                                            </strong>
+                                            <button type="button" [owlDateTimeTrigger]="dt1"
+                                                class="btn btn-link position-absolute text-dark font-weight-bold arrow-btn"
+                                                style="margin-top: -10px;">&#10230;</button>
+
+                                        </div> -->
+
+                                        <div class="shadow-sm p-2 mb-4 bg-white border-top text-center position-relative input-group">
+                                            <input class="form-control text-center" placeholder="yyyy-mm-dd" formControlName="interviewDate"
+                                            autocomplete="off" (click)="d.toggle()" (dateSelect)="onDateChange($event)"
+                                                   name="dp" [(ngModel)]="model" ngbDatepicker  #d="ngbDatepicker" [startDate]="newMinDate"
+                                                   [minDate]="newMinDate" [maxDate]="newMaxDate" id="btnIntDateTime" style="border: none;">
+                                            <!-- <div class="input-group-append"> -->
+                                              <!-- <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button> -->
+                                              <button type="button" (click)="d.toggle()" style="right: 0px;"
+                                              class="btn btn-link position-absolute text-dark font-weight-bold arrow-btn"
+                                              >&#10230;</button>
+                                            <!-- </div> -->
+                                        </div>
+                                        <div class="card-body" *ngIf="isSlotsDataLoaded">
+                                            <div *ngIf="timeSlots.morningSlots.length > 0">
+                                                <!-- <p class="fs-14 mb-2"><strong>Morning</strong> 7-11 am</p> -->
+                                                <p class="fs-14 mb-2" style="font-size: 14px; color: #99226e;"><strong>Morning</strong></p>
+
+                                                <p style="padding-top: 10px;">
+                                                    <span class="text-theme slot fs-16 mr-2 time-pill"
+                                                        *ngFor="let slot of timeSlots.morningSlots"
+                                                        (click)="slot.status && selectedInterviewInfo.slot = slot"
+                                                        [ngClass]="{'active-slot':selectedInterviewInfo.slot == slot}">
+                                                        <del *ngIf="!slot.status">{{slot.value}}</del>
+                                                        <a *ngIf="slot.status">{{slot.value}}</a>
+                                                    </span>
+                                                </p>
+                                                <hr />
+                                            </div>
+                                            <div *ngIf="timeSlots.afternoonSlots.length > 0">
+                                                <!-- <p class="fs-14 mb-2"><strong>Afternoon</strong> 12-3 pm</p> -->
+                                                <p class="fs-14 mb-2" style="font-size: 14px; color: #99226e;"><strong>Afternoon</strong></p>
+                                                <p style="padding-top: 10px;">
+                                                    <span class="text-theme slot fs-16 mr-2 time-pill"
+                                                        *ngFor="let slot of timeSlots.afternoonSlots"
+                                                        (click)="slot.status && selectedInterviewInfo.slot = slot"
+                                                        [ngClass]="{'active-slot': selectedInterviewInfo.slot == slot}">
+                                                        <del *ngIf="!slot.status">{{slot.value}}</del>
+                                                        <a *ngIf="slot.status">{{slot.value}}</a>
+                                                    </span>
+                                                </p>
+                                                <hr />
+                                            </div>
+                                            <div *ngIf="timeSlots.eveningSlots.length > 0">
+                                                <!-- <p class="fs-14 mb-2"><strong>Evening</strong> 4-9 pm</p> -->
+                                                <p class="fs-14 mb-2" style="font-size: 14px; color: #99226e;"><strong>Evening</strong></p>
+                                                <p style="padding-top: 10px;">
+                                                    <span class="text-theme slot fs-16 mr-2 time-pill"
+                                                        *ngFor="let slot of timeSlots.eveningSlots"
+                                                        (click)="slot.status && selectedInterviewInfo.slot = slot"
+                                                        [ngClass]="{'active-slot': selectedInterviewInfo.slot == slot}">
+                                                        <del *ngIf="!slot.status">{{slot.value}}</del>
+                                                        <a *ngIf="slot.status">{{slot.value}}</a>
+                                                    </span>
+                                                </p>
+                                                <hr />
+                                            </div>
+
+
+                                            <h4 class="text-center mt-4 mb-4" *ngIf="timeSlots.morningSlots.length == 0 
+                                                && timeSlots.afternoonSlots.length == 0 
+                                                && timeSlots.eveningSlots.length == 0">No Slots Available</h4>
+
+
+                                        </div>
+                                    </div>
+                                    <ul class="list-inline text-right mt-3">
+                                        <ul class="list-inline text-right col p-0">
+                                            <li class="d-inline-block">
+                                                <button type="button" class="btn btn-default btn-previous"
+                                                    (click)="selectedInterviewInfo.isFreeSelected ? onStepClick(2, 0) : onStepClick(3, 0)">Previous</button>
+                                            </li>
+                                            <li class="d-inline-block">
+                                                <button type="button" aria-controls="step3"
+                                                    (click)="submitSetupInterview(false, 'DUMMY')"
+                                                    class="btn btn-default btn-gradient btn-next ml-4">Schedule
+                                                    Interview</button>
+                                            </li>
+                                        </ul>
+                                    </ul>
+                                    <!--Step 3 of 1 END-->
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</app-authorize-layout>
+
+<div *ngIf="interviewScheduledSuccess">
+    <div id="toast-container" class="toast-top-right toast-container">
+        <div class="ng-tns-c24-0 ng-star-inserted ng-trigger ng-trigger-flyInOut ngx-toastr toast-success"
+            toast-component="" style="opacity: 1;">
+            <div class="ng-tns-c24-0 toast-title ng-star-inserted" aria-label="Setup Interview"> Setup Interview</div>
+            <div role="alertdialog" aria-live="polite" class="ng-tns-c24-0 toast-message ng-star-inserted"
+                aria-label="Interview scheduled successfully">Interview scheduled successfully</div>
+        </div>
+    </div>
+</div>
+<!--div id="navigatetiinterviews"><a href="interviews"></a></div-->

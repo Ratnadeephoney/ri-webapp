@@ -1,0 +1,354 @@
+<a class="overlay-sidebar-header" [class.overlay-sidebar-header-open]="openSideMenu" (click)="closeOverlay()"></a>
+<div>
+    <header>
+        <div class="showSM row mr-0" *ngIf="dataStorage.globalIsLoggedInUser">
+            <div class="ml-4 row mr-0">
+                <div class=" ml-4">
+                    <a class="navbar-brand" routerLink="/">
+                        <img src="assets/images/logo/main.png" (click)="GetProfileData()" style="width: 70%;"
+                            alt="logo">
+                    </a>
+                </div>
+                <div class=" responsive-btn menu-btn ml-4 mt-4">
+                    <a (click)="toggleSidebar()">
+                        <i class="fa fa-bars text-white" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="navbar m-l-auto" id="toggle-btn" [class.openSidebar]="openSideMenu">
+                    <div class="responsive-btn pr-4">
+                        <a (click)="toggleSidebar()">
+                            <h5>back</h5>
+                        </a>
+                    </div>
+                    <ul class="main-menu sm-main-menu">
+
+                        <li>
+                            <a routerLink="/" (click)="GetProfileData()"><i class="flaticon-home pr-2"></i> Home</a>
+                        </li>
+                        <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.MY_PROFILE.PATH}">
+                            <a [routerLink]="dataStorage.globalPathInformation.MY_PROFILE.PATH"><i
+                                    class="flaticon-resume pr-2"></i> My Profile</a>
+                        </li>
+                        <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.HIRING_ID.PATH}">
+                            <a [routerLink]="dataStorage.globalPathInformation.HIRING_ID.PATH"><i
+                                    class="flaticon-id pr-2"></i>Rock Hiring Id</a>
+                        </li>
+                        <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.SETUP_INTERVIEW.PATH}">
+                            <a [routerLink]="dataStorage.globalPathInformation.SETUP_INTERVIEW.PATH"><i
+                                    class="flaticon-calendar pr-2"></i> Setup Interview</a>
+                        </li>
+                        <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.JOBS.PATH}">
+                            <a [routerLink]="dataStorage.globalPathInformation.JOBS.PATH"><i
+                                    class="flaticon-suitcase pr-2"></i> Jobs</a>
+                        </li>
+                        <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.TRAININGS.PATH}">
+                            <a [routerLink]="dataStorage.globalPathInformation.TRAININGS.PATH"><i
+                                    class="flaticon-online-learning pr-2"></i> Training</a>
+                        </li>
+                        <!-- <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.CREATE_TRAINING.PATH}">
+                            <a [routerLink]="dataStorage.globalPathInformation.CREATE_TRAINING.PATH"><i
+                                    class="flaticon-online-learning pr-2"></i> Create Training</a>
+                        </li> -->
+                        <li *ngIf="dataStorage.globalLoggedInUserData.userType==2"
+                            [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.CREATE_TRAINING.PATH}">
+                            <a [routerLink]="dataStorage.globalPathInformation.CREATE_TRAINING.PATH"><i
+                                    class="flaticon-rounded-add-button pr-2"></i>Create Training</a>
+                            <!-- <a *ngIf="activeUrl != dataStorage.globalPathInformation.CREATE_TRAINING.PATH"
+                                [routerLink]="dataStorage.globalPathInformation.CREATE_TRAINING.PATH"><i
+                                    class="pr-2 p-l-16"><img style="width: 21px; height: 20px;"
+                                        src="../../../../../assets/images/plus.png"></i>
+                                Create Training</a> -->
+                        </li>
+                        <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.BECOME_A_MENTOR.PATH}">
+                            <a *ngIf="dataStorage.globalLoggedInUserData.userType==1"
+                                [routerLink]="dataStorage.globalPathInformation.BECOME_A_MENTOR.PATH"><i
+                                    class="flaticon-advisor pr-2"></i>Become a Mentor</a>
+                            <!-- <a *ngIf="dataStorage.globalLoggedInUserData.userType==2"
+                                [routerLink]="dataStorage.globalPathInformation.BECOME_A_MENTOR.PATH"><i
+                                    class="flaticon-online-learning pr-2"></i>Mentor</a> -->
+                        </li>
+                        <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.INTERVIEWS.PATH}">
+                            <a [routerLink]="dataStorage.globalPathInformation.INTERVIEWS.PATH"><i
+                                    class="flaticon-meeting pr-2"></i> Interviews</a>
+                        </li>
+                        <li *ngIf="dataStorage.globalLoggedInUserData.userType == 1"
+                            [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.COMING_SOON.PATH + '/membership'}">
+                            <a [routerLink]="dataStorage.globalPathInformation.COMING_SOON.PATH+'/membership'"><i
+                                    class="flaticon-member-card pr-2"></i> Membership</a>
+                        </li>
+                        <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.MENTORSLIST.PATH}">
+                            <a [routerLink]="dataStorage.globalPathInformation.MENTORSLIST.PATH"><i
+                                    class="flaticon-group pr-2"></i> Mentors</a>
+                        </li>
+                        <!-- referral -->
+                        <li [class]="{'active': activeUrl == dataStorage.globalPathInformation.REFFERAL.PATH}">
+                            
+                            <a [routerLink]="dataStorage.globalPathInformation.REFFERAL.PATH"> 
+                                <img src="assets/reference.png" class="reference"/>Reference  </a>
+                                
+                        </li>
+                        <!-- referral -->
+                        <li *ngIf="dataStorage.globalLoggedInUserData.userType == 2"
+                            [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.BANK_DETAILS.PATH }">
+                            <a [routerLink]="dataStorage.globalPathInformation.BANK_DETAILS.PATH"><i
+                                    class="flaticon-museum pr-2"></i>Bank Details</a>
+                        </li>
+                        <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.CERTIFICATES.PATH}">
+                            <a 
+                                [routerLink]="dataStorage.globalPathInformation.CERTIFICATES.PATH"><i
+                                    class="flaticon-certificate pr-2"></i> Certificates</a>
+                            <!-- <a *ngIf="activeUrl != dataStorage.globalPathInformation.CERTIFICATES.PATH"
+                                [routerLink]="dataStorage.globalPathInformation.CERTIFICATES.PATH"><i
+                                    class="pr-2 p-l-16"><img style="width: 24px; height: 20px;"
+                                        src="../../../../../assets/images/App Role change-Normal.png"></i>
+                                Certificates</a> -->
+                        </li>
+                        <!-- <li
+                            [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.COMING_SOON.PATH + '/chat'}">
+                            <a [routerLink]="dataStorage.globalPathInformation.COMING_SOON.PATH+'/chat'"><i
+                                    class="flaticon-comment pr-2"></i> Chat</a>
+                        </li> -->
+                        <!-- <li
+                            [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.CHAT.PATH}">
+                            <a [routerLink]="dataStorage.globalPathInformation.CHAT.PATH"><i
+                                    class="flaticon-comment pr-2"></i> Chat</a>
+                        </li> -->
+                        <!-- <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.COMING_SOON.PATH + '/resources'}">
+                            <a [routerLink]="dataStorage.globalPathInformation.COMING_SOON.PATH+'/resources'"><i class="flaticon-target pr-2"></i> Resources</a>
+                        </li> -->
+                        <!-- <li [ngClass]="{'active': activeUrl ==dataStorage.globalPathInformation.MY_VIDEOS.PATH}">
+                            <a [routerLink]="dataStorage.globalPathInformation.MY_VIDEOS.PATH"><i
+                                    class="flaticon-video-call pr-2"></i> Video Resume</a>
+                        </li> -->
+                        <!-- <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.COMING_SOON.PATH + '/myvideos'}">
+                            <a [routerLink]="dataStorage.globalPathInformation.COMING_SOON.PATH+'/myvideos'"><i
+                                    class="flaticon-video-call pr-2"></i> Video Resume</a>
+                        </li> -->
+                        <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.SETTINGS.PATH}">
+                            <a [routerLink]="dataStorage.globalPathInformation.SETTINGS.PATH"><i
+                                    class="flaticon-settings pr-2"></i> Settings</a>
+                        </li>
+                        <li class="showSM" (click)="onLogoutClick()"><a><i class="fa fa-sign-out pr-2 ml-4 fs-18"></i>
+                                Logout</a></li>
+                        <!-- <li>
+                            <a href="#"><i class="far fa-comments fa-lg pr-2"></i> Interviews</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="far fa-id-card fa-lg pr-2"></i> Membership</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="far fa-comment-alt fa-lg pr-2"></i> Chat</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fas fa-hand-holding-water fa-lg pr-2"></i> Resources</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="far fa-id-badge fa-lg pr-2"></i> My Profile</a>
+                        </li> -->
+
+                    </ul>
+                </div>
+            </div>
+
+
+
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top hideSM"
+            *ngIf="dataStorage.globalIsLoggedInUser">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse" (click)="toggleSidebar()"
+                    class="btn d-inline-block d-lg-none">
+                    <i class="fa fa-bars"></i>
+                    <span>Toggle Sidebar</span>
+                </button>
+
+                <a class="navbar-brand" routerLink="/">
+                    <img src="assets/images/logo/main.png" (click)="GetProfileData()" style="width: 70%;" alt="logo">
+                </a>
+
+                <div class="dropdown ml-auto pr-3 hideSM">
+
+                    <ul class="main-menu sm-main-menu">
+                        <li *ngIf="dataStorage.globalIsLoggedInUser && activeUrl != dataStorage.globalPathInformation.MY_VIDEOS.PATH"
+                            [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.MY_VIDEOS.PATH}">
+
+                            <a [routerLink]="dataStorage.globalPathInformation.COMING_SOON.PATH+'/myvideos'"><i
+                                    class="flaticon-video-call pr-2"></i> <img src="assets/images/video icon.png"
+                                    width="25" /></a>
+                            <!-- <a [routerLink]="dataStorage.globalPathInformation.CHAT.PATH"><i
+                                    ></i> <img src="assets/images/Header-chat.png"
+                                    width="25" /><span class="msg-bulb1" *ngIf="dataStorage.globalTotalChatUnreadCount" ></span></a> -->
+                        </li>
+
+                        <li style="margin-right:25px;"
+                            *ngIf="dataStorage.globalIsLoggedInUser && activeUrl != dataStorage.globalPathInformation.CHAT.PATH"
+                            [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.CHAT.PATH}">
+
+                            <!-- <a [routerLink]="dataStorage.globalPathInformation.COMING_SOON.PATH+'/myvideos'"><i
+                                    class="flaticon-video-call pr-2"></i> <img src="assets/images/video icon.png"
+                                    width="25" /></a> -->
+                            <a [routerLink]="dataStorage.globalPathInformation.CHAT.PATH" (click)="afterclick()"><i></i> <img
+                                    src="assets/images/chat_new_icon.png" width="25" /><span class="msg-bulb1"
+                                    *ngIf="dataStorage.globalTotalChatUnreadCount"></span></a>
+                        </li>
+                        <!-- <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.COMING_SOON.PATH + '/myvideos'}">
+                            <a [routerLink]="dataStorage.globalPathInformation.COMING_SOON.PATH+'/myvideos'"><i
+                                    class="flaticon-video-call pr-2"></i> Video Resume</a>
+                        </li> -->
+                        <li *ngIf="dataStorage.globalIsLoggedInUser">
+                            <!-- <img src="assets/images/rockinterview/user-icon.png" width="30"/>
+                                    <a class="pl-2"><h5>{{dataStorage.globalLoggedInUserData.userName ? dataStorage.globalLoggedInUserData.userName : dataStorage.globalLoggedInUserData.mobileNumber}}</h5></a> 
+                                    <i class="fa fa-chevron-down pl-2"></i> -->
+                            <img src="assets/images/rockinterview/user-icon.png" width="30" /> <a class="a-loggedin">
+                                {{dataStorage.globalLoggedInUserData.userName ?
+                                (dataStorage.globalLoggedInUserData.userName | slice:0:10) :
+                                dataStorage.globalLoggedInUserData.mobileNumber}}
+                                {{ dataStorage.globalLoggedInUserData.userName ?
+                                dataStorage.globalLoggedInUserData.userName.length > 10 ? '...': '' : ''}}</a>
+                            <ul class="mega-menu-container">
+                                <li (click)="onLogoutClick()"><a>LOGOUT</a></li>
+                            </ul>
+                        </li>
+
+                        <li style="margin-left: 25px;"
+                            *ngIf="dataStorage.globalIsLoggedInUser && dataStorage.globalLoggedInUserData.userType == 2">
+                            <img src="assets/images/rockinterview/Certified-Mentor.png" width="70">
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+    <!-- <div *ngIf="openSideMenu" >
+                side menu
+            </div> -->
+    <div [ngClass]="{'wrapper' :  dataStorage.globalIsLoggedInUser}">
+
+        <!-- Sidebar  -->
+        <nav id="sidebar" *ngIf="dataStorage.globalIsLoggedInUser" class="hideSM">
+            <!-- <div class="sidebar-header pl-lg-5">
+                            <h4 class="font-weight-bold text-dark">Hello,<br /> <span>Nitin Bm</span></h4>
+                        </div> -->
+
+            <ul class="list-unstyled components mt-4">
+                <li>
+                    <a routerLink="/" (click)="GetProfileData()"><i class="flaticon-home pr-2"></i> Home</a>
+                </li>
+                <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.MY_PROFILE.PATH}">
+                    <a [routerLink]="dataStorage.globalPathInformation.MY_PROFILE.PATH"><i
+                            class="flaticon-resume pr-2"></i> My Profile</a>
+                </li>
+                <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.HIRING_ID.PATH}">
+                    <a [routerLink]="dataStorage.globalPathInformation.HIRING_ID.PATH"><i class="flaticon-id pr-2"></i>
+                        Rock Hiring ID</a>
+                </li>
+                <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.SETUP_INTERVIEW.PATH}">
+                    <a [routerLink]="dataStorage.globalPathInformation.SETUP_INTERVIEW.PATH"><i
+                            class="flaticon-calendar pr-2"></i> Setup Interview</a>
+                </li>
+                <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.INTERVIEWS.PATH}">
+                    <a [routerLink]="dataStorage.globalPathInformation.INTERVIEWS.PATH"><i
+                            class="flaticon-meeting pr-2"></i> Interviews</a>
+                </li>
+                
+                
+                <li *ngIf="dataStorage.globalLoggedInUserData.userType==2"
+                    [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.CREATE_TRAINING.PATH}">
+                    <a [routerLink]="dataStorage.globalPathInformation.CREATE_TRAINING.PATH"><i
+                            class="flaticon-rounded-add-button pr-2">
+                        </i>Create Training</a>
+                </li>
+                <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.TRAININGS.PATH}">
+                    <a [routerLink]="dataStorage.globalPathInformation.TRAININGS.PATH"><i
+                            class="flaticon-online-learning pr-2"></i> Trainings</a>
+                </li>
+
+                <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.JOBS.PATH}">
+                    <a [routerLink]="dataStorage.globalPathInformation.JOBS.PATH"><i class="flaticon-suitcase pr-2"></i>
+                        Jobs</a>
+                </li>
+                <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.MENTORSLIST.PATH}">
+                    <a [routerLink]="dataStorage.globalPathInformation.MENTORSLIST.PATH"><i class="flaticon-group pr-2">
+                        </i> Mentors</a>
+                </li>
+                <!-- referral -->
+                <li [class]="{'active': activeUrl == dataStorage.globalPathInformation.REFFERAL.PATH}">
+                    
+                    <a [routerLink]="dataStorage.globalPathInformation.REFFERAL.PATH">  
+                        <img src="assets/reference.png" class="img-ref"/>Reference <span class="badge badge-pill new-ref">New</span></a>
+                </li>
+                <!-- referral -->
+                <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.BECOME_A_MENTOR.PATH}">
+                    <a *ngIf="dataStorage.globalLoggedInUserData.userType==1"
+                        [routerLink]="dataStorage.globalPathInformation.BECOME_A_MchatENTOR.PATH"><i
+                            class="flaticon-advisor pr-2"></i>Become a Mentor</a>
+                    <!-- <a *ngIf="dataStorage.globalLoggedInUserData.userType==1 && activeUrl != dataStorage.globalPathInformation.BECOME_A_MENTOR.PATH"
+                        [routerLink]="dataStorage.globalPathInformation.BECOME_A_MENTOR.PATH"><i
+                            class="pr-2 p-l-20"><img style="width: 25px; height: 20px;"
+                                src="../../../../../assets/images/Role-change-Normal.png"></i>Become a Mentor</a> -->
+                    <!-- <a *ngIf="dataStorage.globalLoggedInUserData.userType==2 && activeUrl == dataStorage.globalPathInformation.BECOME_A_MENTOR.PATH"
+                        [routerLink]="dataStorage.globalPathInformation.BECOME_A_MENTOR.PATH"><i
+                            class="pr-2 p-l-20"><img style="width: 25px; height: 20px;"
+                                src="../../../../../assets/images/Role-change-Active.png"></i>Mentor</a>
+                    <a *ngIf="dataStorage.globalLoggedInUserData.userType==2 && activeUrl != dataStorage.globalPathInformation.BECOME_A_MENTOR.PATH"
+                        [routerLink]="dataStorage.globalPathInformation.BECOME_A_MENTOR.PATH"><i
+                            class="pr-2 p-l-20"><img style="width: 25px; height: 20px;"
+                                src="../../../../../assets/images/Role-change-Normal.png"></i>Mentor</a> -->
+                </li>
+                
+                <li *ngIf="dataStorage.globalLoggedInUserData.userType == 1"
+                    [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.COMING_SOON.PATH + '/membership'}">
+                    <a [routerLink]="dataStorage.globalPathInformation.COMING_SOON.PATH+'/membership'"><i
+                            class="flaticon-member-card pr-2"></i> Membership</a>
+                </li>
+
+                <li *ngIf="dataStorage.globalLoggedInUserData.userType == 2"
+                    [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.BANK_DETAILS.PATH }">
+                    <a 
+                    [routerLink]="dataStorage.globalPathInformation.BANK_DETAILS.PATH"><i
+                            class="flaticon-museum pr-2"></i>Bank Details</a>
+                </li>
+                <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.CERTIFICATES.PATH}">
+                    <a 
+                        [routerLink]="dataStorage.globalPathInformation.CERTIFICATES.PATH"><i class="flaticon-certificate pr-2"></i> Certificates</a>
+                    <!-- <a *ngIf="activeUrl != dataStorage.globalPathInformation.CERTIFICATES.PATH"
+                        [routerLink]="dataStorage.globalPathInformation.CERTIFICATES.PATH"><i class="pr-2 p-l-16"><img
+                                style="width: 24px; height: 20px;"
+                                src="../../../../../assets/images/App Role change-Normal.png"></i> Certificates</a> -->
+                </li>
+                <!-- <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.COMING_SOON.PATH + '/chat'}">
+                    <a [routerLink]="dataStorage.globalPathInformation.COMING_SOON.PATH+'/chat'"><i
+                            class="flaticon-comment pr-2"></i> Chat</a>
+                </li> -->
+                <!-- <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.CHAT.PATH}">
+                    <a [routerLink]="dataStorage.globalPathInformation.CHAT.PATH" style="position: relative;"><i
+                            class="flaticon-comment pr-2" ></i> Chat <span class="msg-bulb"*ngIf="dataStorage.globalTotalChatUnreadCount" ></span> </a>
+                </li> -->
+                <!-- <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.COMING_SOON.PATH + '/resources'}">
+                    <a [routerLink]="dataStorage.globalPathInformation.COMING_SOON.PATH+'/resources'"><i class="flaticon-target pr-2"></i> Resources</a>
+                </li> -->
+                <!-- <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.COMING_SOON.PATH + '/myvideos'}">
+                    <a [routerLink]="dataStorage.globalPathInformation.COMING_SOON.PATH+'/myvideos'"><i
+                            class="flaticon-video-call pr-2"></i> Video Resume</a>
+                </li> -->
+                <!-- <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.MY_VIDEOS.PATH}">
+                    <a [routerLink]="dataStorage.globalPathInformation.MY_VIDEOS.PATH"><i
+                            class="flaticon-video-call pr-2"></i> Video Resume</a>
+                </li> -->
+                <li [ngClass]="{'active': activeUrl == dataStorage.globalPathInformation.SETTINGS.PATH}">
+                    <a [routerLink]="dataStorage.globalPathInformation.SETTINGS.PATH"><i
+                            class="flaticon-settings pr-2"></i> Settings</a>
+                </li>
+                <li class="showSM" (click)="onLogoutClick()"><a><i class="fa fa-sign-out pr-2 ml-4 fs-18"></i>
+                        Logout</a></li>
+
+            </ul>
+        </nav>
+
+        <div [ngClass]="{'authorize-content': dataStorage.globalIsLoggedInUser}">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

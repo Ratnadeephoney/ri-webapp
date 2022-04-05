@@ -1,0 +1,31 @@
+<div #modal class="login-modal" data-target="#modal" class="schIntPopup">
+    <div class="modal-header p-2">
+        <h4 class="text-white">Do you want to Rock the Interview?</h4>
+        <button aria-label="Close" class="close text-white sm-close-right" data-dismiss="modal"
+            (click)="activeModal.close('close')" type="button" style="right: -150px; outline: none;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body p-0">
+        <div class="row col-md-12 align-items-center">
+            <div class="col-md-6 text-center col-sm-12">
+                <img src="/assets/images/jobs-to-sch-interview.png" class="left-img"/>
+                
+            </div>
+            <div class="col-md-6 col-sm-12 ion-no-padding">
+                <!-- <p >Schedule Interview and <br> Share your report</p> -->
+                <p>Prepare with Rock Interview</p>
+                <p class="mt-4">Increase your chances <br> of getting Hired Faster! </p>
+                
+            </div>
+        </div>
+        <div class="row col-md-12 pb-4">
+            <div class="col-md-7 text-center col-sm-12">
+                <button class="btn btn-default btn-gradient mt-2 " (click)="onModalDismiss(false)">Skip</button>
+            </div>
+            <div class="col-md-5 col-sm-12">
+                <button class="btn btn-default btn-gradient mt-2 " (click)="onModalDismiss(true)">Schedule Interview</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+app-job-assurance{
+   .jap-details{
+    @media (min-width: 768px)
+        {  
+            .tile{
+                flex: 0 0 21%;
+            }        
+        }
+    .tile{
+        text-align: center;
+        height: 400px;
+        box-shadow: 7px 7px 27px 0px rgb(187, 173, 180);
+    border-radius: 20px;
+    margin: 0 2%;
+    margin-bottom: 5rem;
+    .img-right-arrow{
+        width: 8%;
+        position: absolute;
+        bottom: 50%;
+        left: 106%;
+    }
+    .img-down-arrow{
+        width: 10%;
+        position: absolute;
+        bottom: -12%;
+        right: 50%;
+    }
+
+        .header{
+            height: 260px;
+            img{
+                width: 150px;
+                height: auto;
+                margin-top: 30px;
+            }
+        }
+        .content{
+            // position: absolute;
+            //  bottom: 3rem;
+            h3{color: #000;
+                font-weight: 600;}
+            p{
+                margin-top:5px;
+            }
+        }
+    }
+   }
+
+   .faq-section{
+    .faqType {
+        padding:10px 0px; 
+        display: block !important; 
+        flex-direction: column !important; 
+        background: linear-gradient(to right, rgba(157, 16, 119, 1) 0%, rgba(215, 32, 232, 1) 100%); 
+        margin: 5px 0px;
+      }
+    
+      h4 {
+        color: #ffffff;
+        margin-left: 10px;
+      }
+    
+      ul li {
+        list-style: disc;
+        margin-left: 30px;
+        font-size: 15px;
+        font-weight: 300;
+        line-height: 2;
+      }
+    
+      p{
+        font-size: 16px;
+        line-height: 2;
+      }
+   }
+    
+}

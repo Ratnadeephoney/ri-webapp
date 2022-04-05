@@ -1,0 +1,30 @@
+
+<section class="ecommerce pt-0">
+    
+        <owl-carousel-o [options]="ecombannerOptions" class="ecommerce-home-slider" *ngIf="dataStorage.globalSkillsList && dataStorage.globalLocationsList" >
+          <ng-container >
+             
+              <ng-template carouselSlide>
+                   <app-header-template mode="1"  [skillsList]="skillsList" [locationsList]="locationsList"></app-header-template>
+                <div class="animated-bg"><i></i><i></i><i></i></div>
+          </ng-template>
+          </ng-container>
+          <ng-container >
+            <ng-template carouselSlide>
+                    <app-header-template mode="2" [skillsList]="skillsList" [locationsList]="locationsList"></app-header-template>
+              <div class="animated-bg"><i></i><i></i><i></i></div>
+        </ng-template>
+        </ng-container>
+        <ng-container >
+          <ng-template carouselSlide>
+                <app-header-template mode="3" [skillsList]="skillsList" [locationsList]="locationsList"></app-header-template>
+            <div class="animated-bg"><i></i><i></i><i></i></div>
+      </ng-template>
+      </ng-container>
+          </owl-carousel-o>
+          
+    </section>
+
+
+
+

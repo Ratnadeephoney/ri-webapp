@@ -1,0 +1,119 @@
+<!-- <p>settings works!</p> -->
+<app-authorize-layout>
+    <section class="register-page section-b-space">
+        <div class="container">
+                <div class="row">
+                        <div class="col-lg-12">    
+                                <h3 class="mb-4">Settings</h3>  
+                                
+                                <div class="col-md-12" style="text-align: -webkit-center;">
+                                        <div class="col-md-6 main-div">
+                                
+                                            <div style="display: flex;" class="bb-1">
+                                                <div class="col-md-11 featureName pl-0 pr-0">
+                                                    <span class="name">Share Feedback</span>
+                                    
+                                                </div>
+                                                <div class="  pl-0 pr-0">
+                                                    <span class="toggle-container">
+                                                        <input type="checkbox" (click)="onShareFeedbackClick($event)"
+                                                            [checked]="settingsData.shareReportFile || settingsData.shareAudioFile || settingsData.shareResume">
+                                                        <span class="slider round"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <!-- <hr> -->
+                                    
+                                            <div style="display: flex;" class="bb-1">
+                                                <div class="col-md-11 featureName pl-0 pr-0">
+                                                    <span class="specialname">Resume</span>
+                                                </div>
+                                    
+                                                <div class=" pl-0 pr-0">
+                                                    <span class="toggle-container">
+                                                        <input type="checkbox" (click)="updateSettingsData(settingsData, 'shareResume')"
+                                                            [checked]="settingsData.shareResume">
+                                                        <span class="slider round"></span>
+                                                    </span>
+                                                </div>
+                                    
+                                            </div>
+                                            <!-- <hr> -->
+                                    
+                                            <div style="display: flex;" class="bb-1">
+                                                <div class="col-md-11 featureName pl-0 pr-0">
+                                                    <span class="specialname">Interview Report File</span>
+                                                </div>
+                                    
+                                                <div class="  pl-0 pr-0">
+                                                    <span class="toggle-container">
+                                                        <input type="checkbox" (click)="updateSettingsData(settingsData, 'shareReportFile')"
+                                                            [checked]="settingsData.shareReportFile">
+                                                        <span class="slider round"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <!-- <hr> -->
+                                    
+                                            <div style="display: flex;" class="bb-1">
+                                                <div class="col-md-11 featureName pl-0 pr-0">
+                                                    <span class="specialname">Audio File</span>
+                                    
+                                                </div>
+                                    
+                                                <div class="  pl-0 pr-0">
+                                                    <span class="toggle-container">
+                                                        <input type="checkbox" (click)="updateSettingsData(settingsData, 'shareAudioFile')"
+                                                            [checked]="settingsData.shareAudioFile">
+                                                        <span class="slider round"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <!-- <hr> -->
+                                    
+                                            <div style="display: flex;" class="bb-1">
+                                                <div class="col-md-11 featureName pl-0 pr-0">
+                                                    <span class="name">Video Resume</span>
+                                                </div>
+                                    
+                                                <div class="  pl-0 pr-0">
+                                                    <span class="toggle-container">
+                                                        <input type="checkbox" (click)="updateSettingsData(settingsData, 'profileVideo')"
+                                                            [checked]="settingsData.profileVideo">
+                                                        <span class="slider round"></span>
+                                                    </span>
+                                                </div>
+                                    
+                                            </div>
+                                            <!-- <hr> -->
+                                    
+                                            <div style="display:flex;" >
+                                                <div class="col-md-11 featureName pl-0 pr-0">
+                                                    <span class="name">Profile Visibility</span>
+                                                </div>
+                                                <div class="  pl-0 pr-0">
+                                                    <span class="toggle-container">
+                                                        <input type="checkbox" (click)="updateSettingsData(settingsData, 'profileVisibility')"
+                                                            [checked]="settingsData.profileVisibility">
+                                                        <span class="slider round" style="cursor: pointer;"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                    
+                                        </div>
+                                    </div>
+                            </div>
+                        
+                    </div>
+                
+          
+        </div>
+   
+ 
+
+   
+
+    </section>
+
+    <app-detailed-footer></app-detailed-footer>
+</app-authorize-layout>

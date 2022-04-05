@@ -1,0 +1,97 @@
+<app-authorize-layout>
+    <div style="min-height: 600px;">
+    <section class="register-page section-b-space">
+        <div class="container">
+            <div class="col-lg-12 padding-0">
+                <h3 class="mb-4">Certificates</h3>
+                <div>
+                    <div class="col-md-12" *ngIf="certificatesList.length != 0 && isDataAvailable">
+                        <div class="form-row col-md-11 padding-0" style="justify-content: center;">
+                            <div class="col-md-6 col-sm-12 col-xs-12 padding-0"
+                                *ngFor="let certificate of certificatesList" style="padding:0px;">
+                                <div class="padding-0">
+                                    <mat-card class="ri-col cert ">
+                                        <h2 class="cert-name text-center"> 
+                                            {{certificate.certificateTitle}}
+                                        </h2>
+                                        <!-- <img (click)="onDownloadClick(certificate)"
+                                            style="height: 33px;margin-bottom: 20px;  cursor: pointer;"
+                                            src="../../../assets/images/Download.png" /> -->
+
+                                            <button type="button"  class="btn btn-default btn-gradient mt-4 btn-download"
+                                            (click)="onDownloadClick(certificate)">Download
+                                            &nbsp;&nbsp;
+                                            <i class="fa fa-download"></i>
+                                             </button>
+                                    </mat-card>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row d-flex justify-content-center pb-5">
+                <div class="col-lg-12 ">
+                    <div class="form-row col-md-10 padding-0" style="justify-content: center;">
+                        <table class="col-md-4" style="border: none; margin-left:31%; margin-top:0%" *ngIf="certificatesList.length == 0 && isDataAvailable">
+                            <div style="justify-content: center; text-align: inherit;">
+                                <tr>
+                                    <td>
+                                        <h4 class="pagetitle">How you can get a Certificate</h4>
+                                    </td>
+                                </tr><br>
+                                <tr>
+                                    <td>
+                                        <img src="assets/images/App Report.png" style="width:14%;" alt=""> <span
+                                            class="name">Register</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="assets/images/difference line.png" style="width: 6%;" alt=""
+                                            style="margin-left: 15px;padding-top: 5px; padding-bottom: 5px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="assets/images/Schedule Interview.png" style="width:16%;" alt=""> <span
+                                            class="name">Schedule Interview</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="assets/images/difference line.png" style="width: 6%;" alt=""
+                                            style="margin-left: 18px; padding-top: 5px; padding-bottom: 5px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="assets/images/Hiring Certificate.png" style="width:16%;" alt=""> <span
+                                            class="name">Get Hiring Certificate</span>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </div>
+                            <br>
+                            <tr>
+                                <td>
+                                    <h4 class="pagetitle1 ">You don't have any certificates</h4>
+                                </td>
+                            </tr>
+                            <div class="ri-row int">
+                                <button type="button"  class="btn btn-default btn-gradient btn-next pull-right"
+                                    (click)="goToSetupInterview()">Schedule Interview
+                                </button>
+                            </div>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    </section>
+  
+    </div>
+    <app-detailed-footer></app-detailed-footer>
+</app-authorize-layout>

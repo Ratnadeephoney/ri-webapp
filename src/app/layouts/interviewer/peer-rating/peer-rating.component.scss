@@ -1,0 +1,70 @@
+app-peer-rating{
+  .main-div {
+    width: 80%;
+    margin-left: 10rem;
+    display: flex;
+    flex-direction: row;
+  }
+
+  p {
+      font-size: 1rem;
+  }
+
+  .content-div {
+      margin-bottom: 3rem;
+      width: 70%;
+      margin-top: 3rem;
+    .headingText {
+        font-weight: 700;
+        color: #494949;
+        line-height: 5;
+        margin-top: 10px;
+      }
+      p{
+          line-height: 18px;
+      }
+  }
+
+  .image-div {
+    width: 45%;
+
+    img {
+      margin-top: 155px;
+    }
+  }
+
+  .download-btn {
+    font-size: 12px;
+    margin-left: 10px;
+  }
+
+  @media screen and (max-width: 750px) {
+    .main-div {
+      width: 100% !important;
+      margin-left: 0rem;
+      flex-direction: column !important;
+    }
+
+    .content-div {
+      width: 90%;
+      margin-left: 1rem;
+
+      .headingText {
+        line-height: 3.5;
+      }
+    }
+  
+    .image-div {
+      width: 100%;
+  
+      img {
+        width: 90% !important;
+        margin-left: 1rem;
+        margin-top: 30px;
+      }
+    }
+
+
+  }
+  
+}

@@ -1,0 +1,143 @@
+app-user-registration {
+
+    
+    .user-registration-class {
+        // width: 32rem;
+        // height: 33rem;
+        height: auto;
+        padding: 10px;
+    }
+ 
+    .modal-header {
+        padding: 1rem 0rem 1rem 2rem;
+        border-bottom: none;
+        h2 {
+            margin-left: 12rem;
+            // margin-bottom: 3rem;
+        }
+        .close {
+            position: absolute;
+            right: -45px;
+            top: 0;
+            background: #f5f5f5;
+            opacity: 1 !important;
+            color: #000;
+            z-index: 2;
+            margin: 0; 
+        }
+    }
+
+    form {
+        width: 90%;
+    }
+    .form-row {
+        width: 100%;
+        margin: 10px -5px !important;
+    }
+
+    label {
+        float: left;
+    }
+    input {
+        border: none;
+        border-bottom: 1px solid #ddd;
+        outline: none;
+        width: 100%;
+    }
+
+    input[type="radio"] {
+        margin: 0px 5px 0px 10px;
+    }
+    
+    .radioText {
+        color: #99226e;
+        margin-left: 3px;
+    }
+
+    .file-upload>input {
+        display: none;
+    }
+
+    // .file-upload>input {
+    //     border: none;
+    //     border-bottom: 1px solid #ddd;
+    //     width: 100%;
+    //   }
+    
+    .register-btn {
+        outline: none;
+        height: 30px;
+        padding: 0px 30px !important;
+        margin: 20px;
+    }
+
+    select {
+        border: none;
+        border-bottom: 1px solid #ddd;
+        width: 100%;
+    }
+
+    ng-select{
+        background: #fff;
+        height: 3rem;
+        border-bottom: 1px solid #ddd;
+        margin-top: 20px;
+        .ng-value-container{
+            margin-top: 1px;
+        .ng-value{
+            background: #ddd;
+            margin: 2px;
+            padding: 4px 2px;
+            height: 28px;
+            margin-top: 8px;
+            .ng-value-label{
+                font-size: 12px;
+            }
+        }
+        }
+          .ng-clear-wrapper{margin-top: 1rem;}
+          .ng-dropdown-panel{background: #fff;}
+          input{height: 2.7rem;}
+          .ng-option-selected{background: #ddd;}
+          .ng-option{padding: 6px;}
+      }
+
+      .ng-dropdown-panel .ng-dropdown-panel-items {
+          max-height: 190px !important;
+          text-align: left;
+        }
+
+}
+
+@media screen and (max-width: 750px) {
+    .user-registration-class {
+        // width: 20rem !important;
+        width: auto !important;
+        height: auto !important;
+        padding: 1rem !important;
+    }
+
+    form {
+        width: 100% !important;
+    }
+
+    .modal-header {
+        .close {
+            padding: 0.5rem !important;
+        }
+    }
+    .modal-body {
+        padding: 0rem 0rem 0rem 1rem !important;
+    }
+
+    .heading {
+        margin-top: 5px !important;
+    }
+    .register-btn {
+        margin-bottom: -10px !important;
+        margin-top: -5px !important;
+    }
+    .exp {
+        margin: 10px -5px !important;
+    }
+}

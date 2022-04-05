@@ -1,0 +1,226 @@
+<app-authorize-layout>
+    <section class="register-page section-b-space">
+        <div class="container ml-2">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="mb-0">Interviews</h3>
+                    <br>
+                    <div class="ri-col" *ngIf="userData.userType == 2">
+                        <ngb-tabset #tabSet (tabChange)="onTabChange($event)">
+                            <ngb-tab id="tFirst">
+                                <ng-template ngbTabTitle>
+                                    <div>Assigned (Mentor)</div>
+                                </ng-template>
+                                <ng-template ngbTabContent>
+                                    <!-- <div style="color: black; background-color: white;">Tab1 data</div> -->
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab id="tSecond">
+                                <ng-template ngbTabTitle>
+                                    <div>Scheduled</div>
+                                </ng-template>
+                                <ng-template ngbTabContent>
+                                    <!-- <div style="color: black; background-color: white;">Tab2 data</div> -->
+                                </ng-template>
+                            </ngb-tab>
+                        </ngb-tabset>
+                    </div>
+                    <div class="row ml-2 justify-content-center" [ngClass]="{'m-t-10': userData.userType == 2}"
+                        *ngIf="userData.userType == 2 && selectedTab=='INT'">
+                        <a *ngFor="let i of interviewStatusForInt" class=" m-1 filter-item"
+                            (click)="getInterviews(0, i.id, selectedTab)"
+                            [ngClass]="{'active': i.id == selectedStatusId} ">
+                            {{i.value}} </a>
+                    </div>
+                    <div class="row ml-2 justify-content-center" [ngClass]="{'m-t-10': userData.userType == 2}"
+                        *ngIf="userData.userType == 1 && selectedTab=='JS' || userData.userType == 2 && selectedTab=='JS'">
+                        <a *ngFor="let i of interviewStatusForJS" class=" m-1 filter-item"
+                            (click)="getInterviews(0, i.id, selectedTab)"
+                            [ngClass]="{'active': i.id == selectedStatusId} ">
+                            {{i.value}} </a>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div *ngIf="interviewsList.length != 0" class="col-md-12 row">
+                        <div *ngFor="let i of interviewsList" class="col-md-4 ml-0">
+                            <div class="personalized-div">
+                                <img src="../../../assets/images/rockinterview/empty_ribbon.png"
+                                    class="personalized-img" *ngIf="!!i.enterpriseScheduled">
+                                <span class="personalized-img-text" title="{{i.enterpriseCompany}}"
+                                    *ngIf="!!i.enterpriseScheduled && i.enterpriseCompany.length > 15">Scheduled by
+                                    <b> {{ i.enterpriseCompany | slice:0:15}}
+                                        {{i.enterpriseCompany.length > 15 ? '...': ''}}</b>
+                                </span>
+                                <span class="personalized-img-text"
+                                    *ngIf="!!i.enterpriseScheduled && i.enterpriseCompany.length <= 15">Scheduled by
+                                    <b> {{ i.enterpriseCompany | slice:0:15}}
+                                        {{i.enterpriseCompany.length > 15 ? '...': ''}}</b>
+                                </span>
+                            </div>
+                            <div class=" main-card p-0 m-4">
+                                <div class="interview-header row m-0 p-2 pt-3">
+                                    <p class="text-black col-md-8  p-2">{{i.interviewTimeStamp | date: 'dd MMM yyyy'}}
+                                    </p>
+                                    <p class="pull-right col-md-4  text-black p-2">
+                                        {{i.interviewTimeStamp | date: 'hh:mm a'}}</p>
+                                </div>
+                                <div class="content-div pt-3 pl-3">
+                                    <div class="mb-2">
+                                        <label class="mb-0">Name: </label>
+                                        <span *ngIf="!!i.userName; else NABlock"> {{i.userName}} </span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="mb-0">Interview Level: </label>
+                                        <span *ngIf="!!i.interviewLevelName; else NABlock"> {{i.interviewLevelName}}
+                                        </span>
+                                    </div>
+                                    <!-- <div class="mb-2">
+                                        <div #hoverTech>
+                                            <label class="mb-0">Technologies: </label>
+                                            <span style="overflow-x: scroll;" *ngIf="!!i.technologyNames; else NABlock"> {{i.technologyNames}} </span>
+                                        </div>
+                                    </div> -->
+
+                 
+                                    <div class="mb-2">
+                                        <label class="mb-0">Technologies: </label>
+                                        <span *ngIf="!!i.technologyNames; else NABlock"> {{i.technologyNames | slice:0:1
+                                            }}
+                                            {{i.technologyNames.length > 2 ? '...': ''}}
+                                        </span> &nbsp;
+                                        <span *ngIf="i.technologyNames.length > 2">
+                                            <!-- <button *ngIf="i.technologyNames.length > 2">see more</button> -->
+                                            <!-- <div fxFlex="25%" fxFlex.sm="100%" fxFlex.md="25%" fxFlex.xs="100%"
+                                            ngClass.sm="search-btn-sm" ngClass.xs="search-btn-sm">                 style="background-color: #9a0365;opacity: 1;" -->
+                                            <popover-content #skillsPopover placement="bottom" animation="true"
+                                                id="popOver2" style="background-color: red">
+                                                <span
+                                                    *ngIf="!!i.technologyNames; else NABlock">{{i.technologyNames}}</span>
+                                            </popover-content>
+                                            <button mat-flat-button disableRipple ngClass.md="serach-button-md"
+                                                ngClass.xl="serach-button-xl" ngClass.lg="serach-button-lg"
+                                                ngClass.sm="serach-button-sm" ngClass.xs="serach-button-xs"
+                                                id="btnSearch" [popover]="skillsPopover" [popoverOnHover]="false"
+                                                [popoverCloseOnClickOutside]="true" [popoverCloseOnMouseOutside]="true"
+                                                [popoverDismissTimeout]="5000" id="popOver1">See More</button>
+                                            <!-- </div> -->
+                                        </span>
+                                    </div>
+
+                                    
+                                    <div class="mb-2" *ngIf="selectedTab == 'INT' && i.resumePath">
+                                        <label class="mb-0">Resume: </label>
+                                        <span *ngIf="!!i.resumePath; else NABlock"> {{i.resumeName}} </span>
+                                        <!-- <img src="assets/images/rockinterview/download-report.png" /> -->
+                                        <i class="fa fa-arrow-down ml-2" *ngIf="!!i.resumePath"
+                                            style="color: #9a0365; cursor: pointer;"
+                                            (click)="downloadResume(i.resumePath)" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="mb-0">Mode: </label>
+                                        <span *ngIf="!!i.interviewMode; else NABlock"> {{i.interviewMode}} </span>
+                                    </div>
+                                    <div *ngIf="i.meetingLink" class="mb-2">
+                                        <label class="mb-0">Meeting Link: </label>
+                                        <!--span *ngIf="i.meetingLinks; else NABlock" *ngIf="!!i.meetingLinks; else NABlock">{{i.meetingLinks}}</span-->
+                                        <span *ngIf="true">
+                                            <a *ngIf="i.meetingLink === 'Not Available'"
+                                                style="color: grey; cursor:context-menu;" id="meetingL">
+                                                {{i.meetingLink}}</a>
+
+                                            <a *ngIf="i.meetingLink !== 'Not Available'" href="{{i.meetingLink}}"
+                                                target="_blank"> {{i.meetingLink.slice(0,20)}}...</a>
+                                        </span>
+                                    </div>
+
+                                    <!-- <div class="mb-2" *ngIf="i.enterpriseScheduled"><a id="ameetLinks" href="{{i.meetingLink}}" target="_blank">
+                                        <label class="mb-0" style="color: #99226e;">Scheduled by </label>
+                                        <span style="padding-left: 10px; font-weight: 500;"
+                                            title="{{i.enterpriseCompany}}">{{ i.enterpriseCompany | slice:0:15}}
+                                            {{i.enterpriseCompany.length > 15 ? '...': ''}}
+                                        </span>
+                                    </div> -->
+                                </div>
+                                <hr class="mt-0 mb-0">
+                                <div class="pl-1">
+                                    <div class="row col-md-12 ml-1 status-row">
+                                        <div class="col-md-6 text-center"
+                                            *ngIf="i.status != interviewStatusIds.COMPLETED_INTERVIEW && i.status != interviewStatusIds.CANCELLED_INTERVIEW && selectedTab == 'INT' && i.status != interviewStatusIds.CANCELLED_BY_ADMIN_INTERVIEW && i.status != interviewStatusIds.CANCELLED_BY_ENTERPRISE_INTERVIEW">
+                                            <p class="cancel-int mt-2" (click)="cancelInterview(i)">
+                                                Cancel <br> Interview</p>
+                                            <!-- <p style="color: #9a0365;" 
+                                                *ngIf="(i.status == interviewStatusIds.COMPLETED_INTERVIEW) && userData.userType == 2" >Cancel <br> Interview</p> -->
+                                        </div>
+                                        <div class="p-0 col-md-6 mt-2"
+                                            *ngIf="i.originalDbStatus == interviewStatusIds.CANCELLED_INTERVIEW && selectedTab != 'INT'">
+                                            <p class="text-size-md"
+                                                style="white-space: initial; font-weight: 500; line-height: 1.1; margin-top: 10px;">
+                                                Don't worry. System will assign new Mentor.
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6"
+                                            *ngIf="!(i.status != interviewStatusIds.COMPLETED_INTERVIEW && i.status != interviewStatusIds.CANCELLED_INTERVIEW && selectedTab == 'INT' && i.status != interviewStatusIds.CANCELLED_BY_ADMIN_INTERVIEW) && !(i.originalDbStatus == interviewStatusIds.CANCELLED_INTERVIEW && selectedTab != 'INT') && !(i.originalDbStatus == interviewStatusIds.CANCELLED_BY_ENTERPRISE_INTERVIEW && selectedTab != 'INT')">
+
+                                        </div>
+                                        <div class="col-md-6 text-center">
+                                            <p class="btn mt-1 p-0 pt-2"
+                                                [ngClass]="{'completed-int': i.status == interviewStatusIds.COMPLETED_INTERVIEW}"
+                                                *ngIf="i.status == interviewStatusIds.COMPLETED_INTERVIEW">
+                                                {{i.interviewStatus}} </p>
+                                            <p class="btn mt-1 p-0 pt-2"
+                                                [ngClass]="{'scheduled-int': i.status != interviewStatusIds.COMPLETED_INTERVIEW}"
+                                                *ngIf="i.status != interviewStatusIds.COMPLETED_INTERVIEW">
+                                                {{i.interviewStatus}} </p>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row col-md-12 justify-content-center mt-3 pb-2 pl-2 pr-0">
+                                        <div class="col-md-6 text-center pr-0">
+                                            <!-- <button class="btn feedback-btn pl-4 pr-4 pt-1 pb-1"
+                                                [disabled]="i.status != interviewStatusIds.COMPLETED_INTERVIEW"
+                                                (click)="getInterviewerFeedback(i)">{{(userData.userType == 1) ? 'Interviewer Feedback' : 'Your Feedback'}}</button> -->
+                                            <button class="btn feedback-btn pl-4 pr-4 pt-1 pb-1 mt-2"
+                                                style="height: 50px;"
+                                                [disabled]="i.status != interviewStatusIds.COMPLETED_INTERVIEW"
+                                                (click)="getInterviewerFeedback(i)">{{(selectedTab == 'JS') ? 'Report' :
+                                                'Your Feedback'}}</button>
+                                        </div>
+                                        <div class="col-md-6 text-center pr-0">
+                                            <!-- <button class="btn feedback-btn pl-4 pr-4 pt-1 pb-1"
+                                                [disabled]="i.status != interviewStatusIds.COMPLETED_INTERVIEW"
+                                                (click)="getJobseekerFeedback(i)">{{(userData.userType == 2) ? 'Jobseeker Feedback' : 'Your Feedback'}}</button> -->
+                                            <button class="btn feedback-btn pl-4 pr-4 pt-1 pb-1 mt-2"
+                                                style="height: 50px;"
+                                                [disabled]="i.status != interviewStatusIds.COMPLETED_INTERVIEW"
+                                                (click)="getJobseekerFeedback(i)">{{(selectedTab == 'INT') ? 'Report' :
+                                                'Your Feedback'}}</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-template #NABlock>
+                                <span class="ml-1">Not Available</span>
+                            </ng-template>
+                            <ng-template #NABlockMeetLink>
+                                <span class="ml-1">https://meet.google.com/hhi-evhc-aux?authuser=1</span>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div *ngIf="isDataLoaded && interviewsList.length == 0">
+                        <div class="center-content">
+                            <img src="assets/images/rockinterview/no-interviews.png" class="no-interviews" />
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 center-content row pl-0 mt-4 ml-2"
+                    *ngIf="isDataLoaded && selectedTab == 'JS' && interviewsList.length == 0">
+                    <button class="btn btn-gradient btn-default pl-4 pr-4 pt-2 pb-2" style="background: #9a0365;"
+                        (click)="addInterview()">Setup Interview</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</app-authorize-layout>

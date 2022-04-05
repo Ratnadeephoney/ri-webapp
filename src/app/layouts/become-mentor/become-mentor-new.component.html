@@ -1,0 +1,374 @@
+<app-authorize-layout>
+    <section class="register-page section-b-space">
+        <div class="container newpad">
+            <div class="ri-col" *ngIf="ShowApply">
+                <div>
+                    <h3 style="color: black;" *ngIf="dataStorage.globalLoggedInUserData.userType == 1">Become a Mentor
+                    </h3>
+                    <h3 style="color: black;" *ngIf="dataStorage.globalLoggedInUserData.userType == 2">Mentor</h3>
+                </div>
+                <div class="ri-row-center">
+                    <div class="ri-col" style="line-height: 30px;">
+                        <div>
+                            <img src="../../../assets/images/Become-Mentor1.png" style="height: 300px; width: 400px">
+                        </div>
+                        <div class="ri-row-center" style="padding-top: 10px;">
+                            <h4 style="color: black;">Conduct Interviews</h4>
+                        </div>
+                        <div class="ri-row-center" style="padding-top: 10px;">
+                            <h4 style="color: black;">Create Trainings</h4>
+                        </div>
+                        <div class="ri-row-center" style="padding-top: 10px;">
+                            <h4 style="color: black;">Suggest Trainings</h4>
+                        </div>
+                        <div class="ri-row-center" style="padding-top: 10px;">
+                            <h4 style="color: black;">Make Money</h4>
+                        </div>
+                        <div class="ri-row-center" style="padding-top: 10px;">
+                            <button (click)="GoToVerification()"
+                                class="btn primary-btn btn-default btn-gradient mt-1">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row" *ngIf="ShowVerification">
+                <div class="col-lg-12">
+                    <div class="ri-row" style="align-items: center;">
+                        <div (click)="BackToApply()" style="margin-bottom: 20px; cursor: pointer;">
+                            <img style="height: 20px; width: 16px;" src="../../../assets/images/Back-Arrow.png">
+                        </div>
+                        <div (click)="BackToApply()" style="padding-top: 3px; padding-left: 10px; cursor: pointer;">
+                            <h3>Verification</h3>
+                        </div>
+                    </div>
+                    <div class="theme-card">
+                        <form class="theme-form" [formGroup]="myProfileForm" (ngSubmit)="saveProfile()">
+                            <!-- Basic details -->
+                            <div class=" form-row bg-theme-gradient text-white px-3 pt-2 mt-3 mb-3">
+                                <h5 class="col-md-11 text-white mt-0"> Details</h5>
+                                <!-- <i class="float-right fa fa-angle-down col-md-1 fs-32" *ngIf="!showBasicDet"></i>
+                                            <i class="float-right fa fa-angle-up col-md-1 fs-32" *ngIf="showBasicDet"></i> -->
+                            </div>
+                            <div class="">
+                                <div style="border: 1px solid #ddd" class="p-3">
+
+                                    <div class="form-row">
+                                        <div class="col-md-6 col-sm-6 selectExperience">
+                                            <label for="year" class="ml-14" class="form-control-placeholder"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.years}"
+                                                *ngIf="this.myProfileForm.value.years ">Exp(Years)</label>
+                                            <select class="form-control mb-0" id="year" formControlName="years"
+                                                style="width: 100%"
+                                                [ngClass]="{'emptySelect': !this.myProfileForm.value.years}">
+                                                <option value="">Exp(Years)</option>
+                                                <option *ngFor="let y of yearsList" value="{{y}}"
+                                                    [selected]="y == expyear">
+                                                    <span>{{y}}</span>                                                    
+                                                </option>
+                                                
+                                            </select>
+                                            <div *ngIf="submitted == true && myProfileForm.get('years').invalid">
+                                                <mat-error class="nameError errors mt-1"
+                                                    *ngFor="let validation of validation_messages.years">
+                                                    <span
+                                                        *ngIf="submitted==true && myProfileForm.get('years').hasError(validation.type)">
+                                                        {{ validation.message | translate}}
+                                                    </span>
+                                                </mat-error>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 selectExperience">
+
+                                            <label for="month" class="ml-14 form-control-select"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.months}"
+                                                *ngIf="this.myProfileForm.value.months ">Exp(Months)</label>
+                                            <select class="form-control" id="month" name="month" style="width: 100%"
+                                                formControlName="months"
+                                                [ngClass]="{'emptySelect': !this.myProfileForm.value.months}">
+                                                <option value="">Exp(Months)</option>
+                                                <option *ngFor="let m of monthsList" value="{{m}}"
+                                                    [selected]="m == expmonth">
+                                                    {{m}} 
+                                                   
+                                                </option>
+                                            </select>
+                                            <div *ngIf="submitted == true && myProfileForm.get('months').invalid">
+                                                <mat-error class="nameError errors mb-0"
+                                                    *ngFor="let validation of validation_messages.months">
+                                                    <span
+                                                        *ngIf="submitted==true && myProfileForm.get('months').hasError(validation.type)">
+                                                        {{ validation.message | translate}}
+                                                    </span>
+                                                </mat-error>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6" style="margin-top:3px;">
+                                            <!-- <label for="month" class="ml-14 form-control-placeholder"  
+                                                                    *ngIf="this.myProfileForm.value.technologies">Exp(Months)</label> -->
+                                            <label class="resumeLabel">Technologies</label>
+                                            <ng-select [selectOnTab]="true" placeholder="Technologies"
+                                                formControlName="technologies" [items]="dataStorage.globalSkillsList"
+                                                bindLabel="technologyDescription" bindValue="technologyId"
+                                                [multiple]="true" id="txtSkills" class="left">
+                                                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                                    <div class="ng-value" *ngFor="let item of items | slice:0:3">
+                                                        <span class="ng-value-label"
+                                                            title="{{item.technologyDescription}}">
+                                                            {{item.technologyDescription | slice:0:10}}
+                                                            <!-- <span style="margin-left:-3px"
+                                                                title="{{item.technologyDescription}}"
+                                                                *ngIf="item.technologyDescription.length > 10">...</span> -->
+                                                        </span>
+
+                                                        <span class="ng-value-icon right" (click)="clear(item)"
+                                                            aria-hidden="true">×</span>
+                                                    </div>
+                                                    <div class="ng-value" *ngIf="items.length > 3">
+                                                        <span class="ng-value-label">{{items.length - 3}}
+                                                            more...</span>
+                                                    </div>
+                                                </ng-template>
+                                            </ng-select>
+                                            <div *ngIf="submitted == true && myProfileForm.get('technologies').invalid">
+                                                <mat-error class="nameError errors" style="padding-top: 15px;"
+                                                    *ngFor="let validation of validation_messages.technologies">
+                                                    <span
+                                                        *ngIf="submitted==true && myProfileForm.get('technologies').hasError(validation.type)">
+                                                        {{ validation.message | translate}}
+                                                    </span>
+                                                </mat-error>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 upload mb-0">
+                                            <div class="custom-file mb-0">
+                                                <label *ngIf="resume.length != 0" class="resumeLabel mb-0">Upload
+                                                    Resume</label>
+                                                <input type="file" placeholder="Upload Resume" class="custom-file-input mb-0"
+                                                    id="uploadResume" (change)="getFile($event)"
+                                                    title="{{resume.length != 0 ? resume : 'Upload Resume'}}">
+                                                <label class="custom-file-label" for="uploadResume" *ngIf="!resume"
+                                                    title="{{resume.length != 0 ? resume : 'Upload Resume'}}">
+                                                    <!-- {{!!resume ? resume : 'Upload Resume'}} -->
+                                                    Upload Resume
+                                                    <i class="fa fa-paperclip"></i></label>
+                                                <label class="custom-file-label" for="uploadResume" *ngIf="resume"
+                                                    title="{{resume.length != 0 ? resume : 'Upload Resume'}}">
+                                                    {{resume | slice:0:19}}
+                                                    {{resume.length > 19 ? '...': ''}}
+                                                    <i class="fa fa-paperclip"></i></label>
+                                            </div>
+                                            <div *ngIf="submitted == true && resumenf">
+                                                <mat-error class="nameError errors"
+                                                    style="margin-left: 0px; margin-bottom: 5px; padding-top: 15px; padding-left: 5px;">
+                                                    <span>
+                                                        Please upload Resume
+                                                    </span>
+                                                </mat-error>
+                                            </div>
+                                            <div *ngIf="resumeError">
+                                                <mat-error class="nameError errors"
+                                                    style="margin-left: 0px; margin-bottom: 5px; padding-top: 15px; padding-left: 5px;">
+                                                    <span>
+                                                        {{resumeErrorText}}
+                                                    </span>
+                                                </mat-error>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row" style="margin-left: 10px;">
+                                        <div class="col-md-6">
+                                            <h6>Available Time</h6>
+                                            <div class="form-group d-flex justify-content-between form-row pl-1"
+                                                style="margin-bottom: 5px;">
+                                                <div class="custom-control custom-checkbox form-check-inline">
+                                                    <input class="custom-control-input " type="checkbox" id="morning"
+                                                        value="morning" formControlName="isMorning">
+                                                    <label class="custom-control-label" for="morning">Morning</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox form-check-inline">
+                                                    <input class="custom-control-input " type="checkbox" id="afternoon"
+                                                        value="afternoon" formControlName="isAfternoon">
+                                                    <label class="custom-control-label"
+                                                        for="afternoon">Afternoon</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox form-check-inline">
+                                                    <input class="custom-control-input" type="checkbox" id="evening"
+                                                        value="evening" formControlName="isEvening">
+                                                    <label class="custom-control-label" for="evening">Evening</label>
+                                                </div>
+                                            </div>
+                                            <div
+                                                *ngIf="submitted == true && myProfileForm.get('availableSlots').invalid">
+                                                <mat-error class="nameError errors"
+                                                    style="margin-left: 0px; margin-bottom: 5px;">
+                                                    <span>
+                                                        Select Atleast One Slot
+                                                    </span>
+                                                </mat-error>
+                                            </div>
+                                        </div>
+                                        <!-- <div>
+                                            <mat-error *ngIf="Availableslotserror">Select Atleast One Slot
+                                            </mat-error>
+                                        </div> -->
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <input type="text" autocomplete="off" class="form-control" id="curCompany"
+                                                formControlName="currentCompany" required="false" maxlength="50">
+                                            <label for="curCompany" class="form-control-placeholder"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.currentCompany}">Current
+                                                Company
+                                            </label>
+                                            <div
+                                                *ngIf="submitted == true && myProfileForm.get('currentCompany').invalid">
+                                                <mat-error class="nameError errors"
+                                                    *ngFor="let validation of validation_messages.currentCompany">
+                                                    <span
+                                                        *ngIf="submitted==true && myProfileForm.get('currentCompany').hasError(validation.type)">
+                                                        {{ validation.message | translate}}
+                                                    </span>
+                                                </mat-error>
+                                            </div>
+
+
+                                            <div
+                                                *ngIf="myProfileForm.get('currentCompany').valid && companyError==true">
+                                                <mat-error class="nameError errors">
+                                                    <span>Current and Previous company should not be same</span>
+                                                </mat-error>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" autocomplete="off" class="form-control" id="prevCompany"
+                                                formControlName="prevCompanies" required="false" maxlength="50">
+                                            <label for="prevCompany" class="form-control-placeholder"
+                                                [ngClass]="{'form-control-valid': this.myProfileForm.value.prevCompanies}">Previous
+                                                Company
+                                            </label>
+                                            <div
+                                                *ngIf="submitted == true && myProfileForm.get('prevCompanies').invalid">
+                                                <mat-error class="nameError errors"
+                                                    *ngFor="let validation of validation_messages.prevCompanies">
+                                                    <span
+                                                        *ngIf="submitted==true && myProfileForm.get('prevCompanies').hasError(validation.type)">
+                                                        {{ validation.message | translate}}
+                                                    </span>
+                                                </mat-error>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="form-row col-md-12 justify-content-center" style="margin-top: 5px;">
+                                <button class="btn primary-btn btn-default btn-gradient mt-1"
+                                    (submit)="saveProfile()">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- <h3 class="mb-4">My Profile</h3> -->
+                </div>
+            </div>
+
+            <div class="ri-col" *ngIf="ShowStatus">
+                <div>
+                    <h3 style="color: black;" *ngIf="dataStorage.globalLoggedInUserData.userType == 1">Become a Mentor
+                    </h3>
+                    <h3 style="color: black;" *ngIf="dataStorage.globalLoggedInUserData.userType == 2">Mentor</h3>
+                </div>
+                <div class="ri-row-center">
+                    <div class="ri-col" style="line-height: 30px;">
+                        <div>
+                            <img src="../../../assets/images/Become-Mentor1.png" style="height: 300px; width: 400px">
+                        </div>
+                        <div class="ri-row-center" style="padding-top: 10px;">
+                            <h4 style="color: black;">Conduct Interviews</h4>
+                        </div>
+                        <div class="ri-row-center" style="padding-top: 10px;">
+                            <h4 style="color: black;">Create Trainings</h4>
+                        </div>
+                        <div class="ri-row-center" style="padding-top: 10px;">
+                            <h4 style="color: black;">Suggest Trainings</h4>
+                        </div>
+                        <div class="ri-row-center" style="padding-top: 10px;">
+                            <h4 style="color: black;">Make Money</h4>
+                        </div>
+                        <br>
+                        <div class="ri-col" *ngIf="RoleStatus==1">
+                            <div class="ri-row-center" style="padding-top: 10px;">
+                                <h3 style="color: black; margin-bottom: 0px;">Awaiting Approval</h3>
+                            </div>
+                            <div class="ri-row-center" style="padding-top: 10px;">
+                                <h4 style="color: black;">You will be notified once you are verified</h4>
+                            </div>
+                        </div>
+                        <div class="ri-col" *ngIf="RoleStatus==3">
+                            <div class="ri-row-center" style="padding-top: 10px;">
+                                <h3 style="color: black; margin-bottom: 0px;">Reconsider</h3>
+                            </div>
+                            <div class="ri-row-center" style="padding-top: 10px;">
+                                <h4 style="color: black;">You will be notified once you are verified</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ri-col" *ngIf="ShowMentor">
+                <div>
+                    <h3 style="color: black;" *ngIf="dataStorage.globalLoggedInUserData.userType == 1">Become a Mentor
+                    </h3>
+                    <h3 style="color: black;" *ngIf="dataStorage.globalLoggedInUserData.userType == 2">Mentor</h3>
+                </div>
+                <div class="ri-row"
+                    style="box-shadow: 0px 2px 5px 0px #857f7f; padding: 25px; max-width: 800px; flex-wrap: wrap;">
+                    <div class="ri-row-center" style="flex: 1;">
+                        <img src="../../../assets/images/Mentor-training.png" style="height: 150px; width: 120px;">
+                    </div>
+                    <div class="ri-col-center" style="flex: 1;">
+                        <div>
+                            <h4>Training</h4>
+                        </div>
+                        <div>
+                            <h5>Post a personalised training</h5>
+                        </div>
+                        <div>
+                            <button class="btn primary-btn btn-default btn-gradient mt-1" (click)="AddTraining()">Create Training</button>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+                <div class="ri-row"
+                    style="box-shadow: 0px 2px 5px 0px #857f7f; padding: 25px; max-width: 800px; flex-wrap: wrap;">
+                    <div class="ri-row-center" style="flex: 1;">
+                        <img src="../../../assets/images/Mentor-interview.png" style="height: 150px; width: 200px;">
+                    </div>
+                    <div class="ri-col-center" style="flex: 1;">
+                        <div>
+                            <h4>Interviews</h4>
+                        </div>
+                        <div>
+                            <h5>Conduct Interviews</h5>
+                        </div>
+                        <div>
+                            <button (click)="ScheduleInterview()"
+                                class="btn primary-btn btn-default btn-gradient mt-1">Schedule Interview</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</app-authorize-layout>

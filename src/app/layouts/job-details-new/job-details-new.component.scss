@@ -1,0 +1,34 @@
+app-job-details-new {
+    .img-new {
+        width: 15px;
+        height: 15px;
+    }
+
+    .mar-tp-100{
+        margin-top: 100px !important;
+    }
+
+    .scrolldiv::-webkit-scrollbar {
+        width: 3px !important;
+        background-color: white !important;
+    }
+
+    .scrolldiv::-webkit-scrollbar-thumb{
+        background-color: #9a0365;
+        border-radius: 0px;
+    }
+
+    .jd-div{
+        max-height: 220px; overflow: auto;
+    }
+
+    .jd-div::-webkit-scrollbar {
+        width: 4px;
+        background-color: #fff;
+      }
+      .jd-div::-webkit-scrollbar-thumb {
+        background-color: rgb(128, 4, 82);
+        border-radius: 0;
+      }
+    
+}

@@ -1,0 +1,129 @@
+<section class="app2 header overflow-unset" id="home">
+    <div class="app2-header bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-7 col-md-8">
+                    <div class="center-text">
+
+                        <div style="width: 100%;">
+                            <div class="row header-text">
+                                <h1>Connecting Job Seekers
+                                    <span> to industry experts and jobs </span>
+                                </h1>
+
+                            </div>
+                            <form [formGroup]="searchForm">
+
+                                <div class="row search-area">
+
+                                    <div class="col-md-5" style="border-right: 1px solid #ddd;">
+                                        <div class="row">
+                                            <div class="col-md-2 col-sm-2 col-xs-2" style="width: 10%;">
+                                                <img style="margin-top: 12px;" src="assets/images/icon/search.png" />
+                                            </div>
+                                            <div class="col-md-10 col-sm-10 col-xs-10 p-0 sm-ml-7" style="width: 88%;">
+                                                <ng-select #skill [selectOnTab]="true" placeholder="Search Skills"
+                                                    formControlName="skills" [items]="dataStorage.globalSkillsList"
+                                                    bindLabel="technologyDescription" bindValue="technologyId"
+                                                    [multiple]="true" id="txtSkills" class="left" 
+                                                    (click)="showDefaultSkillsList = false" (keyup)="showDefaultSkillsList = false">
+
+                                                    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                                        <div class="ng-value" *ngFor="let item of items | slice:0:2">
+                                                            <span class="ng-value-label"
+                                                                title="{{item.technologyDescription}}">
+                                                                {{item.technologyDescription | slice:0:4}} <span
+                                                                    style="margin-left:-3px"
+                                                                    title="{{item.technologyDescription}}"
+                                                                    *ngIf="item.technologyDescription && item.technologyDescription.length > 4">...</span>
+                                                            </span>
+
+                                                            <span class="ng-value-icon right" (click)="clear(item)"
+                                                                aria-hidden="true">×</span>
+                                                        </div>
+                                                        <div class="ng-value" *ngIf="items.length > 2">
+                                                            <span class="ng-value-label">{{items.length - 2}}
+                                                                more...</span>
+                                                        </div>
+                                                    </ng-template>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="row">
+                                            <div class="col-md-2 col-sm-2 col-xs-2" style="width: 10%;">
+                                                <img src="assets/images/icon/location.png"
+                                                    style="width: 20px;margin-top: 8px;" />
+                                            </div>
+                                            <div class="col-md-10 col-sm-10 col-xs-10 p-0 sm-ml-7" style="width: 88%;">
+                                                <ng-select [selectOnTab]="true" placeholder="Search Locations"
+                                                    formControlName="locations"
+                                                    [items]="dataStorage.globalLocationsList" bindLabel="locationName"
+                                                    bindValue="locationId" [multiple]="true" id="txtSkills"
+                                                    class="right" (click)="showDefaultSkillsList = false">
+                                                    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                                        <div class="ng-value" *ngFor="let item of items | slice:0:2">
+                                                            <span class="ng-value-label" title="{{item.locationName}}">
+                                                                {{item.locationName | slice:0:4}} <span
+                                                                    style="margin-left:-3px"
+                                                                    title="{{item.locationName}}"
+                                                                    *ngIf="item.locationName.length > 4">...</span>
+                                                            </span>
+
+                                                            <span class="ng-value-icon right" (click)="clear(item)"
+                                                                aria-hidden="true">×</span>
+                                                        </div>
+                                                        <div class="ng-value" *ngIf="items.length > 2">
+                                                            <span class="ng-value-label">{{items.length - 2}}
+                                                                more...</span>
+                                                        </div>
+                                                    </ng-template>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-md-2 col-sm-12">
+                                        <button
+                                            class="btn btn-default primary-btn info radius-0 btn-search btn-gradient col-sm-12"
+                                            [routerLink]="dataStorage.globalPathInformation.JOBS.PATH">Search</button>
+                                    </div>
+
+                                </div>
+
+                            </form>
+                            <!-- <div *ngIf="showDefaultSkillsList && topJobsAndCounts.length != 0" class="dd">
+                                <div  class="skills-dd" >
+                                    <div *ngFor="let item of topJobsAndCounts" (click)="setSkill(item)" style="cursor: pointer;" >
+                                        <span>{{item.technologyName}} </span>
+                                        <span class="pull-right">{{item.countOfJobs}} </span>
+                                    </div>
+                                </div>
+                            </div> -->
+                           
+                            <app-video-section [module]="dataStorage.globalModuleNames.JOBS"></app-video-section>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-md-4">
+                    <div class="img-mobile set-abs">
+                        <img src="assets/images/rockinterview/slider-jobs.png" alt="" class="headaer-image" />
+
+                    </div>
+                    <!-- <div class="wave-orange"></div> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="wave"></div>
+    </div>
+</section>
+
+<div class="animation-circle-inverse">
+    <i></i>
+    <i></i>
+    <i></i>
+</div>

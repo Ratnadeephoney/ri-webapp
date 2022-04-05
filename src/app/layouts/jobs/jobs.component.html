@@ -1,0 +1,405 @@
+<app-authorize-layout>
+    <div id="content">
+        <app-modern-nav *ngIf="!dataStorage.globalIsLoggedInUser"></app-modern-nav>
+        <div class="container sm-pl-0" [ngStyle]="!dataStorage.globalIsLoggedInUser && {'margin-top': '4rem'}">
+            <div class="row">
+                <div class="col-md-8 col-sm-12" style="margin: 30px auto;">
+                    <form [formGroup]="searchForm">
+
+                        <div class="row search-area">
+
+                            <div class="col-md-5 col-sm-12" style="border-right: 1px solid #ddd;">
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-2" style="width: 13%;">
+                                        <img style="margin-top: 12px;" src="assets/images/icon/search.png" />
+                                    </div>
+                                    <div class="col-md-10 col-sm-10 col-xs-10 p-0 sm-ml-7" style="width: 84%;">
+                                        <ng-select [selectOnTab]="true" placeholder="Search Skills"
+                                            formControlName="skills" [items]="dataStorage.globalSkillsList"
+                                            bindLabel="technologyDescription" bindValue="technologyId" [multiple]="true"
+                                            id="txtSkills" class="left">
+                                            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                                <div class="ng-value" *ngFor="let item of items | slice:0:3">
+                                                    <span class="ng-value-label" title="{{item.technologyDescription}}">
+                                                        {{item.technologyDescription | slice:0:4}} <span
+                                                            style="margin-left:-3px"
+                                                            title="{{item.technologyDescription}}"
+                                                            *ngIf="item.technologyDescription && item.technologyDescription.length > 4">...</span>
+                                                    </span>
+
+                                                    <span class="ng-value-icon right" (click)="clear(item)"
+                                                        aria-hidden="true">×</span>
+                                                </div>
+                                                <div class="ng-value" *ngIf="items.length > 3">
+                                                    <span class="ng-value-label">{{items.length - 3}} more...</span>
+                                                </div>
+                                            </ng-template>
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-5 col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-2" style="width: 13%;">
+                                        <img src="assets/images/icon/location.png"
+                                            style="width: 20px;margin-top: 8px;" />
+                                    </div>
+                                    <div class="col-md-10 col-sm-10 col-xs-10 p-0 sm-ml-7" style="width: 84%;">
+                                        <ng-select [selectOnTab]="true" placeholder="Search Locations"
+                                            formControlName="locations" [items]="dataStorage.globalLocationsList"
+                                            bindLabel="locationName" bindValue="locationId" [multiple]="true"
+                                            id="txtSkills" class="right">
+                                            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                                <div class="ng-value" *ngFor="let item of items | slice:0:3">
+                                                    <span class="ng-value-label" title="{{item.locationName}}">
+                                                        {{item.locationName | slice:0:4}} <span style="margin-left:-3px"
+                                                            title="{{item.locationName}}"
+                                                            *ngIf="item.locationName && item.locationName.length > 4">...</span>
+                                                    </span>
+
+                                                    <span class="ng-value-icon right" (click)="clear(item)"
+                                                        aria-hidden="true">×</span>
+                                                </div>
+                                                <div class="ng-value" *ngIf="items.length > 3">
+                                                    <span class="ng-value-label">{{items.length - 3}} more...</span>
+                                                </div>
+                                            </ng-template>
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-2 col-sm-12 sm-ml-7" style="min-width: 100px;">
+                                <button style="min-width: 100px;"
+                                    class="btn btn-default primary-btn info radius-0 btn-search btn-gradient btn-search col-sm-12"
+                                    (click)="onSearchClick()">Search</button>
+                            </div>
+
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <app-breadcrumb></app-breadcrumb>
+        <div style="min-height: 200px;">
+            <div class="job-results container" *ngIf="jobsList && jobsList.length > 0">
+                <div class="row col-md-12" style="padding-right: 0px !important;">
+                    <div class="col-md-3 text-center-sm" style="margin-bottom: 5px">
+                        <strong>{{paginationProps.totalItems}}</strong> results found
+                    </div>
+                    <div class="col-md-6">
+                        <pagination-controls (pageChange)="onPageChanges($event);">
+                        </pagination-controls>
+                    </div>
+                    <div class="col-md-3 m-b-30">
+                        Jobs per page
+                        <select name="country" [(ngModel)]="selectedPage" (change)="onPerPageChange($event)">
+                            <option [value]="obj" *ngFor="let obj of perPageItems">{{obj}}</option>
+                        </select>
+                    </div>
+
+
+                </div>
+                <div class="row col-md-12">
+                    <!-- <div class="col-md-5 left" id="results">
+                            <div class="item " [ngClass]="{'active': job.jobId == selectedJob.jobId}"
+                                *ngFor="let job of jobsList | paginate: { itemsPerPage: paginationProps.itemsPerPage, currentPage: paginationProps.currentPage, totalItems: paginationProps.totalItems };"
+                                (click)="getSelectedJobById(job); scrollToDiv()">
+                                <div class="row info">
+                                    <div class="col-md-2 web-display">
+                                        <div class="avatar">
+                                            {{job.jobAvatar}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h6 class="pt-2">
+                                            <strong>
+                                                <span title="{{job.jobTitle}}">
+                                                    {{job.jobTitle | slice:0:25}}
+                                                    {{job.jobTitle.length > 25 ? '...': ''}}
+                                                </span>
+                                            </strong>
+                                        </h6>
+                                        <p class="p-company">
+                                            <span title="{{job.company}}">
+                                                {{job.company | slice:0:25}}
+                                            {{job.company.length > 25 ? '...': ''}} 
+                                            </span>
+                                            </p>
+                                        <p class="p-skill"><strong>Skills:</strong>
+                                            <span title="{{job.skills}}">
+                                                {{job.skills | slice:0:25}}
+                                                {{job.skills.length > 25 ? '...': ''}}
+                                            </span>
+                                        </p>
+                                        <p><strong>Experience:</strong> {{job.experience}}</p>
+                                    </div>
+                                </div>
+                                <div class="row footer">
+                                    <div class="col-md-6 posted-date text-center-sm"> <span>Posted {{job.jobPostedTime}}</span>
+                                    </div>
+                                    <div class="col-md-6 text-right posted-by text-center-sm"> <span>Posted by
+                                            <span title="{{job.company}}">
+                                                {{job.company | slice:0:10}}
+                                                {{job.company.length > 10 ? '...': ''}} </span>
+                                        </span></div>
+                                </div>
+                
+                            </div>
+                        </div>
+                        <div class="col-md-7 right" id="job-details" *ngIf="selectedJob && selectedJob.jobId">
+                            <div class="row">
+                                <div class="col-md-2" class="web-display">
+                                    <div class="avatar">
+                                        {{selectedJob.jobAvatar}}
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <h4>
+                                        <span title="{{selectedJob.jobTitle}}">
+                                            {{selectedJob.jobTitle | slice:0:42}}
+                                            {{selectedJob.jobTitle ? (selectedJob.jobTitle.length > 42 ? '...': '') : ''}}
+                                        </span>
+                                    </h4>
+                                    <p class="p-company">{{selectedJob.company}}</p>
+                                    <p class="p-company">{{selectedJob.companyName}}</p>
+                                    <p *ngIf="isJODForSelectedJob" class="p-skill"><strong>Skills:</strong>
+                                        <span title="{{selectedJob.technology}}">
+                                            {{selectedJob.technology | slice:0:50}}
+                                            {{selectedJob.technology ? (selectedJob.technology.length > 50 ? '...': '') : ''}}
+                                        </span>
+                                    </p>
+                                    <p *ngIf="!isJODForSelectedJob" class="p-skill"><strong>Skills:</strong>
+                                        <span title="{{selectedJob.skills}}">
+                                            {{selectedJob.skills | slice:0:50}}
+                                            {{selectedJob.skills ? (selectedJob.skills.length > 50 ? '...': '') : ''}}
+                                        </span>
+                                    </p>
+                                    <p><strong>Experience:</strong> {{selectedJob.experience}}</p>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <ngb-tabset *ngIf="!isJODForSelectedJob" #tabSet>
+                                    <ngb-tab title="Job Description" id="tFirst">
+                                        <ng-template ngbTabContent>
+                                            <div class="row mb-2">
+                                                <div class="col-md-6">
+                                                    <p> <strong>Job Type:</strong>
+                                                        {{selectedJob.jobDescription ? selectedJob.jobDescription.jobType: 'NA'}}{{selectedJob.jobDescription ? (selectedJob.jobDescription.workRemote ? '/Work Remote' : '') : ''}}</p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p><strong>Salary Range:</strong>
+                                                        {{selectedJob.jobDescription ? (selectedJob.jobDescription.salaryRange ? selectedJob.jobDescription.salaryRange : 'NA') : 'NA'}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2"
+                                                *ngIf="selectedJob.jobDescription && selectedJob.jobDescription.gigFrom">
+                                                <div class="col-md-6">
+                                                    <p><strong>From:</strong> {{selectedJob.jobDescription.gigFrom}}</p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p><strong>To:</strong> {{selectedJob.jobDescription.gigTo}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2"
+                                                *ngIf="selectedJob.jobDescription && selectedJob.jobDescription.gigHours">
+                                                <div class="col-md-6">
+                                                    <p><strong>Hours:</strong> {{selectedJob.jobDescription.gigHours}}</p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p><strong>Rate:</strong> {{selectedJob.jobDescription.gigRate}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2"
+                                                *ngIf="selectedJob.jobDescription && selectedJob.jobDescription.gigEstiatedPrice">
+                                                <div class="col-md-6">
+                                                    <p><strong>Total Estimated Price:</strong> {{selectedJob.jobDescription.gigEstiatedPrice}}</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div> <hr/> </div>
+                                            <div class="row col-md-12 mb-2 mt-4">
+                                                   
+                                                <p class="job-description" *ngIf="selectedJob.jobDescription && selectedJob.jobDescription.jobDescription"
+                                                style="word-break: break-word;"
+                                                    [innerHTML]="selectedJob.jobDescription.jobDescription">
+                                                    {{selectedJob.jobDescription.jobDescription}}
+                                                </p>
+                
+                                            </div>
+                                        </ng-template>
+                                    </ngb-tab>
+                                    <ngb-tab title="Company Details" id="tSecond">
+                                        <ng-template ngbTabContent>
+                                            <div class="row col-md-12 mb-1">
+                                                <p> <strong>Company Name:</strong>
+                                                    {{selectedJob.companyDetails ? (selectedJob.companyDetails.companyName ? selectedJob.companyDetails.companyName: 'NA') : 'NA'}}
+                                                </p>
+                                            </div>
+                                            <div class="row col-md-12 mb-1" *ngIf="selectedJob.companyDetails">
+                                                <strong>Website:</strong> <span *ngIf="!selectedJob.companyDetails.website">NA</span>
+                                                <a *ngIf="selectedJob.companyDetails.website"
+                                                    [href]="selectedJob.companyDetails.website" target="_blank">
+                                                    {{selectedJob.companyDetails.website}}
+                                                </a>
+                                            </div>
+                                            <div class="row col-md-12 mb-2" *ngIf="selectedJob.companyDetails">
+                                                <strong>Video:</strong> <span *ngIf="!selectedJob.companyDetails.video">NA</span>
+                                                <a *ngIf="selectedJob.companyDetails.video" [href]="selectedJob.companyDetails.video"
+                                                    target="_blank">
+                                                    {{selectedJob.companyDetails.video}}
+                                                </a>
+                                            </div>
+                                            <div class="row col-md-12 mb-1">
+                                                <p style="word-break: break-word;"> <strong>Why Join Us:</strong>
+                                                    {{selectedJob.companyDetails ? (selectedJob.companyDetails.whyJoinUs ? selectedJob.companyDetails.whyJoinUs: 'NA') : 'NA'}}
+                                                </p>
+                                            </div>
+                                        </ng-template>
+                                    </ngb-tab>
+                                </ngb-tabset>
+                                <p *ngIf="isJODForSelectedJob" style="border-top: 1px solid #dddd;">
+                                    <a style="text-decoration: underline;" [href]="selectedJob.jobUrl" target="_blank">Click here</a> 
+                                    to apply the job
+                                    <br />
+                                    <img class="img-jod" src="assets/images/rockinterview/job-of-day-user.png" />
+                                </p>
+                            </div>
+                            <div *ngIf="!isJODForSelectedJob" class="text-right mt-1 mb-1">
+                            <span class="mr-4" *ngIf="selectedJob.isApplied && applyingEmployerName">Your profile has been shared for this job by <b>{{applyingEmployerName }}</b></span>
+                                <button
+                            class="btn-default btn btn-gradient btn-apply" (click)="applyJob(selectedJob)" [disabled]="selectedJob.isApplied"> {{!selectedJob.isApplied? 'Apply' : 'Applied'}}</button></div>
+                        </div> -->
+                    <mat-card class="ri-col crdstyle" (click)="OpenJobDetails(job)"
+                        style="cursor: pointer; box-shadow: 0px 2px 5px 0px #857f7f; padding: 10px; margin: 0px 40px 40px 0px;"
+                        *ngFor="let job of jobsList | paginate: { itemsPerPage: paginationProps.itemsPerPage, currentPage: paginationProps.currentPage, totalItems: paginationProps.totalItems };">
+                        <div class="ri-row">
+                            <div class="ri-col" style="flex: 1;">
+                                <div>
+                                    <h5 style="color: black;"><b><span title="{{job.jobTitle}}">
+                                                {{job.jobTitle | slice:0:19}}
+                                                {{job.jobTitle.length > 19 ? '...': ''}}
+                                            </span></b></h5>
+                                </div>
+                                <div><span title="{{job.company}}">{{job.company | slice:0:25}}
+                                        {{job.company.length > 25 ? '...': ''}}</span></div>
+                            </div>
+                            <div style="flex: 0.2">
+                                <!-- <span *ngIf="job.isNew==true" style="color: #99226e;">New</span> -->
+                            </div>
+                            <div>
+                                <button mat-button (click)="MoreOptionsClick(job, $event)"
+                                    style="border: none; background:transparent"><img
+                                        src="../../../assets/images/Jobs-More-Options.png"
+                                        style="width: 6px; height: 20px;"></button>
+                                <div *ngIf="job.ShowMore==true"
+                                    style="width: 120px; position: absolute; background: white; box-shadow: 0px 2px 5px 0px #857f7f;">
+                                    <ul>
+
+                                        <!-- <li (click)="ShareJob(job, $event)"
+                                            style="text-align: center; border-top: 1px solid #dedede">
+                                            <a>Share</a>
+                                        </li> -->
+                                        <li style="text-align: center;" class="copy-link" (click)="CopyJob(job, $event)">
+                                            <a>Copy Link</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ri-col"
+                            style="border-top: 1px solid #dedede; line-height: 30px; margin-top: 10px; padding-top: 5px;">
+                            <div class="ri-row">
+                                <div>
+                                    <img class="img-new" src="../../../assets/images/Skills.png">
+                                </div>
+                                <div class="p-l-10">
+                                    <span title="{{job.skills}}">
+                                        {{job.skills | slice:0:25}}
+                                        {{job.skills.length > 25 ? '...': ''}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="ri-row">
+                                <div>
+                                    <img src="../../../assets/images/Exp.png" class="img-new">
+                                </div>
+                                <div class="p-l-10">
+                                    <span *ngIf="job.experience!=null" title="{{job.experience}}">
+                                        {{job.experience | slice:0:25}}
+                                        {{job.experience.length > 25 ? '...': ''}}
+                                    </span>
+                                    <span *ngIf="job.experience==null">NA</span>
+                                </div>
+                            </div>
+                            <div class="ri-row" *ngIf="job.isJOD==false">
+                                <div>
+                                    <img src="../../../assets/images/Duration.png" class="img-new">
+                                </div>
+                                <div class="p-l-10">
+                                    <span *ngIf="job.jobType!=null">
+                                        {{job.jobType | slice:0:25}}
+                                        {{job.jobType.length > 25 ? '...': ''}}
+                                    </span>
+                                    <span *ngIf="job.jobType==null">NA</span>
+                                </div>
+                            </div>
+                            <div class="ri-row">
+                                <div>
+                                    <img src="../../../assets/images/Location.png" class="img-new">
+                                </div>
+                                <div class="p-l-10">
+                                    <span *ngIf="job.location!=null" title="{{job.location}}">
+                                        {{job.location | slice:0:25}}
+                                        {{job.location.length > 25 ? '...': ''}}
+                                    </span>
+                                    <span *ngIf="job.location==null">NA</span>
+                                </div>
+                            </div>
+                            <div class="ri-row" *ngIf="job.isJOD==true" style="height: 30px;">
+
+                            </div>
+                        </div>
+
+                        <div class="ri-row-center" style="margin-top: 10px;">
+                            <div class="ri-col" style="font-size: 10px; color: #99226e; align-items: center;" *ngIf="job.applyingEmployerName!=null">
+                                <span>Your profile has been shared for this job by</span>
+                                <span><b>{{job.applyingEmployerName}}</b></span>
+                            </div>
+                        </div>
+
+                        <div class="ri-row-center" style="margin-top: 10px;">
+                            <button *ngIf="job.isJOD==false && job.isApplied==false" (click)="applyJob(job, $event)"
+                                class="btn  btn-default btn-gradient mt-1"
+                                style="padding: 10px 35px">Apply</button>
+                            <button *ngIf="job.isJOD==false && job.isApplied==true"
+                                class="btn primary-btn btn-default btn-gradient"
+                                style="background-image: linear-gradient(to right, green, green, green, green); padding: 10px 15px"><img
+                                    style="height: 13px; width:18px; margin-right: 5px;"
+                                    src="../../../assets/images/Tick.png"
+                                    (click)="Applied(job, $event)">Applied</button>
+                            <button *ngIf="job.isJOD==true" class="btn primary-btn btn-default btn-gradient mt-1"
+                                style="padding: 10px 35px">View</button>
+                        </div>
+
+                        <div style="padding-top: 5px; font-size: 9px;" [ngClass]="{'p-t-30': job.applyingEmployerName==null}">
+                            <span><i>Posted {{job.jobPostedTime}}</i></span>
+                        </div>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="job-results container text-center  no-results"
+                *ngIf="isDataLoaded && jobsList && jobsList.length == 0">
+                <h2>No results found</h2>
+            </div>
+        </div>
+        <app-detailed-footer class="footerf" *ngIf="isDataLoaded"></app-detailed-footer>
+    </div>
+</app-authorize-layout>

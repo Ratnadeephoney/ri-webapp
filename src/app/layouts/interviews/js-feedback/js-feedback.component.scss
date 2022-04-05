@@ -1,0 +1,40 @@
+app-js-feedback {
+    .intfbPopup {
+        // width: 40rem;
+    }
+    .modal-header {
+        background: #9a0365;
+    }
+    // label {
+    //     width: 10rem;
+    // }
+    .rating {
+        img {
+            width: 20px;
+        }
+    }
+    .feedback {
+        border: 1px solid darkgray;
+        height: 4rem;
+        width: 100%;
+        overflow-y: auto;
+    }
+    .feedback::-webkit-scrollbar {
+        width: 4px;
+        background-color: #fff;
+    }
+    .feedback::-webkit-scrollbar-thumb {
+        background-color: #9a0365;
+        border-radius: 0;
+    }
+
+    .star-rating {
+        font-size: 25px;
+        margin-top: -8px;
+        color: #99226e;
+        outline: none;
+    }
+    label {
+        font-weight: 600;
+    }
+}

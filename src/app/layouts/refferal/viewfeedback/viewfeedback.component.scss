@@ -1,0 +1,48 @@
+.roecolor{
+    background-color:  gray;
+}
+.res{
+    background-color: green;
+}
+
+.mat-dialog-container {
+    padding: 2px !important;
+  }
+  .center {
+    display: flex;
+    justify-content: center;
+  }
+
+
+  .initials {
+    position: relative;
+    top: 12.5px; /* 25% of parent */
+    font-size: 25px; /* 50% of parent */
+    line-height: 25px; /* 50% of parent */
+    color: #fff;
+    //font-family: "Courier New", monospace;
+    //font-weight: bold;
+  }
+  hr{
+    width: 100%;       
+  }
+  .star-rating{
+    gap: 5px 10px;
+    font-size: 27px;
+    margin-top: -6px;
+    color: #9a0365;
+    outline: none;
+  }
+
+  //style=""
+  .marginpadding{
+    margin-top: 5px; 
+    min-height: 30px; 
+  }
+  .marginpadding2{
+    margin-top: 8px; 
+    min-height: 30px; 
+  }
+  
+
+  

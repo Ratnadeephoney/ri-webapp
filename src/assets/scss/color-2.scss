@@ -1,0 +1,14 @@
+@import 'theme/variable' ;
+
+//$primary: #fd6d64;
+$primary: rgb(128, 4, 82);
+$secondary: #434345;
+// $dark: #FF534B;
+$dark: #9a0365;
+//$light:#F66E54;
+$light: rgba(215, 32, 232, 1);
+@import 'theme/style';
+@import 'theme/responsive';
+@import 'theme/customize';
+@import 'theme/theme-dark';
+@import 'theme/theme-rtl'

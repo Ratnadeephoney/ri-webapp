@@ -1,0 +1,38 @@
+app-team-about{
+  .secondDiv {
+    margin-bottom: 3rem;
+    width: 100%;
+    p {
+        font-size: 1rem;
+    }
+    .headingText {
+      font-weight: 700;
+      color: #494949;
+      line-height: 5;
+    }
+    p{
+        line-height: 18px;
+        text-align: justify;
+    }
+
+    p.headingText:nth-child(4){
+      margin-top: -3rem;
+    }
+  }
+
+  @media only screen and (max-width: 991px) {
+    .team-img{
+      width: 100%; height: auto;
+    }
+    .secondDiv {
+      .headingText {
+        line-height: 1.5;
+        margin: 5px 0px 12px 0px;
+      }
+
+      p.headingText:nth-child(4){
+        margin-top: 0rem !important;
+      }
+    }
+  }
+}

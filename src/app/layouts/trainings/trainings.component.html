@@ -1,0 +1,1424 @@
+<app-authorize-layout #item>
+    <div id="content">
+
+        <app-modern-nav *ngIf="!dataStorage.globalIsLoggedInUser"></app-modern-nav>
+
+        <div class="container" *ngIf="!trainingdetails"
+            [ngStyle]="!dataStorage.globalIsLoggedInUser && {'margin-top': '4rem'}">
+            <div class="row">
+                <div class="col-md-8 col-sm-12" style="margin: 30px auto;">
+                    <form [formGroup]="searchForm">
+
+                        <div class="row search-area">
+
+                            <div class="col-md-10 col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-1 col-sm-2 col-xs-2" style="width: 10%;">
+                                        <img style="margin-top: 12px;" src="assets/images/icon/search.png" />
+                                    </div>
+                                    <div class="col-md-11 col-sm-10 col-xs-10 p-0 sm-ml-7" style="width: 84%;">
+                                        <ng-select [selectOnTab]="true" placeholder="Search Skills"
+                                            formControlName="skills" [items]="dataStorage.globalSkillsList"
+                                            bindLabel="technologyDescription" bindValue="technologyId" [multiple]="true"
+                                            id="txtSkills" class="left">
+                                            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                                <div class="ng-value" *ngFor="let item of items | slice:0:5">
+                                                    <span class="ng-value-label" title="{{item.technologyDescription}}">
+                                                        {{item.technologyDescription | slice:0:10}} <span
+                                                            style="margin-left:-3px"
+                                                            title="{{item.technologyDescription}}"
+                                                            *ngIf="item.technologyDescription && item.technologyDescription.length > 10">...</span>
+                                                    </span>
+
+                                                    <span class="ng-value-icon right" (click)="clear(item)"
+                                                        aria-hidden="true">×</span>
+                                                </div>
+                                                <div class="ng-value" *ngIf="items.length > 5">
+                                                    <span class="ng-value-label">{{items.length - 5}} more...</span>
+                                                </div>
+                                            </ng-template>
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-2 col-sm-12 sm-ml-7">
+                                <button
+                                    class="btn btn-default primary-btn info radius-0 btn-search btn-gradient btn-search col-sm-12"
+                                    (click)="onSearchClick()">Search</button>
+                            </div>
+
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div style="padding-top: 30px;" [ngClass]="{'p-t-80': trainingdetails && !dataStorage.globalIsLoggedInUser}">
+            <app-breadcrumb></app-breadcrumb>
+        </div>
+
+        <!-- <div class="container dropdown-suggest" *ngIf="dataStorage.globalIsLoggedInUser && !trainingdetails">
+            <div class="col-md-4 mt-2">
+                <select name="training-type" class="form-control" [(ngModel)]="selectedTrainingType"
+                    (change)="onTrainingTypeChange($event)">
+                    <option value="1">All</option>
+                    <option value="2">Suggested for you</option>
+                </select>
+            </div>
+        </div> -->
+
+
+        <div class="ri-col container" style="padding-top: 20px;"
+            *ngIf="dataStorage.globalIsLoggedInUser && !trainingdetails && dataStorage.globalLoggedInUserData.userType == 2">
+            <ngb-tabset #tabSet (tabChange)="onTabChange($event)">
+                <ngb-tab id="tFirst">
+                    <ng-template ngbTabTitle>
+                        <div>My Trainings (Mentor)</div>
+                    </ng-template>
+                    <ng-template ngbTabContent>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab id="tSecond">
+                    <ng-template ngbTabTitle>
+                        <div>Suggested</div>
+                    </ng-template>
+                    <ng-template ngbTabContent>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </div>
+        <div class="ri-row" style="justify-content: flex-end; min-height: 60px; align-items: center; flex-wrap: wrap;"
+            *ngIf="dataStorage.globalIsLoggedInUser && !trainingdetails && dataStorage.globalLoggedInUserData.userType == 2 && selectedTab=='INT'">
+            <div>
+                <button class="btn btn-default btn-gradient mt-1" style="padding: 10px 30px;"
+                    (click)="AddTraining()">Add Training</button>
+            </div>
+            <div style="padding-right: 70px;">
+                <div class="col-md-4 mt-2">
+                    <select name="training-type" style="min-width: 250px;" class="form-control"
+                        [(ngModel)]="selectedTrainingType" (change)="onTrainingTypeChange($event)">
+                        <option *ngFor="let level of IntFilters; let i= index" [value]="level.id">{{level.value}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="container dropdown-suggest"
+            *ngIf="dataStorage.globalIsLoggedInUser && !trainingdetails && dataStorage.globalLoggedInUserData.userType == 1 || dataStorage.globalIsLoggedInUser && !trainingdetails && dataStorage.globalLoggedInUserData.userType == 2 && selectedTab=='JS'">
+            <div class="col-md-4 mt-2">
+                <select name="training-type" class="form-control" [(ngModel)]="selectedTrainingType"
+                    (change)="onTrainingTypeChange($event)">
+                    <option *ngFor="let level of JSFilters; let i= index" [value]="level.id">{{level.value}}</option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="!trainingdetails" style="min-height: 200px;">
+            <div class="training-results container" *ngIf="trainingsList && trainingsList.length > 0" id="jobsSection">
+
+                <div class="row col-md-12" style="padding-top: 30px;">
+                    <div class="col-md-3 text-center-sm" style="margin-bottom: 5px">
+                        <strong>{{paginationProps.totalItems}}</strong> results found
+                    </div>
+                    <div class="col-md-6">
+                        <pagination-controls (pageChange)="onPageChanges($event);">
+                        </pagination-controls>
+                    </div>
+                    <div class="col-md-3">
+                        Trainings per page
+                        <select name="country" [(ngModel)]="selectedPage" (change)="onPerPageChange($event)">
+                            <option [value]="obj" *ngFor="let obj of perPageItems">{{obj}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="ri-col" id="results" *ngIf="selectedTab=='JS'">
+                    <div
+                        *ngFor="let training of trainingsList | paginate: { itemsPerPage: paginationProps.itemsPerPage, currentPage: paginationProps.currentPage, totalItems: paginationProps.totalItems };">
+                        <img src="../../../assets/images/rockinterview/personalised-training.png"
+                            *ngIf="training.trainingCreatedBy != 'Rock Interview'"
+                            style="height: 3rem; position: absolute;">
+                        <div class="ri-row" (click)="onTrainingClick(training, JS)"
+                            style="margin: 5px; box-shadow: 0px 2px 5px 0px #857f7f; padding: 20px; cursor: pointer; flex-wrap: wrap;">
+
+                            <div style="flex:1;">
+                                <img style="height: 150px; width: 12rem"
+                                    [ngStyle]="{'background-image': 'url(https://riglobal.s3.ap-south-1.amazonaws.com/template/external/trainining/training-'+training.randomNumber+'.jpg)'}">
+                            </div>
+                            <div class="ri-col" style="flex: 2; padding-left: 20px; line-height: 35px;">
+                                <div class="ri-row" style="align-items: center; flex-wrap: wrap;">
+                                    <span>
+                                        <h4 *ngIf="training.trainingName !=null && training.trainingName !=''">
+                                            {{training.trainingName | slice:0:30}}
+                                            {{training.trainingName.length > 30 ? '...': ''}}
+                                        </h4>
+                                        <h4 *ngIf="training.trainingName ==null || training.trainingName ==''">NA</h4>
+                                    </span>
+                                    <span *ngIf="training.trainingCreatedBy !=null && training.trainingCreatedBy !=''"
+                                        style="font-size: 9px; padding-left: 10px; padding-top: 5px;"><i>by
+                                            {{training.trainingCreatedBy}}</i></span>
+                                    <span *ngIf="training.trainingCreatedBy ==null || training.trainingCreatedBy ==''"
+                                        style="font-size: 9px; padding-left: 10px; padding-top: 5px;"><i>by
+                                            Interviewer</i></span>
+                                </div>
+                                <div style="padding: 5px 0px 5px 0px; background: #dedede"><span>
+                                        <h6 *ngIf="training.trainingDescription !=null && training.trainingDescription !=''"
+                                            style="font-weight: 300; padding: 5px; font-size: 11px;">
+                                            {{training.trainingDescription | slice:0:150}}
+                                            {{training.trainingDescription.length > 150 ? '...': ''}}
+                                        </h6>
+                                        <h6 *ngIf="training.trainingDescription ==null || training.trainingDescription ==''"
+                                            style="font-weight: 300; padding: 5px; font-size: 11px;">
+                                            NA
+                                        </h6>
+                                    </span></div>
+                                <div class="ri-row" style="padding-top: 5px; flex-wrap: wrap;">
+                                    <div class="ri-row" style="flex:1">
+                                        <div>
+                                            <img src="../../../assets/images/Topics.png"
+                                                style="width: 20px; height: 20px;">
+                                        </div>
+                                        <div style="padding-left: 5px;">
+                                            <span>{{training.totalTopics}} Topics</span>
+                                        </div>
+                                    </div>
+                                    <div class="ri-row" style="flex:1">
+                                        <div>
+                                            <img src="../../../assets/images/Duration.png"
+                                                style="width: 20px; height: 20px;">
+                                        </div>
+                                        <div style="padding-left: 5px;">
+                                            <span>{{training.hours}} Hours</span>
+                                        </div>
+                                    </div>
+                                    <div class="ri-row" style="flex:1.3">
+                                        <div>
+                                            <img src="../../../assets/images/Attachments.png"
+                                                style="width: 20px; height: 20px;">
+                                        </div>
+                                        <div style="padding-left: 5px;">
+                                            <span>{{training.totalAttachments}} Attachments</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="ri-row" style="flex:1">
+                                    <div>
+                                        <img src="../../../assets/images/Videos.png" style="width: 20px; height: 20px;">
+                                    </div>
+                                    <div style="padding-left: 5px;">
+                                        <span>{{training.totalVideos}} Videos</span>
+                                    </div>
+                                </div> -->
+                                </div>
+                                <div class="ri-row">
+                                    <div class="ri-row" style="padding-top: 3px;">
+                                        <div>
+                                            <img src="../../../assets/images/viewers.png"
+                                                style="width: 20px; height: 17px;">
+                                        </div>
+                                        <div style="padding-left: 5px;">
+                                            <span>{{training.jobSeekerCount}} Users are viewing</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ri-col newclass"
+                                style="flex: 0.8; min-width: 160px; padding: 10px 0px 0px 5px; flex-wrap: wrap;">
+                                <div class="ri-row-center">
+                                    <div class="ri-row-center ml-3" *ngIf="dataStorage.globalIsLoggedInUser"
+                                        [ngClass]="{'created': training.status==TrainingStatusCodes.CREATED.Value, 'suggested': training.status==TrainingStatusCodes.SUGGESTED.Value, 'registered': training.status == TrainingStatusCodes.REGISTERED.Value, 'in-progress': training.status == TrainingStatusCodes.INPROGRESS.Value, 'completed': training.status == TrainingStatusCodes.COMPLETED.Value}"
+                                        style="width: 150px; height: 35px;">
+                                        <span style="font-weight: bold;">{{training.status}}</span>
+                                    </div>
+                                </div>
+                                <div class="ri-row-center" style="flex:2;">
+                                    <div>
+                                        <img src="../../../assets/images/price-tag.png"
+                                            style="height: 20px; width: 20px;">
+                                    </div>
+                                    <div style="padding-left: 5px;">
+                                        <span>
+                                            <h4><b>&#x20B9;{{training.trainingPrice}}</b></h4>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="newclass1" style="text-align: end;">
+                                    <span style="font-size: 10px; opacity: 0.6;">{{training.postedTime}}</span>
+                                </div>
+                            </div>
+                            <div style="flex:0.2">
+                                <button mat-button (click)="MoreOptionsClick(training, $event)"
+                                    style="border: none; background:transparent"><img
+                                        src="../../../assets/images/Jobs-More-Options.png"
+                                        style="width: 6px; height: 20px;"></button>
+                                <div *ngIf="training.ShowMore==true"
+                                    style="width: 120px; position: absolute; background: white; box-shadow: 0px 2px 5px 0px #857f7f;">
+                                    <ul>
+
+                                        <!-- <li (click)="ShareJob(job, $event)"
+                                            style="text-align: center; border-top: 1px solid #dedede">
+                                            <a>Share</a>
+                                        </li> -->
+                                        <li style="text-align: center;" class="copy-link"
+                                            (click)="CopyTraining(training, $event)">
+                                            <a>Copy Link</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ri-col" id="results" *ngIf="selectedTab=='INT'">
+                    <div
+                        *ngFor="let training of trainingsList | paginate: { itemsPerPage: paginationProps.itemsPerPage, currentPage: paginationProps.currentPage, totalItems: paginationProps.totalItems };">
+                        <img src="../../../assets/images/rockinterview/personalised-training.png"
+                            *ngIf="training.trainingCreatedBy != 'Rock Interview'"
+                            style="position: absolute; height: 3rem;">
+                        <div class="ri-row" (click)="onTrainingClick(training, INT)"
+                            style="margin: 5px; box-shadow: 0px 2px 5px 0px #857f7f; padding: 20px; cursor: pointer; flex-wrap: wrap;">
+
+                            <div style="flex:1;">
+                                <img style="height: 200px; width: 12rem"
+                                    [ngStyle]="{'background-image': 'url(https://riglobal.s3.ap-south-1.amazonaws.com/template/external/trainining/training-'+training.randomNumber+'.jpg)'}">
+                            </div>
+                            <div class="ri-col" style="flex: 2; padding-left: 20px; line-height: 35px;">
+                                <div class="ri-row" style="align-items: center; flex-wrap: wrap;">
+                                    <span>
+                                        <h4 *ngIf="training.trainingName !=null && training.trainingName !=''">
+                                            {{training.trainingName | slice:0:30}}
+                                            {{training.trainingName.length > 30 ? '...': ''}}
+                                        </h4>
+                                        <h4 *ngIf="training.trainingName ==null || training.trainingName ==''">NA</h4>
+                                    </span>
+                                    <span *ngIf="training.trainingCreatedBy !=null && training.trainingCreatedBy !=''"
+                                        style="font-size: 9px; padding-left: 10px; padding-top: 5px;"><i>by
+                                            {{training.trainingCreatedBy}}</i></span>
+                                    <span *ngIf="training.trainingCreatedBy ==null || training.trainingCreatedBy ==''"
+                                        style="font-size: 9px; padding-left: 10px; padding-top: 5px;"><i>by
+                                            Interviewer</i></span>
+                                </div>
+                                <div style="padding: 5px 0px 5px 0px; background: #dedede"><span>
+                                        <h6 *ngIf="training.trainingDescription !=null && training.trainingDescription !=''"
+                                            style="font-weight: 300; padding: 5px; font-size: 11px;">
+                                            {{training.trainingDescription | slice:0:150}}
+                                            {{training.trainingDescription.length > 150 ? '...': ''}}
+                                        </h6>
+                                        <h6 *ngIf="training.trainingDescription ==null || training.trainingDescription ==''"
+                                            style="font-weight: 300; padding: 5px; font-size: 11px;">
+                                            NA
+                                        </h6>
+                                    </span></div>
+                                <div class="ri-row" style="padding-top: 5px; flex-wrap: wrap;">
+                                    <div class="ri-row" style="flex:1">
+                                        <div>
+                                            <img src="../../../assets/images/Topics.png"
+                                                style="width: 20px; height: 20px;">
+                                        </div>
+                                        <div style="padding-left: 5px;">
+                                            <span>{{training.totalTopics}} Topics</span>
+                                        </div>
+                                    </div>
+                                    <div class="ri-row" style="flex:1">
+                                        <div>
+                                            <img src="../../../assets/images/Duration.png"
+                                                style="width: 20px; height: 20px;">
+                                        </div>
+                                        <div style="padding-left: 5px;">
+                                            <span>{{training.hours}} Hours</span>
+                                        </div>
+                                    </div>
+                                    <div class="ri-row" style="flex:1.3">
+                                        <div>
+                                            <img src="../../../assets/images/Attachments.png"
+                                                style="width: 20px; height: 20px;">
+                                        </div>
+                                        <div style="padding-left: 5px;">
+                                            <span>{{training.totalAttachments}} Attachments</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="ri-row" style="flex:1">
+                                    <div>
+                                        <img src="../../../assets/images/Videos.png" style="width: 20px; height: 20px;">
+                                    </div>
+                                    <div style="padding-left: 5px;">
+                                        <span>{{training.totalVideos}} Videos</span>
+                                    </div>
+                                </div> -->
+                                </div>
+                                <div class="ri-row">
+                                    <div class="ri-row" style="padding-top: 3px;">
+                                        <div>
+                                            <img src="../../../assets/images/viewers.png"
+                                                style="width: 20px; height: 17px;">
+                                        </div>
+                                        <div style="padding-left: 5px;">
+                                            <span>
+                                                <ul>Shared with {{training.jobSeekerCount}} Users</ul>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ri-row" style="flex: 1; justify-content: center; flex-wrap: wrap;">
+                                    <div style="padding-right: 5px;">
+                                        <button (click)="shareToJS(training, $event)"
+                                            style="padding: 8px; min-width: 150px;"
+                                            class="btn btn-default btn-gradient mt-1">Share To JS</button>
+                                    </div>
+                                    <div>
+                                        <button (click)="shareToAll(training, $event)"
+                                            style="padding: 8px; min-width: 150px;"
+                                            class="btn btn-default btn-gradient mt-1">Share To ALL</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ri-col newclass"
+                                style="flex: 0.8; min-width: 160px; padding: 10px 0px 0px 5px; flex-wrap: wrap;">
+                                <div class="ri-row-center">
+                                    <div class="ri-row-center ml-4"
+                                        *ngIf="dataStorage.globalIsLoggedInUser && training.status==TrainingStatusCodes.COMPLETED.Value"
+                                        [ngClass]="{'created': training.status==TrainingStatusCodes.CREATED.Value, 'suggested': training.status==TrainingStatusCodes.SUGGESTED.Value, 'registered': training.status == TrainingStatusCodes.REGISTERED.Value, 'in-progress': training.status == TrainingStatusCodes.INPROGRESS.Value, 'completed': training.status == TrainingStatusCodes.COMPLETED.Value}"
+                                        style="width: 150px; height: 35px;">
+                                        <span style="font-weight: bold;">{{training.status}}</span>
+                                    </div>
+
+                                    <div class="ri-row-center created ml-4"
+                                        *ngIf="dataStorage.globalIsLoggedInUser && training.trainingCreatedBy=='You' && (training.status == TrainingStatusCodes.SUGGESTED.Value || training.status == 'New' || training.status == TrainingStatusCodes.REGISTERED.Value || training.status==TrainingStatusCodes.INPROGRESS.Value )"
+                                        style="width: 150px; height: 35px;">
+                                        <span style="font-weight: bold;">Created</span>
+                                    </div>
+
+                                    <!-- <div class="ri-row-center assigned"
+                                        *ngIf="dataStorage.globalIsLoggedInUser && training.trainingCreatedBy=='Rock Interview' && training.status!=TrainingStatusCodes.COMPLETED.Value && training.status!=TrainingStatusCodes.INPROGRESS.Value"
+                                        style="width: 150px; height: 35px;">
+                                        <span style="font-weight: bold;">Assigned</span>
+                                    </div> -->
+
+                                    <div class="ri-row-center assigned ml-4"
+                                        *ngIf="dataStorage.globalIsLoggedInUser && training.trainingCreatedBy=='Rock Interview' && (training.status == TrainingStatusCodes.SUGGESTED.Value || training.status == TrainingStatusCodes.REGISTERED.Value || training.status == 'New')"
+                                        style="width: 150px; height: 35px;">
+                                        <span style="font-weight: bold;">Assigned</span>
+                                    </div>
+
+                                    <!-- <div class="ri-row-center suggested ml-4"
+                                        *ngIf="dataStorage.globalIsLoggedInUser && training.trainingCreatedBy=='You' && training.status == TrainingStatusCodes.SUGGESTED.Value"
+                                        style="width: 150px; height: 35px;">
+                                        <span style="font-weight: bold;">Suggested</span>
+                                    </div> -->
+                                </div>
+                                <div class="ri-row-center" style="flex: 2;"
+                                    *ngIf="training.trainingCreatedBy == 'You' && training.status == 'New'">
+                                    <div>
+                                        <img src="../../../assets/images/rockinterview/courses/edit-course.png"
+                                            (click)="EditCourse(training)" style="height: 25px; width: 25px">
+                                    </div>
+                                    <!-- <div>
+                                    <img src="../../../assets/images/delete.png" (click)="DeleteCourse(training)" style="height: 20px; width: 20px">
+                                </div> -->
+                                </div>
+                                <div class="ri-row-center" style="flex:2;">
+                                    <div>
+                                        <img src="../../../assets/images/price-tag.png"
+                                            style="height: 20px; width: 20px;">
+                                    </div>
+                                    <div style="padding-left: 5px;">
+                                        <span>
+                                            <h4><b>&#x20B9;{{training.trainingPrice}}</b></h4>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="newclass1" style="text-align: end;">
+                                    <span style="font-size: 10px; opacity: 0.6;">{{training.postedTime}}</span>
+                                </div>
+                            </div>
+                            <div style="flex:0.2">
+                                <button mat-button (click)="MoreOptionsClick(training, $event)"
+                                    style="border: none; background:transparent"><img
+                                        src="../../../assets/images/Jobs-More-Options.png"
+                                        style="width: 6px; height: 20px;"></button>
+                                <div *ngIf="training.ShowMore==true"
+                                    style="width: 120px; position: absolute; background: white; box-shadow: 0px 2px 5px 0px #857f7f;">
+                                    <ul>
+
+                                        <!-- <li (click)="ShareJob(job, $event)"
+                                            style="text-align: center; border-top: 1px solid #dedede">
+                                            <a>Share</a>
+                                        </li> -->
+                                        <li style="text-align: center;" class="copy-link"
+                                            (click)="CopyTraining(training, $event)">
+                                            <a>Copy Link</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="training-results container text-center  no-results"
+                *ngIf="isDataLoaded && trainingsList && trainingsList.length == 0">
+                <h2>No results found</h2>
+            </div>
+
+        </div>
+
+
+
+
+
+        <div class="container" id="detailsresults" *ngIf="selectedTab=='JS' && trainingdetails && trainingdetailsenable"
+            style="margin-top: 20px;">
+
+            <div class="ri-col">
+                <div class="ri-row"
+                    style="border-bottom: 1px solid #dedede; padding-bottom: 10px; flex-wrap: wrap-reverse;">
+                    <div class="ri-col" style="flex:1; line-height: 40px;">
+                        <div class="ri-row">
+                            <!-- <img src="../../../assets/images/Back-Arrow.png" style="width: 15px; height: 15px"> -->
+                            <a style="font-size: 18px; text-decoration: underline; color: #6666ff;"
+                                (click)="BackToList()">Back To List</a>
+                        </div>
+                        <div style="padding-top: 20px;">
+                            <span>
+                                <h2
+                                    *ngIf="selectedTrainingInfo.trainingInfo.trainingName!= null && selectedTrainingInfo.trainingInfo.trainingName !=''">
+                                    {{selectedTrainingInfo.trainingInfo.trainingName}}
+                                </h2>
+                                <h2
+                                    *ngIf="selectedTrainingInfo.trainingInfo.trainingName== null && selectedTrainingInfo.trainingInfo.trainingName ==''">
+                                    NA
+                                </h2>
+                            </span>
+                        </div>
+                        <div class="ri-col">
+                            <!-- <div style="padding-top: 20px;">
+                                <h4><b>Training Details</b></h4>
+                            </div> -->
+                            <div class="ri-row" style="flex:1">
+                                <div>
+                                    <img src="../../../assets/images/Topics.png" style="width: 20px; height: 20px;">
+                                </div>
+                                <div style="padding-left: 5px;">
+                                    <span>{{selectedTrainingInfo.trainingInfo.totalTopics}} Topics</span>
+                                </div>
+                            </div>
+                            <div class="ri-row" style="flex:1">
+                                <div>
+                                    <img src="../../../assets/images/Duration.png" style="width: 20px; height: 20px;">
+                                </div>
+                                <div style="padding-left: 5px;">
+                                    <span>{{selectedTrainingInfo.trainingInfo.hours}} Hours</span>
+                                </div>
+                            </div>
+                            <div class="ri-row" style="margin-top: 30px;">
+                                <div class="ri-row" style="flex: 1; align-items: flex-end;">
+                                    <button
+                                        *ngIf="selectedTrainingInfo.status==TrainingStatusCodes.SUGGESTED.Value || !dataStorage.globalIsLoggedInUser"
+                                        (click)="registerApp(selectedTrainingInfo)"
+                                        class="btn btn-default btn-gradient mt-1">Register Now</button>
+                                </div>
+                                <div style="flex: 0.7; display: flex; justify-content: center;">
+
+
+                                    <!-- <div class="ri-row-center" *ngIf="dataStorage.globalIsLoggedInUser"
+                                        style="box-shadow: 0px 2px 5px 0px #857f7f; margin-left: 10px; min-width: 120px; border-radius: 30px; background-image: linear-gradient(90deg, #b73dcc, #8e0e41)">
+                                        <span
+                                            style="font-weight: bold; color: white;">{{selectedTrainingInfo.status}}</span>
+                                    </div> -->
+                                    <div class="ri-row-center" *ngIf="dataStorage.globalIsLoggedInUser"
+                                        [ngClass]="{'created': selectedTrainingInfo.status==TrainingStatusCodes.CREATED.Value, 'suggested': selectedTrainingInfo.status==TrainingStatusCodes.SUGGESTED.Value, 'registered': selectedTrainingInfo.status == TrainingStatusCodes.REGISTERED.Value, 'in-progress': selectedTrainingInfo.status == TrainingStatusCodes.INPROGRESS.Value, 'completed': selectedTrainingInfo.status == TrainingStatusCodes.COMPLETED.Value}"
+                                        style="margin-left: 10px; min-width: 120px;">
+                                        <span style="font-weight: bold;">{{selectedTrainingInfo.status}}</span>
+                                    </div>
+                                    <div class="ri-row-center"
+                                        style="box-shadow: 0px 2px 5px 0px #857f7f; margin-left: 10px; min-width: 120px;">
+                                        <img src="../../../assets/images/price-tag.png"
+                                            style="height: 15px; width: 15px;">
+                                        <span
+                                            style="padding-left: 5px; font-weight: bold; font-size: larger;">&#x20B9;{{selectedTrainingInfo.trainingInfo.trainingPrice}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="flex: 0.1; text-align: right; padding-right: 0.5rem;">
+                        <button mat-button (click)="MoreOptionsClick(selectedTrainingInfo, $event)"
+                            style="border: none; background:transparent"><img
+                                src="../../../assets/images/Jobs-More-Options.png"
+                                style="width: 6px; height: 20px;"></button>
+                        <div *ngIf="selectedTrainingInfo.ShowMore==true"
+                            style="width: 120px; position: absolute; background: white; box-shadow: 0px 2px 5px 0px #857f7f;">
+                            <ul>
+
+                                <!-- <li (click)="ShareJob(job, $event)"
+                                    style="text-align: center; border-top: 1px solid #dedede">
+                                    <a>Share</a>
+                                </li> -->
+                                <li style="text-align: center;" class="copy-link"
+                                    (click)="CopyTraining(selectedTrainingInfo, $event, 'details')">
+                                    <a>Copy Link</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="flex: 0.4;">
+                        <div>
+                            <img src="../../../assets/images/Training-Img1.png" style="height: 250px; width: 370px;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ri-col" style="padding: 10px 0px; border-bottom: 1px solid #dedede;">
+                    <div>
+                        <h4><b>Training Description</b></h4>
+                    </div>
+                    <div style="padding-top: 10px;">
+                        <span
+                            *ngIf="selectedTrainingInfo.courseInfo.trainingDescription!= null && selectedTrainingInfo.courseInfo.trainingDescription !=''">
+                            {{selectedTrainingInfo.courseInfo.trainingDescription}}
+                        </span>
+                        <span
+                            *ngIf="selectedTrainingInfo.courseInfo.trainingDescription== null || selectedTrainingInfo.courseInfo.trainingDescription ==''">
+                            NA
+                        </span>
+                    </div>
+                </div>
+
+                <div class="ri-col" style="padding: 10px 0px 15px 0px; border-bottom: 1px solid #dedede;">
+                    <div>
+                        <h4><b>Skills</b></h4>
+                    </div>
+                    <div class="ri-row" style="flex-wrap: wrap;">
+                        <div *ngFor="let tech of selectedTrainingInfo.technologies"
+                            style="box-shadow: 0px 2px 5px 0px #857f7f; padding: 5px; margin-right: 5px; margin-top: 15px;">
+                            <span>{{tech.technologyDescription}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ri-col"
+                    style="padding: 10px 0px; border-bottom: 1px solid #dedede; background: #dedede; margin-top: 15px;">
+                    <div style="padding-left: 10px;">
+                        <h4><b>Topic Details </b></h4>
+                    </div>
+                    <div class="ri-col" style="padding: 20px; line-height: 30px;">
+                        <div class="ri-row" style="padding: 10px; background: white;">
+                            <div style="width: 40px;">
+
+                            </div>
+                            <div style="flex: 1;">
+                                <h5><b>Topic Title</b></h5>
+                            </div>
+                            <div class="ri-row" style="flex: 1; justify-content: space-evenly;">
+                                <h5><b>Hours</b></h5>
+                            </div>
+                            <div class="ri-row" style="flex: 1; justify-content: space-evenly;">
+                                <h5><b>Price</b></h5>
+                            </div>
+                        </div>
+                        <div class="ri-row" style="padding: 10px; background: white; margin-top: 5px;"
+                            *ngFor="let course of selectedTrainingInfo.courseInfo.topicList">
+                            <div style="width: 40px;">
+                                <input type="checkbox" *ngIf="dataStorage.globalIsLoggedInUser"
+                                    [disabled]="course.isRegistered || disableCourses || selectedTrainingInfo.status!=TrainingStatusCodes.SUGGESTED.Value"
+                                    [(ngModel)]="course.isTopicRegistered" />
+                                <input type="checkbox" *ngIf="!dataStorage.globalIsLoggedInUser"
+                                    [(ngModel)]="course.isTopicRegistered" />
+                            </div>
+                            <div class="ri-col" style="flex: 1;">
+                                <div class="ri-row">
+                                    <span>{{course.topicName | slice:0:25}}
+                                        {{course.topicName.length > 25 ? '...': ''}}</span>
+                                    <span *ngIf="!course.ShowDesc"
+                                        style="margin-left: 10px; font-size: 9px; color: blue; cursor: pointer;"
+                                        (click)="course.ShowDesc= !course.ShowDesc">See More</span>
+                                    <span *ngIf="course.ShowDesc"
+                                        style="margin-left: 10px; font-size: 9px; color: blue; cursor: pointer;"
+                                        (click)="course.ShowDesc= !course.ShowDesc">See Less</span>
+                                </div>
+                                <div class="ri-row" *ngIf="course.ShowDesc">
+                                    <span style="font-size: 12px; font-weight: bold;">Description:</span>
+                                    <span style="padding-left: 5px; font-size: 12px;"
+                                        *ngIf="course.topicDescription!=null && course.topicDescription !=''">{{course.topicDescription}}</span>
+                                    <span style="padding-left: 5px; font-size: 12px;"
+                                        *ngIf="course.topicDescription==null || course.topicDescription ==''">NA</span>
+                                </div>
+                            </div>
+
+                            <div class="ri-row" style="flex: 1; justify-content: space-evenly;">
+                                <span>{{course.duration}}</span>
+                            </div>
+
+                            <div class="ri-row" style="flex: 1; justify-content: space-evenly;">
+                                &#x20B9;{{formatPrice(course.price)}}
+                            </div>
+                        </div>
+
+                        <div class="ri-row" style="padding: 10px; background: white; margin-top: 5px;">
+                            <div class="ri-row" style="flex: 1;">
+                                <div>
+                                    <span style="font-weight: 400;">Selected Price : </span>
+                                </div>
+                                <div style="padding-left: 5px;">
+                                    <span
+                                        style="font-size: large; font-weight: bolder;">&#x20B9;{{formatPrice(getSelectedPrice(selectedTrainingInfo.courseInfo))}}</span>
+                                </div>
+                            </div>
+                            <div class="ri-row-center" style="flex: 1;">
+                                <div>
+                                    <span style="font-weight: 400;">Total Hours : </span>
+                                </div>
+                                <div style="padding-left: 5px;">
+                                    <span
+                                        style="font-size: large; font-weight: bolder;">{{getTotalHours(selectedTrainingInfo.courseInfo)}}</span>
+                                </div>
+                            </div>
+                            <div class="ri-row-center" style="flex: 1; margin-right: 47px;">
+                                <div>
+                                    <span style="font-weight: 400;">Total Price : </span>
+                                </div>
+                                <div style="padding-left: 5px;">
+                                    <span
+                                        style="font-size: large; font-weight: bolder;">&#x20B9;{{formatPrice(getTotalPrice(selectedTrainingInfo.courseInfo))}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ri-col"
+                    style="padding: 10px 0px 15px 0px; border-bottom: 1px solid #dedede; margin-top: 10px; border-top: 1px solid #dedede;">
+                    <div>
+                        <h4><b>Attachments</b></h4>
+                    </div>
+                    <div class="ri-row" style="padding-top: 10px;">
+                        <div *ngIf="selectedTrainingInfo.courseInfo.attachments.length == 0">
+                            <span>No Attachments Available</span>
+                        </div>
+                        <div *ngIf="selectedTrainingInfo.courseInfo.attachments.length != 0">
+                            <div class="ri-col" *ngFor="let data of selectedTrainingInfo.courseInfo.attachments"
+                                (click)="OpenAttachment(data)"
+                                style="width: 183px; flex-wrap: wrap; box-shadow: 0px 2px 5px 0px #857f7f; cursor: pointer; margin-left: 10px;">
+                                <div style="padding: 3px;">
+                                    <img src="../../../assets/images/attachments-pdf.png" style="height: 100px;">
+                                </div>
+                                <div class="ri-row">
+                                    <span style="padding: 5px;">
+                                        {{data.attachmentName | slice:0:20}}
+                                        {{data.attachmentName.length > 20 ? '...': ''}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="ri-col"
+                    style="padding: 10px 0px 15px 0px; border-bottom: 1px solid #dedede; margin-top: 10px;">
+                    <div>
+                        <h4><b>Videos</b></h4>
+                    </div>
+                    <div class="ri-row" style="padding-top: 10px;">
+                        <div *ngIf="selectedTrainingInfo.courseInfo.introUploaded==false">
+                            <span>No Videos Available</span>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="ri-col"
+                    style="padding: 10px 0px 15px 0px; border-bottom: 1px solid #dedede; margin-top: 10px;">
+                    <div>
+                        <h4><b>About the Mentor</b></h4>
+                    </div>
+                    <div class="ri-col" style="padding-top: 10px;"
+                        *ngIf="selectedTrainingInfo.mentorInfo != {} && selectedTrainingInfo.mentorInfo != null">
+                        <div class="ri-row">
+                            <div>
+                                <span><b>Name</b> - </span>
+                            </div>
+                            <div>
+                                <span
+                                    *ngIf="selectedTrainingInfo.mentorInfo.name != null && selectedTrainingInfo.mentorInfo.name != ''">{{selectedTrainingInfo.mentorInfo.name}}</span>
+                                <span
+                                    *ngIf="selectedTrainingInfo.mentorInfo.name == null || selectedTrainingInfo.mentorInfo.name == ''">NA</span>
+                            </div>
+                        </div>
+                        <div class="ri-row">
+                            <div>
+                                <span><b>Experience</b> - </span>
+                            </div>
+                            <div>
+                                <span
+                                    *ngIf="selectedTrainingInfo.mentorInfo.experience!=null">{{selectedTrainingInfo.mentorInfo.experience}}</span>
+                                <span *ngIf="selectedTrainingInfo.mentorInfo.experience==null">NA</span>
+                            </div>
+                        </div>
+                        <div class="ri-row">
+                            <div>
+                                <span><b>Skills</b> - </span>
+                            </div>
+                            <div style="padding-left: 10px;">
+                                <span>{{selectedTrainingInfo.mentorInfo.technologies}}</span>
+                            </div>
+                        </div>
+                        <div class="ri-row">
+                            <div>
+                                <span><b>Ratings</b> - </span>
+                            </div>
+                            <div>
+                                <!-- <span class="position-absolute star-rate"
+                                    *ngIf="selectedTrainingInfo.mentorInfo.ratings != null && selectedTrainingInfo.mentorInfo.ratings>=1">
+                                    <i class="fa"
+                                        [ngClass]="{'fa-star': selectedTrainingInfo.mentorInfo.ratings >= 1, 'fa-star-o': selectedTrainingInfo.mentorInfo.ratings < 1}"></i>
+                                    <i class="fa"
+                                        [ngClass]="{'fa-star': selectedTrainingInfo.mentorInfo.ratings >= 2, 'fa-star-o': selectedTrainingInfo.mentorInfo.ratings < 2}"></i>
+                                    <i class="fa"
+                                        [ngClass]="{'fa-star': selectedTrainingInfo.mentorInfo.ratings >= 3, 'fa-star-o': selectedTrainingInfo.mentorInfo.ratings < 3}"></i>
+                                    <i class="fa"
+                                        [ngClass]="{'fa-star': selectedTrainingInfo.mentorInfo.ratings >= 4, 'fa-star-o': selectedTrainingInfo.mentorInfo.ratings < 4}"></i>
+                                    <i class="fa"
+                                        [ngClass]="{'fa-star': selectedTrainingInfo.mentorInfo.ratings >= 5, 'fa-star-o': selectedTrainingInfo.mentorInfo.ratings < 5}"></i>
+                                </span> -->
+                                <div
+                                    *ngIf="selectedTrainingInfo.mentorInfo.ratings != null && selectedTrainingInfo.mentorInfo.ratings>=1">
+                                    <ngb-rating class="star-rating" max="5" [readonly]="true"
+                                        [(rate)]="selectedTrainingInfo.mentorInfo.ratings"></ngb-rating>
+                                </div>
+
+                                <span
+                                    *ngIf="selectedTrainingInfo.mentorInfo.ratings==null || selectedTrainingInfo.mentorInfo.ratings<1">
+                                    NA
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ri-row">
+                            <div>
+                                <span><b>No of Trainings Given</b> - </span>
+                            </div>
+                            <div>
+                                <span>{{selectedTrainingInfo.mentorInfo.trainingsCompleted}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ri-row" *ngIf="selectedTrainingInfo.mentorInfo == {}">
+                        <span>Details Not Available.</span>
+                    </div>
+                </div>
+
+                <div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container" id="detailsresults"
+            *ngIf="selectedTab=='INT' && trainingdetails && trainingdetailsenable" style="margin-top: 20px;">
+
+            <div class="ri-col">
+                <div class="ri-row"
+                    style="border-bottom: 1px solid #dedede; padding-bottom: 10px; flex-wrap: wrap-reverse;">
+                    <div class="ri-col" style="flex:1; line-height: 40px;">
+                        <div class="ri-row">
+                            <!-- <img src="../../../assets/images/Back-Arrow.png" style="width: 15px; height: 15px"> -->
+                            <a style="font-size: 18px; text-decoration: underline; color: #6666ff;"
+                                (click)="BackToList()">Back To List</a>
+                        </div>
+                        <div style="padding-top: 20px;">
+                            <span>
+                                <h2
+                                    *ngIf="selectedTrainingInfo.trainingInfo.trainingName!= null && selectedTrainingInfo.trainingInfo.trainingName !=''">
+                                    {{selectedTrainingInfo.trainingInfo.trainingName}}
+                                </h2>
+                                <h2
+                                    *ngIf="selectedTrainingInfo.trainingInfo.trainingName== null && selectedTrainingInfo.trainingInfo.trainingName ==''">
+                                    NA
+                                </h2>
+                            </span>
+                        </div>
+                        <div class="ri-col">
+                            <!-- <div style="padding-top: 20px;">
+                                <h4><b>Training Details</b></h4>
+                            </div> -->
+                            <div class="ri-row" style="flex:1">
+                                <div>
+                                    <img src="../../../assets/images/Topics.png" style="width: 20px; height: 20px;">
+                                </div>
+                                <div style="padding-left: 5px;">
+                                    <span>{{selectedTrainingInfo.trainingInfo.totalTopics}} Topics</span>
+                                </div>
+                            </div>
+                            <div class="ri-row" style="flex:1">
+                                <div>
+                                    <img src="../../../assets/images/Duration.png" style="width: 20px; height: 20px;">
+                                </div>
+                                <div style="padding-left: 5px;">
+                                    <span>{{selectedTrainingInfo.trainingInfo.hours}} Hours</span>
+                                </div>
+                            </div>
+                            <div class="ri-row" style="margin-top: 30px;">
+                                <div class="ri-row" style="flex: 1; align-items: flex-end;">
+                                    <!-- <button
+                                        *ngIf="selectedTrainingInfo.status=='Suggested' || !dataStorage.globalIsLoggedInUser"
+                                        (click)="registerApp(selectedTrainingInfo)"
+                                        class="btn primary-btn btn-default btn-gradient mt-1">Book</button> -->
+                                    <div style="padding-right: 5px;">
+                                        <button (click)="shareToJS(selectedTrainingInfo.trainingInfo, $event)"
+                                            style="padding: 10px; min-width: 150px;"
+                                            class="btn btn-default btn-gradient mt-1">Share To JS</button>
+                                    </div>
+                                    <div style="padding-left: 5px;">
+                                        <button (click)="shareToAll(selectedTrainingInfo.trainingInfo, $event)"
+                                            style="padding: 10px; min-width: 150px;"
+                                            class="btn btn-default btn-gradient mt-1">Share To ALL</button>
+                                    </div>
+
+                                </div>
+                                <div style="flex: 0.7; display: flex; justify-content: center;">
+
+
+                                    <!-- <div class="ri-row-center" *ngIf="dataStorage.globalIsLoggedInUser"
+                                        style="box-shadow: 0px 2px 5px 0px #857f7f; margin-left: 10px; min-width: 120px; border-radius: 30px; background-image: linear-gradient(90deg, #b73dcc, #8e0e41)">
+                                        <span
+                                            style="font-weight: bold; color: white;">{{selectedTrainingInfo.status}}</span>
+                                    </div> -->
+                                    <!-- <div class="ri-row-center" *ngIf="dataStorage.globalIsLoggedInUser"
+                                        [ngClass]="{'created': selectedTrainingInfo.status=='Created', 'suggested': selectedTrainingInfo.status=='Suggested', 'registered': selectedTrainingInfo.status == 'Registered', 'in-progress': selectedTrainingInfo.status == 'In Progress', 'completed': selectedTrainingInfo.status == 'Completed'}"
+                                        style="box-shadow: 0px 2px 5px 0px #857f7f; margin-left: 10px; min-width: 120px; color: white;">
+                                        <span style="font-weight: bold;">{{selectedTrainingInfo.status}}</span></div>
+                                        <span style="font-weight: bold;">{{selectedTrainingInfo.trainingInfo.trainingCreatedBy}}</span></div> -->
+                                    <div class="ri-row-center"
+                                        *ngIf="dataStorage.globalIsLoggedInUser && selectedTrainingInfo.trainingInfo.status == TrainingStatusCodes.COMPLETED.Value"
+                                        [ngClass]="{'created': selectedTrainingInfo.trainingInfo.status==TrainingStatusCodes.CREATED.Value, 'suggested': selectedTrainingInfo.trainingInfo.status==TrainingStatusCodes.SUGGESTED.Value, 'registered': selectedTrainingInfo.trainingInfo.status == TrainingStatusCodes.REGISTERED.Value, 'in-progress': selectedTrainingInfo.trainingInfo.status == TrainingStatusCodes.INPROGRESS.Value, 'completed': selectedTrainingInfo.trainingInfo.status == TrainingStatusCodes.COMPLETED.Value}"
+                                        style="width: 150px;">
+                                        <span
+                                            style="font-weight: bold;">{{selectedTrainingInfo.trainingInfo.status}}</span>
+                                    </div>
+
+                                    <div class="ri-row-center created"
+                                        *ngIf="dataStorage.globalIsLoggedInUser && selectedTrainingInfo.trainingInfo.trainingCreatedBy=='You' && (selectedTrainingInfo.trainingInfo.status == TrainingStatusCodes.SUGGESTED.Value || selectedTrainingInfo.trainingInfo.status == 'New' || selectedTrainingInfo.trainingInfo.status == TrainingStatusCodes.REGISTERED.Value || selectedTrainingInfo.trainingInfo.status==TrainingStatusCodes.INPROGRESS.Value)"
+                                        style="width: 150px;">
+                                        <span style="font-weight: bold;">Created</span>
+                                    </div>
+
+                                    <!-- <div class="ri-row-center assigned"
+                                        *ngIf="dataStorage.globalIsLoggedInUser && selectedTrainingInfo.trainingInfo.trainingCreatedBy=='Rock Interview' && selectedTrainingInfo.trainingInfo.status != TrainingStatusCodes.COMPLETED.Value && selectedTrainingInfo.trainingInfo.status != TrainingStatusCodes.INPROGRESS.Value"
+                                        style="width: 150px;">
+                                        <span style="font-weight: bold;">Assigned</span>
+                                    </div> -->
+                                    <div class="ri-row-center assigned"
+                                        *ngIf="dataStorage.globalIsLoggedInUser && selectedTrainingInfo.trainingInfo.trainingCreatedBy=='Rock Interview' && (selectedTrainingInfo.trainingInfo.status == TrainingStatusCodes.SUGGESTED.Value || selectedTrainingInfo.trainingInfo.status == TrainingStatusCodes.REGISTERED.Value || selectedTrainingInfo.trainingInfo.status == 'New')"
+                                        style="width: 150px;">
+                                        <span style="font-weight: bold;">Assigned</span>
+                                    </div>
+                                    <!-- <div class="ri-row-center suggested"
+                                        *ngIf="dataStorage.globalIsLoggedInUser && selectedTrainingInfo.trainingInfo.trainingCreatedBy=='You' && selectedTrainingInfo.trainingInfo.status == TrainingStatusCodes.SUGGESTED.Value"
+                                        style="width: 150px;">
+                                        <span style="font-weight: bold;">Suggested</span>
+                                    </div> -->
+                                    <div class="ri-row-center"
+                                        style="box-shadow: 0px 2px 5px 0px #857f7f; margin-left: 10px; min-width: 120px;">
+                                        <img src="../../../assets/images/price-tag.png"
+                                            style="height: 15px; width: 15px;">
+                                        <span
+                                            style="padding-left: 5px; font-weight: bold; font-size: larger;">&#x20B9;{{selectedTrainingInfo.trainingInfo.trainingPrice}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="flex: 0.1; text-align: right; padding-right: 0.5rem;">
+                        <button mat-button (click)="MoreOptionsClick(selectedTrainingInfo, $event)"
+                            style="border: none; background:transparent"><img
+                                src="../../../assets/images/Jobs-More-Options.png"
+                                style="width: 6px; height: 20px;"></button>
+                        <div *ngIf="selectedTrainingInfo.ShowMore==true"
+                            style="width: 120px; position: absolute; background: white; box-shadow: 0px 2px 5px 0px #857f7f;">
+                            <ul>
+
+                                <!-- <li (click)="ShareJob(job, $event)"
+                                    style="text-align: center; border-top: 1px solid #dedede">
+                                    <a>Share</a>
+                                </li> -->
+                                <li style="text-align: center;" class="copy-link"
+                                    (click)="CopyTraining(selectedTrainingInfo, $event, 'details')">
+                                    <a>Copy Link</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="flex: 0.4;">
+                        <div>
+                            <img src="../../../assets/images/Training-Img1.png" style="height: 250px; width: 370px;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ri-col" style="padding: 10px 0px; border-bottom: 1px solid #dedede;">
+                    <div>
+                        <h4><b>Training Description</b></h4>
+                    </div>
+                    <div style="padding-top: 10px;">
+                        <span
+                            *ngIf="selectedTrainingInfo.courseInfo.trainingDescription!= null && selectedTrainingInfo.courseInfo.trainingDescription !=''">
+                            {{selectedTrainingInfo.courseInfo.trainingDescription}}
+                        </span>
+                        <span
+                            *ngIf="selectedTrainingInfo.courseInfo.trainingDescription== null || selectedTrainingInfo.courseInfo.trainingDescription ==''">
+                            NA
+                        </span>
+                    </div>
+                </div>
+
+                <div class="ri-col" style="padding: 10px 0px 15px 0px; border-bottom: 1px solid #dedede;">
+                    <div>
+                        <h4><b>Skills</b></h4>
+                    </div>
+                    <div class="ri-row" style="flex-wrap: wrap;">
+                        <div *ngFor="let tech of selectedTrainingInfo.technologies"
+                            style="box-shadow: 0px 2px 5px 0px #857f7f; padding: 5px; margin-right: 5px; margin-top: 15px;">
+                            <span class="Inline">{{tech.technologyDescription}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ri-col"
+                    style="padding: 10px 0px; border-bottom: 1px solid #dedede; background: #dedede; margin-top: 15px;">
+                    <div style="padding-left: 10px;">
+                        <h4><b>Topic Details </b></h4>
+                    </div>
+                    <div class="ri-col" style="padding: 20px; line-height: 30px;">
+                        <div class="ri-row" style="padding: 10px; background: white;">
+                            <div style="width: 40px;">
+
+                            </div>
+                            <div style="flex: 1;">
+                                <h5><b>Topic Title</b></h5>
+                            </div>
+                            <div class="ri-row" style="flex: 1; justify-content: space-evenly;">
+                                <h5><b>Hours</b></h5>
+                            </div>
+                            <div class="ri-row" style="flex: 1; justify-content: space-evenly;">
+                                <h5><b>Price</b></h5>
+                            </div>
+                        </div>
+                        <div class="ri-row" style="padding: 10px; background: white; margin-top: 5px;"
+                            *ngFor="let course of selectedTrainingInfo.courseInfo.topicList; let in of counter(course.totalTopics) ;let i = index">
+                            <div style="width: 40px;">
+                                <!-- <input type="checkbox" *ngIf="dataStorage.globalIsLoggedInUser"
+                                [disabled]="course.isRegistered || disableCourses || selectedTrainingInfo.status!='Suggested'"
+                                [(ngModel)]="course.isTopicRegistered" />
+                            <input type="checkbox" *ngIf="!dataStorage.globalIsLoggedInUser"
+                                [(ngModel)]="course.isTopicRegistered" /> -->
+                            </div>
+                            <div class="ri-col" style="flex: 1;">
+                                <div class="ri-row">
+                                    <span>{{course.topicName | slice:0:25}}
+                                        {{course.topicName.length > 25 ? '...': ''}}</span>
+                                    <!-- <span style="margin-left: 10px; font-size: 9px; color: blue; cursor: pointer;"
+                                    (click)="course.ShowDesc= !course.ShowDesc">See More</span> -->
+                                    <span *ngIf="!course.ShowDesc"
+                                        style="margin-left: 10px; font-size: 9px; color: blue; cursor: pointer;"
+                                        (click)="course.ShowDesc= !course.ShowDesc"
+                                        (click)="hourgetbackmethod(course.topicName,i)">See More</span>
+                                    <span *ngIf="course.ShowDesc"
+                                        style="margin-left: 10px; font-size: 9px; color: blue; cursor: pointer;"
+                                        (click)="course.ShowDesc= !course.ShowDesc"
+                                        (click)="hourgetfrontmethod(course.topicName,i)">See Less</span>
+                                </div>
+                                <div class="ri-row" *ngIf="course.ShowDesc">
+                                    <span style="font-size: 12px; font-weight: bold;">Description:</span>
+                                    <span style="padding-left: 5px; font-size: 12px; width:820px;"
+                                        *ngIf="course.topicDescription!=null && course.topicDescription !=''"><span class="Inline">{{course.topicDescription}}</span></span>
+                                    <span style="padding-left: 5px; font-size: 12px;"
+                                        *ngIf="course.topicDescription==null || course.topicDescription ==''">NA</span>
+                                </div>
+                            </div>
+
+                            <div id="hourgetback" class="ri-row" style="flex: 1; justify-content: space-evenly;">
+                                <span *ngIf="hoursarray[i] === 'false'">{{course.duration}}</span>
+                                <span style="margin-left:-850px;"
+                                    *ngIf="hoursarray[i] !== 'false'">{{course.duration}}</span>
+                            </div>
+
+                            <div class="ri-row" style="flex: 1; justify-content: space-evenly;">
+                                <span *ngIf="hoursarray[i] === 'false'">&#x20B9;{{formatPrice(course.price)}}</span>
+                                <span style="margin-left:-290px;"
+                                    *ngIf="hoursarray[i] !== 'false'">&#x20B9;{{formatPrice(course.price)}}</span>
+                            </div>
+
+                        </div>
+                        <div class="ri-row" style="padding: 10px; background: white; margin-top: 5px;">
+                            <div class="ri-row" style="flex: 1;">
+                            </div>
+                            <div class="ri-row-center" style="flex: 1;">
+                                <div>
+                                    <span style="font-weight: 400;">Total Hours : </span>
+                                </div>
+                                <div style="padding-left: 5px;">
+                                    <span
+                                        style="font-size: large; font-weight: bolder;">{{getTotalHours(selectedTrainingInfo.courseInfo)}}</span>
+                                </div>
+                            </div>
+                            <div class="ri-row-center" style="flex: 1; margin-right: 47px;">
+                                <div>
+                                    <span style="font-weight: 400;">Total Price : </span>
+                                </div>
+                                <div style="padding-left: 5px;">
+                                    <span
+                                        style="font-size: large; font-weight: bolder;">&#x20B9;{{formatPrice(getTotalPrice(selectedTrainingInfo.courseInfo))}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ri-col"
+                    style="padding: 10px 0px 15px 0px; border-bottom: 1px solid #dedede; margin-top: 10px; border-top: 1px solid #dedede;">
+                    <div>
+                        <h4><b>Attachments</b></h4>
+                    </div>
+                    <div class="ri-row" style="padding-top: 10px;">
+                        <div *ngIf="selectedTrainingInfo.courseInfo.attachments.length==0">
+                            <span>No Attachments Available</span>
+                        </div>
+
+                        <div class="ri-col" *ngFor="let data of selectedTrainingInfo.courseInfo.attachments"
+                            (click)="OpenAttachment(data)"
+                            style="width: 183px; flex-wrap: wrap; box-shadow: 0px 2px 5px 0px #857f7f; cursor: pointer; margin-left: 10px;">
+                            <div style="padding: 3px;">
+                                <img src="../../../assets/images/attachments-pdf.png" style="height: 100px;">
+                            </div>
+                            <div class="ri-row">
+                                <span style="padding: 5px;">
+                                    {{data.attachmentName | slice:0:20}}
+                                    {{data.attachmentName.length > 20 ? '...': ''}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="ri-col"
+                    style="padding: 10px 0px 15px 0px; border-bottom: 1px solid #dedede; margin-top: 10px;">
+                    <div>
+                        <h4><b>Videos</b></h4>
+                    </div>
+                    <div class="ri-row" style="padding-top: 10px;">
+                        <div *ngIf="selectedTrainingInfo.courseInfo.introUploaded==false">
+                            <span>No Videos Available</span>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- <div class="ri-col"
+                    style="padding: 10px 0px 15px 0px; border-bottom: 1px solid #dedede; margin-top: 10px;">
+                    <div>
+                        <h4><b>About the Mentor</b></h4>
+                    </div>
+                    <div class="ri-col" style="padding-top: 10px;"
+                        *ngIf="selectedTrainingInfo.mentorInfo != {} && selectedTrainingInfo.mentorInfo != null">
+                        <div class="ri-row">
+                            <div>
+                                <span>Name - </span>
+                            </div>
+                            <div>
+                                <span
+                                    *ngIf="selectedTrainingInfo.mentorInfo.name != null && selectedTrainingInfo.mentorInfo.name != ''">{{selectedTrainingInfo.mentorInfo.name}}</span>
+                                <span
+                                    *ngIf="selectedTrainingInfo.mentorInfo.name == null || selectedTrainingInfo.mentorInfo.name == ''">NA</span>
+                            </div>
+                        </div>
+                        <div class="ri-row">
+                            <div>
+                                <span>Experience - </span>
+                            </div>
+                            <div>
+                                <span
+                                    *ngIf="selectedTrainingInfo.mentorInfo.experience!=null">{{selectedTrainingInfo.mentorInfo.experience}}</span>
+                                <span
+                                    *ngIf="selectedTrainingInfo.mentorInfo.experience==null || selectedTrainingInfo.mentorInfo.experience==0">NA</span>
+                            </div>
+                        </div>
+                        <div class="ri-row">
+                            <div>
+                                <span>Skills - </span>
+                            </div>
+                            <div>
+                                <span>{{selectedTrainingInfo.mentorInfo.technologies}}</span>
+                            </div>
+                        </div>
+                        <div class="ri-row">
+                            <div>
+                                <span>Ratings - </span>
+                            </div>
+                            <div>
+                                <span class="position-absolute star-rate"
+                                    *ngIf="selectedTrainingInfo.mentorInfo.ratings != null && selectedTrainingInfo.mentorInfo.ratings>=1">
+                                    <i class="fa"
+                                        [ngClass]="{'fa-star': selectedTrainingInfo.mentorInfo.ratings >= 1, 'fa-star-o': selectedTrainingInfo.mentorInfo.ratings < 1}"></i>
+                                    <i class="fa"
+                                        [ngClass]="{'fa-star': selectedTrainingInfo.mentorInfo.ratings >= 2, 'fa-star-o': selectedTrainingInfo.mentorInfo.ratings < 2}"></i>
+                                    <i class="fa"
+                                        [ngClass]="{'fa-star': selectedTrainingInfo.mentorInfo.ratings >= 3, 'fa-star-o': selectedTrainingInfo.mentorInfo.ratings < 3}"></i>
+                                    <i class="fa"
+                                        [ngClass]="{'fa-star': selectedTrainingInfo.mentorInfo.ratings >= 4, 'fa-star-o': selectedTrainingInfo.mentorInfo.ratings < 4}"></i>
+                                    <i class="fa"
+                                        [ngClass]="{'fa-star': selectedTrainingInfo.mentorInfo.ratings >= 5, 'fa-star-o': selectedTrainingInfo.mentorInfo.ratings < 5}"></i>
+                                </span>
+                                <span
+                                    *ngIf="selectedTrainingInfo.mentorInfo.ratings==null || selectedTrainingInfo.mentorInfo.ratings<1">
+                                    NA
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ri-row">
+                            <div>
+                                <span>No of Trainings Given - </span>
+                            </div>
+                            <div>
+                                <span>{{selectedTrainingInfo.mentorInfo.trainingsCompleted}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ri-row" *ngIf="selectedTrainingInfo.mentorInfo == {}">
+                        <span>Details Not Available.</span>
+                    </div>
+                </div> -->
+                <div class="ri-col"
+                    style="padding: 10px 0px 15px 0px; border-bottom: 1px solid #dedede; margin-top: 10px;">
+                    <div>
+                        <h4><b>About the Mentor</b></h4>
+                    </div>
+                    <div class="ri-col" style="padding-top: 10px;"
+                        *ngIf="selectedTrainingInfo.mentorInfo != {} && selectedTrainingInfo.mentorInfo != null">
+                        <div class="ri-row">
+                            <div>
+                                <span><b>Name</b> - </span>
+                            </div>
+                            <div>
+                                <span
+                                    *ngIf="selectedTrainingInfo.mentorInfo.name != null && selectedTrainingInfo.mentorInfo.name != ''">{{selectedTrainingInfo.mentorInfo.name}}</span>
+                                <span
+                                    *ngIf="selectedTrainingInfo.mentorInfo.name == null || selectedTrainingInfo.mentorInfo.name == ''">NA</span>
+                            </div>
+                        </div>
+                        <div class="ri-row">
+                            <div>
+                                <span><b>Experience</b> - </span>
+                            </div>
+                            <div>
+                                <span
+                                    *ngIf="selectedTrainingInfo.mentorInfo.experience!=null">{{selectedTrainingInfo.mentorInfo.experience}}</span>
+                                <span *ngIf="selectedTrainingInfo.mentorInfo.experience==null">NA</span>
+                            </div>
+                        </div>
+                        <div class="ri-row">
+                            <div>
+                                <span><b>Skills</b> - </span>
+                            </div>
+                            <div>
+                                <span>{{selectedTrainingInfo.mentorInfo.technologies}}</span>
+                            </div>
+                        </div>
+                        <div class="ri-row">
+                            <div>
+                                <span><b>Ratings</b> - </span>
+                            </div>
+                            <div>
+                                <!-- <span class="position-absolute star-rate"
+                                    *ngIf="selectedTrainingInfo.mentorInfo.ratings != null && selectedTrainingInfo.mentorInfo.ratings>=1">
+                                    <i class="fa"
+                                        [ngClass]="{'fa-star': selectedTrainingInfo.mentorInfo.ratings >= 1, 'fa-star-o': selectedTrainingInfo.mentorInfo.ratings < 1}"></i>
+                                    <i class="fa"
+                                        [ngClass]="{'fa-star': selectedTrainingInfo.mentorInfo.ratings >= 2, 'fa-star-o': selectedTrainingInfo.mentorInfo.ratings < 2}"></i>
+                                    <i class="fa"
+                                        [ngClass]="{'fa-star': selectedTrainingInfo.mentorInfo.ratings >= 3, 'fa-star-o': selectedTrainingInfo.mentorInfo.ratings < 3}"></i>
+                                    <i class="fa"
+                                        [ngClass]="{'fa-star': selectedTrainingInfo.mentorInfo.ratings >= 4, 'fa-star-o': selectedTrainingInfo.mentorInfo.ratings < 4}"></i>
+                                    <i class="fa"
+                                        [ngClass]="{'fa-star': selectedTrainingInfo.mentorInfo.ratings >= 5, 'fa-star-o': selectedTrainingInfo.mentorInfo.ratings < 5}"></i>
+                                </span> -->
+                                <div
+                                    *ngIf="selectedTrainingInfo.mentorInfo.ratings != null && selectedTrainingInfo.mentorInfo.ratings>=1">
+                                    <ngb-rating class="star-rating" max="5" [readonly]="true"
+                                        [(rate)]="selectedTrainingInfo.mentorInfo.ratings"></ngb-rating>
+                                </div>
+
+                                <span
+                                    *ngIf="selectedTrainingInfo.mentorInfo.ratings==null || selectedTrainingInfo.mentorInfo.ratings<1">
+                                    NA
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ri-row">
+                            <div>
+                                <span><b>No of Trainings Given</b> - </span>
+                            </div>
+                            <div>
+                                <span>{{selectedTrainingInfo.mentorInfo.trainingsCompleted}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ri-row" *ngIf="selectedTrainingInfo.mentorInfo == {}">
+                        <span>Details Not Available.</span>
+                    </div>
+                </div>
+                <div class="ri-col"
+                    style="padding: 10px 0px 15px 0px; border-bottom: 1px solid #dedede; margin-top: 10px;">
+                    <div>
+                        <h4><b>Registered Users</b></h4>
+                    </div>
+                    <div *ngIf="selectedTrainingInfo.registeredUsers.length !=0">
+                        <div class="ri-row" *ngFor="let user of selectedTrainingInfo.registeredUsers"
+                            style="padding-top: 10px;">
+                            <div style="min-width: 200px;">{{!!user.jobseekerName ? user.jobseekerName : 'NA'}}</div>
+                            <div>
+                                <span
+                                    [ngClass]="{'registered1': user.status == 'Registered', 'in-progress1': user.status == 'In Progress', 'completed1': user.status == 'Completed'}">
+                                    {{!!user.status ? user.status: 'NA'}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding-top: 10px;" *ngIf="selectedTrainingInfo.registeredUsers.length ==0">
+                        <div>
+                            <span>No Registered Users</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <app-detailed-footer *ngIf="isDataLoaded"></app-detailed-footer>
+
+    </div>
+</app-authorize-layout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <app-authorize-layout>
+    <div id="content">
+        <app-modern-nav *ngIf="!dataStorage.globalIsLoggedInUser"></app-modern-nav>
+        <div class="container" *ngIf="!trainingdetails"
+            [ngStyle]="!dataStorage.globalIsLoggedInUser && {'margin-top': '4rem'}">
+            <div class="row">
+                <div class="col-md-8 col-sm-12" style="margin: 30px auto;">
+                    <form [formGroup]="searchForm">
+
+                        <div class="row search-area">
+
+                            <div class="col-md-10 col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-1 col-sm-2 col-xs-2" style="width: 10%;">
+                                        <img style="margin-top: 12px;" src="assets/images/icon/search.png" />
+                                    </div>
+                                    <div class="col-md-11 col-sm-10 col-xs-10 p-0 sm-ml-7" style="width: 84%;">
+                                        <ng-select [selectOnTab]="true" placeholder="Search Skills"
+                                            formControlName="skills" [items]="dataStorage.globalSkillsList"
+                                            bindLabel="technologyDescription" bindValue="technologyId" [multiple]="true"
+                                            id="txtSkills" class="left">
+                                            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                                                <div class="ng-value" *ngFor="let item of items | slice:0:5">
+                                                    <span class="ng-value-label" title="{{item.technologyDescription}}">
+                                                        {{item.technologyDescription | slice:0:10}} <span
+                                                            style="margin-left:-3px"
+                                                            title="{{item.technologyDescription}}"
+                                                            *ngIf="item.technologyDescription && item.technologyDescription.length > 10">...</span>
+                                                    </span>
+
+                                                    <span class="ng-value-icon right" (click)="clear(item)"
+                                                        aria-hidden="true">×</span>
+                                                </div>
+                                                <div class="ng-value" *ngIf="items.length > 5">
+                                                    <span class="ng-value-label">{{items.length - 5}} more...</span>
+                                                </div>
+                                            </ng-template>
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-2 col-sm-12 sm-ml-7">
+                                <button
+                                    class="btn btn-default primary-btn info radius-0 btn-search btn-gradient btn-search col-sm-12"
+                                    (click)="onSearchClick()">Search</button>
+                            </div>
+
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="container dropdown-suggest" *ngIf="!trainingdetails">
+                <div class="col-md-4 mt-2" ngIf="dataStorage.globalLoggedInUserData.userType == 1">
+                    <select name="training-type" class="form-control" [(ngModel)]="selectedTrainingType"
+                        (change)="onTrainingTypeChange($event)">
+                        <option *ngFor="let level of JSFilters; let i= index" value="level.id">{{level.value}}</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mt-2" ngIf="dataStorage.globalLoggedInUserData.userType == 2">
+                    <select name="training-type" class="form-control" [(ngModel)]="selectedTrainingType"
+                        (change)="onTrainingTypeChange($event)">
+                        <option *ngFor="let level of IntFilters; let i= index" value="level.id">{{level.value}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="mb-0">Trainings</h3>
+                    <br>
+                    <div class="ri-col" *ngIf="dataStorage.globalLoggedInUserData.userType == 1">
+                        <ngb-tabset #tabSet>
+                            <ngb-tab id="tFirst">
+                                <ng-template ngbTabTitle>
+                                    <div (click)="Tab1Selected()">My Trainings (Mentor)</div>
+                                </ng-template>
+                                <ng-template ngbTabContent>
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab id="tSecond">
+                                <ng-template ngbTabTitle>
+                                    <div (click)="Tab2Selected()">Suggested</div>
+                                </ng-template>
+                                <ng-template ngbTabContent>
+                                </ng-template>
+                            </ngb-tab>
+                        </ngb-tabset>
+                    </div>
+
+                    <div *ngIf="dataStorage.globalLoggedInUserData.userType == 2 && SelectedTab=='Tab1'">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</app-authorize-layout> -->

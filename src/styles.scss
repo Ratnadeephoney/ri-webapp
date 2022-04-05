@@ -1,0 +1,278 @@
+/* You can add global styles to this file, and also import other style files */
+// @import "~ng-pick-datetime/assets/style/picker.min.css";
+
+@import '~ngx-toastr/toastr.css';
+   
+body::-webkit-scrollbar {
+    width: 6px;
+    background-color: #fff;
+}
+body::-webkit-scrollbar-thumb {
+    background-color: #9a0365;
+    border-radius: 0px;
+}
+
+    mat-error {
+        // margin: 5px 10px;
+        font-size: 12px;
+        color: red;
+        float: left;
+        text-align: left;
+    }
+
+    button:focus, img:focus{
+        outline: none !important;
+    }
+    
+
+    .ngx-toastr{
+        box-shadow: 0px 0px 10px 5px rgba(203, 29, 210, 0.2) !important;
+    border-radius: 0 !important;
+    }
+
+    .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder{
+        font-size: 18px;
+    margin-top: 8px;
+    }
+
+    .ng-select .ng-has-value .ng-placeholder {
+        display: none;
+    }
+
+
+    ng-select .ng-dropdown-panel {
+        border: 1px solid #ddd;
+        border-top: none;
+        left: 0;
+        background: #fff;
+        margin-top:10px;
+    };
+
+    ng-select .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+        background-color: #f5faff;
+        color: #333;
+    }
+
+    .required-mark {
+        color: red;
+    }
+
+    @media screen and (max-width: 1180px) {
+        .ecommerce .owl-nav [class*=owl-].owl-prev {
+            height: fit-content;
+            width: fit-content;
+            left: 0 !important;
+        }
+
+        .ecommerce .owl-nav [class*=owl-].owl-next {
+            height: fit-content;
+            width: fit-content;
+        }
+    }
+
+    .btn:disabled {
+        cursor: default;
+    }
+
+    .ri-row {
+        display: flex !important;
+        flex-direction: row !important;
+    }
+
+    .ri-col {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .ri-row-center {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .ri-col-center {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .flex1 {
+        flex: 1 !important;
+    }
+
+    .p-l-10 {
+        padding-left: 10px !important;
+    }
+
+    .p-l-5 {
+        padding-left: 5px !important;
+    }
+
+    .NewClass .modal-dialog {
+        max-width: 900px !important;
+    }
+
+    .schIntPopup .modal-dialog {
+        max-width: 700px !important;
+    }
+
+    .confirmation-dialog {
+        .modal-content{
+            border: none;
+            border-radius: 0;
+        }
+    }
+
+    .msg-bulb{
+        width: 6px;
+        height: 6px;
+        background: #99226e;
+        border-radius: 20px;
+        margin: 2px 0px 0px 2px;
+        position: absolute;
+    }
+
+    .msg-bulb1{
+        animation:1s blink ease infinite;
+        width: 13px;
+        height: 13px;
+        background: #99226e;
+        border-radius: 20px;
+        margin: -5px 0px 0px -5px;
+        position: absolute;
+    }
+      
+      @keyframes blink {
+        from, to {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      
+      @-moz-keyframes blink {
+        from, to {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      
+      @-webkit-keyframes blink {
+        from, to {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      
+      @-ms-keyframes blink {
+        from, to {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      
+      @-o-keyframes blink {
+        from, to {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+    @media (min-width: 576px) {
+        .schIntPopup .modal-dialog {
+            max-width: 700px !important;
+            margin: 1.75rem auto;
+        }
+    }
+
+    .owl-carousel .owl-item img {
+      display: block;
+      width: 100%;
+  }
+
+  .ecommerce .owl-nav [class*=owl-].owl-prev {
+    left: 15px;
+}
+
+.ecommerce .owl-nav [class*=owl-]:hover {
+    background-color: #f8f8f8;
+    color: #333333;
+}
+[class^=icon-], [class*=" icon-"] {
+  font-family: "themify";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  *margin-right: 0.3em;
+}
+
+.owl-item{
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -webkit-transform: translate3d(0,0,0);
+  -moz-transform: translate3d(0,0,0);
+  -ms-transform: translate3d(0,0,0);
+}
+
+.owl-item {
+  position: relative;
+  min-height: 1px;
+  float: left;
+  -webkit-backface-visibility: hidden;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+.owl-item img {
+  display: block;
+  width: 100%;
+}
+
+.owl-theme .owl-nav {
+  margin-top: 10px;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.owl-theme .owl-nav [class*=owl-] {
+  color: #FFF;
+  font-size: 14px;
+  margin: 5px;
+  padding: 4px 7px;
+  background: #D6D6D6;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.owl-carousel .owl-nav .owl-prev, .owl-carousel .owl-nav .owl-next, .owl-carousel .owl-dot {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.mat-dialog-container {
+  padding: 0px !important;
+}
+
+
+// html, body { height: 100%; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,54 @@
+<!-- Nav Start-->
+<header class="app2 loding-header nav-abs custom-scroll">
+    <!-- <div class="animated-bg"><i></i><i></i><i></i></div> -->
+  <div class="">
+  
+      <div class="row">
+          <div class="col">
+            <nav>
+              <div class="col-md-6 row">
+                <div class="col-md-3 ml-4">
+                    <a (click)="onModuleClick(dataStorage.globalModuleNames.JOBS)" class="d-inline-block m-r-auto pl-1">
+                        <img src="assets/images/logo/main.png" (click)="GetProfileData()" style="width: 140px;" alt="" class="img-fluid">
+                    </a>
+                </div>
+                <div class="col-md-9" class="web-display">
+                    <!-- <button class="btn btn-default primary-btn btn-js">JOB SEEKER</button> -->
+                    <ul class="main-menu">
+                            <li (click)="onModuleClick(dataStorage.globalModuleNames.JOBS)">
+                                <a [ngClass]="{'menu-active': selectedModule == dataStorage.globalModuleNames.JOBS}">
+                                    <!-- <i class="fa fa-search"></i> -->
+                                     Search Jobs</a>
+                            </li>
+                            <li  (click)="onModuleClick(dataStorage.globalModuleNames.TRAININGS)">
+                                    <a [ngClass]="{'menu-active': selectedModule == dataStorage.globalModuleNames.TRAININGS}">
+                                        <!-- <i class="fa fa-search"></i> -->
+                                         Search Trainings
+                                        </a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-default btn-ent" [href]="enterpriseUrl" target="blank">FOR EMPLOYERS</a>
+                                </li>
+                                <!-- <li (click)="onModuleClick(dataStorage.globalModuleNames.FIND_PROFILES)">
+                                        <a>
+                                            Find Profiles</a>
+                                    </li> -->
+                            <!-- <li>
+                                    <a class="btn btn-default primary-btn btn-gradient btn-ent">ENTERPRISE</a>
+                            </li> -->
+                        </ul>
+                   
+                  </div>
+                  
+              </div>
+              <div class="col-md-6">
+                  <app-menu (onFindModuleClick)="onModuleClick($event)"></app-menu>
+              </div>
+             
+            
+          </nav>
+          </div>
+      </div>
+  </div>
+</header>
+<!-- Nav end-->

@@ -1,0 +1,23 @@
+app-video-section{
+
+}
+
+.video-modal.ri-video{
+    video{width: 100%;}
+
+    button.close{
+        position: absolute;
+    top: 6px;
+    right: 10px;
+    border-radius: 50%;
+    background: #fff;
+    width: 4%;
+    z-index: 1;
+    span{
+        color: #9a0365;
+        font-size: 2rem;
+        font-weight: 600;
+        
+    }
+    }
+}

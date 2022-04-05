@@ -1,0 +1,33 @@
+app-jobseeker-book-mock-interview{
+  .main-heading {
+    font-size: 40px;
+    font-weight: 700;
+    margin-top: 3rem;
+    color: rgb(68, 63, 63);
+    font-family: sans-serif;
+  }
+  p {
+      font-size: 15px;
+      line-height: 1.8;
+  }
+
+  img {
+      width:965px;
+      height:528px;
+  }
+
+  .download-btn {
+    font-size: 12px;
+    margin-left: 10px;
+  }
+
+  @media screen and (max-width: 750px) {
+    .main-heading {
+      margin-top: 1rem;
+    }
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}

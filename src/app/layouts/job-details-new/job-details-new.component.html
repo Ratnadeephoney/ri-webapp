@@ -1,0 +1,207 @@
+<app-authorize-layout>
+    <div id="content">
+        <app-modern-nav *ngIf="!dataStorage.globalIsLoggedInUser"></app-modern-nav>
+        <div class="ri-row-center" *ngIf="ScreenEnable==true">
+            <div class="ri-col" [ngClass]="{'mar-tp-100': !dataStorage.globalIsLoggedInUser}"
+                style="box-shadow: 0px 2px 5px 0px #857f7f; width: 600px; padding: 20px; margin: 60px;">
+                <div class="ri-row">
+                    <div class="ri-col" style="flex: 1;">
+                        <div>
+                            <h5 style="color: black;"><b><span title="{{dataforshowing.jobTitle}}">
+                                        {{dataforshowing.jobTitle | slice:0:25}}
+                                        {{dataforshowing.jobTitle.length > 25 ? '...': ''}}
+                                    </span></b></h5>
+                        </div>
+                        <div><span title="{{dataforshowing.company}}">{{dataforshowing.company | slice:0:25}}
+                                {{dataforshowing.company.length > 25 ? '...': ''}}</span></div>
+                    </div>
+                    <div style="flex: 0.2">
+                        <!-- <span *ngIf="job.isNew==true" style="color: #99226e;">New</span> -->
+                    </div>
+                    <!-- <div>
+                <button mat-button (click)="MoreOptionsClick()" style="border: none; background:transparent"><img
+                        src="../../../assets/images/Jobs-More-Options.png"
+                        style="width: 6px; height: 20px;"></button>
+                <div *ngIf="ShowMore==true"
+                    style="width: 120px; position: absolute; background: white; box-shadow: 0px 2px 5px 0px #857f7f;">
+                    <ul>
+                        <li (click)="ShareJob()" style="text-align: center; border-top: 1px solid #dedede">
+                            <a>Share</a>
+                        </li>
+                        <li style="text-align: center;" (click)="CopyJob()">
+                            <a>Copy Link</a>
+                        </li>
+                    </ul>
+                </div>
+            </div> -->
+                </div>
+
+                <div class="ri-col" style="line-height: 30px; margin-top: 10px; padding-top: 5px;">
+                    <div class="ri-row" style="flex-wrap: wrap;">
+                        <div class="ri-row" style="flex:1; min-width: 150px;">
+                            <div>
+                                <img class="img-new" src="../../../assets/images/Skills.png">
+                            </div>
+                            <div class="p-l-10">
+                                <span title="{{dataforshowing.skills}}">
+                                    {{dataforshowing.skills | slice:0:25}}
+                                    {{dataforshowing.skills.length > 25 ? '...': ''}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ri-row" style="flex:1; min-width: 150px;">
+                            <div>
+                                <img src="../../../assets/images/Exp.png" class="img-new">
+                            </div>
+                            <div class="p-l-10">
+                                <span *ngIf="dataforshowing.experience!=null" title="{{dataforshowing.experience}}">
+                                    {{dataforshowing.experience | slice:0:25}}
+                                    {{dataforshowing.experience.length > 25 ? '...': ''}}
+                                </span>
+                                <span *ngIf="dataforshowing.experience==null">NA</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ri-row" style="flex-wrap: wrap;">
+                        <div class="ri-row" style="flex:1; min-width: 150px;">
+                            <div>
+                                <img src="../../../assets/images/Duration.png" class="img-new">
+                            </div>
+                            <!-- <div class="p-l-10">
+                                <span
+                                    *ngIf="dataforshowing.jobDescription.jobType=='' || dataforshowing.jobDescription.jobType==null">NA</span>
+                                <span
+                                    *ngIf="dataforshowing.jobDescription.jobType!='' && dataforshowing.jobDescription.jobType!=null">{{dataforshowing.jobDescription.jobType}}</span>
+                            </div> -->
+                            <div class="ri-row p-l-10">
+                                <!-- <span
+                                    *ngIf="dataforshowing.jobDescription.jobType=='' || dataforshowing.jobDescription.jobType==null">NA</span> -->
+                                <!-- <span
+                                    *ngIf="dataforshowing.jobDescription.jobType!='' && dataforshowing.jobDescription.jobType!=null">{{dataforshowing.jobDescription.jobType}}</span> -->
+                                    <span>{{!!dataforshowing.jobDescription.jobType ? dataforshowing.jobDescription.jobType : 'NA' }}</span>
+                                    <span *ngIf="dataforshowing.jobDescription.jobType == 'Gig'"> /{{!!dataforshowing.jobDescription.gigHours ? dataforshowing.jobDescription.gigHours : 'NA'}}</span>
+                                    <span *ngIf="!!dataforshowing.jobDescription.workRemote"> /Work Remote</span>
+                            </div>
+                        </div>
+                        <div class="ri-row" style="flex:1; min-width: 150px;">
+                            <div>
+                                <img src="../../../assets/images/Location.png" class="img-new">
+                            </div>
+                            <div class="p-l-10">
+                                <span *ngIf="dataforshowing.location!=null && dataforshowing.location !=''" title="{{dataforshowing.location}}">
+                                    {{dataforshowing.location | slice:0:25}}
+                                    {{dataforshowing.location.length > 25 ? '...': ''}}
+                                </span>
+                                <span *ngIf="dataforshowing.location==null || dataforshowing.location ==''">NA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+                <div>
+                    <ngb-tabset #tabSet>
+                        <ngb-tab title="Company Details" id="tFirst">
+                            <ng-template ngbTabContent>
+                                <br>
+                                <!-- <div class="row col-md-12 mb-1">
+                            <p> <strong>Company Name:</strong>
+                                {{dataforshowing.companyDetails ? (dataforshowing.companyDetails.companyName ? dataforshowing.companyDetails.companyName: 'NA') : 'NA'}}
+                            </p>
+                        </div> -->
+                                <div class="row col-md-12 mb-1" *ngIf="dataforshowing.companyDetails">
+                                    <strong>Website:</strong> <span class="p-l-5"
+                                        *ngIf="!dataforshowing.companyDetails.website">NA</span>
+                                    <a class="p-l-5" *ngIf="dataforshowing.companyDetails.website"
+                                        [href]="dataforshowing.companyDetails.website" target="_blank">
+                                        {{dataforshowing.companyDetails.website}}
+                                    </a>
+                                </div>
+                                <!-- <div class="row col-md-12 mb-2" *ngIf="dataforshowing.companyDetails">
+                                    <strong>Video:</strong> <span class="p-l-5"
+                                        *ngIf="!dataforshowing.companyDetails.video">NA</span>
+                                    <a class="p-l-5" *ngIf="dataforshowing.companyDetails.video"
+                                        [href]="dataforshowing.companyDetails.video" target="_blank">
+                                        {{dataforshowing.companyDetails.video}}
+                                    </a>
+                                </div> -->
+                                <div class="row col-md-12 mb-2" *ngIf="dataforshowing.companyDetails">
+                                    <strong>Video:</strong> <span class="p-l-5"
+                                        *ngIf="!dataforshowing.companyDetails.video">NA</span>
+                                    <!-- <a class="p-l-5" *ngIf="dataforshowing.companyDetails.video"
+                                        [href]="dataforshowing.companyDetails.video" target="_blank">
+                                        {{dataforshowing.companyDetails.video}}
+                                    </a> -->
+                                    <div *ngIf="dataforshowing.companyDetails.video" style="padding-left: 10px; position: relative;">
+                                        <img style="width: 300px; height: 200px;" src='{{YouTubeGetImage(dataforshowing.companyDetails.video)}}'>
+                                        <img *ngIf="showplay==true" src="../../../../assets/images/whiteplay.png" alt="ri"
+                                            (click)="playvideo(dataforshowing.companyDetails.video)"
+                                            style="height:70px; width:70px; position: absolute; display: block; top: 33%; bottom: 40%; left:42%; cursor: pointer;"
+                                            id="btnPlayVideo">
+                                    </div>
+                                </div>
+                                <div class="row col-md-12 mb-1">
+                                    <p style="word-break: break-word;"> <strong>About this Company:</strong>
+                                        {{dataforshowing.companyDetails ? (dataforshowing.companyDetails.whyJoinUs ? dataforshowing.companyDetails.whyJoinUs: 'NA') : 'NA'}}
+                                    </p>
+                                </div>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab title="Job Details" id="tSecond">
+                            <ng-template ngbTabContent>
+                                <br *ngIf="dataforshowing.jobDescription.jobType != 'Gig'">
+                                <div class="row col-md-12 mb-1" *ngIf="dataforshowing.jobDescription.jobType != 'Gig'">
+                                    <p><strong>Salary Range:</strong>
+                                        {{dataforshowing.jobDescription ? (dataforshowing.jobDescription.salaryRange ? dataforshowing.jobDescription.salaryRange : 'NA') : 'NA'}}
+                                    </p>
+                                </div>
+    
+                                <div class="ri-col" *ngIf="dataforshowing.jobDescription.jobType == 'Gig'">
+                                    <div class="ri-row" style="height: 30px;">
+                                        <div class="ri-row" style="flex:1; align-items: center;">
+                                            <p><strong>From:</strong></p>
+                                            <p style="padding-left: 5px;">{{dataforshowing.jobDescription.gigFrom}}</p>
+                                        </div>
+                                        <div class="ri-row" style="flex:1; align-items: center;">
+                                            <p><strong>To:</strong></p>
+                                            <p style="padding-left: 5px;">{{dataforshowing.jobDescription.gigTo}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="ri-row" style="height: 30px;">
+                                        <div class="ri-row" style="flex:1; align-items: center;">
+                                            <p><strong>Rate:</strong></p>
+                                            <p style="padding-left: 5px;">{{dataforshowing.jobDescription.gigRate}}</p>
+                                        </div>
+                                        <div class="ri-row" style="flex:1; align-items: center;">
+                                            <p><strong>Total Estimated Price:</strong></p>
+                                            <p style="padding-left: 5px;">{{dataforshowing.jobDescription.gigEstiatedPrice}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="row col-md-12 mb-1 scrolldiv" style="padding-top: 10px; max-height: 220px; overflow: auto;">
+                                    <p style="word-break: break-word; padding-bottom: 10px;"> <strong>Job Description:</strong><br>
+                                        <span [innerHTML]="dataforshowing.jobDescription.jobDescription"></span>
+                                        <!-- {{dataforshowing.jobDescription ? (dataforshowing.jobDescription.jobDescription ? dataforshowing.jobDescription.jobDescription: 'NA') : 'NA'}} -->
+                                    </p>
+                                </div>
+                            </ng-template>
+                        </ngb-tab>
+                    </ngb-tabset>
+                </div>
+
+                <div class="ri-row-center" style="margin-top: 10px;">
+                    <button *ngIf="dataforshowing.isJOD==false && dataforshowing.isApplied==false" (click)="applyJob()"
+                        class="btn btn-default btn-gradient mt-1" style="padding: 10px 35px">Apply</button>
+                    <button *ngIf="dataforshowing.isJOD==false && dataforshowing.isApplied==true"
+                        class="btn btn-default btn-gradient"
+                        style="background-image: linear-gradient(to right, green, green, green, green); padding: 10px 15px"><img
+                            style="height: 13px; width:18px; margin-right: 5px;"
+                            src="../../../assets/images/Tick.png">Applied</button>
+                    <!-- <button *ngIf="dataforshowing.isJOD==true"
+                class="btn primary-btn btn-default btn-gradient mt-1">View</button> -->
+                </div>
+            </div>
+        </div>
+        <app-detailed-footer *ngIf="isDataLoaded"></app-detailed-footer>
+    </div>
+</app-authorize-layout>

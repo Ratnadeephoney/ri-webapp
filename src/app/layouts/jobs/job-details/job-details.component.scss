@@ -1,0 +1,37 @@
+app-job-details {
+    .modal-header {
+        background: #9a0365;
+    }
+
+    .img-new {
+        width: 15px;
+        height: 15px;
+    }
+
+    li:hover {
+        background: #dedede;
+    }
+
+    .modal-dialog {
+        min-width: 800px !important;
+    }
+
+    .close {
+        opacity: 1;
+    }
+
+    .tab-content {
+        max-height: 250px !important;
+        overflow: auto !important;
+    }
+
+    .tab-content::-webkit-scrollbar {
+        width: 3px !important;
+        background-color: white !important;
+    }
+
+    .tab-content::-webkit-scrollbar-thumb{
+        background-color: #9a0365;
+        border-radius: 0px;
+    }    
+}

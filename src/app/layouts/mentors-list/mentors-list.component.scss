@@ -1,0 +1,52 @@
+app-mentors-list {
+    .star-rating {
+        font-size: 25px;
+        margin-top: -6px;
+        color: #9a0365;
+        outline: none;
+    }
+
+    ng-select{
+        background: #fff;
+        height: 2.5rem;
+        width: 97%;
+        // border: 1px solid #ddd;
+        // border-radius: 30px;
+        // box-shadow: 8px 1px 4px 4px whitesmoke;
+        .ng-value-container{
+            margin-top: 1px;
+        .ng-value{
+            background: #ddd;
+            margin: 2px;
+            padding: 4px 2px;
+            height: 28px;
+            // margin-top: 6px;
+            margin-top: 1%;
+            // margin-left: 15px;
+            .ng-value-label{
+                font-size: 12px;
+            }
+        }
+        }
+          .ng-clear-wrapper{
+              margin-top: 0.7rem;
+              margin-right: 0.5rem;
+            }
+          .ng-dropdown-panel{background: #fff;}
+          input{height: 2.7rem !important;}
+          .ng-option-selected{background: #ddd;}
+          .ng-option{padding: 6px;}
+          .ng-placeholder {
+            position: absolute;
+            z-index: 1;
+            // font-size: 15px !important;
+            // color: darkgray;
+            // font-weight: 300;
+            margin-left: 10px;
+            font-size: 14px !important;
+        }
+        .ng-input {
+            // margin-top: -5px;
+        }
+      }
+}
